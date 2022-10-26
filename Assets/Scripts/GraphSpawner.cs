@@ -12,12 +12,8 @@ public class GraphSpawner : MonoBehaviour
     [SerializeField]
     private GameObject edgeReference;
 
-    [SerializeField]
-    private Transform posv;
-
     private GameObject edgeInstance;
     private GameObject nodeInstance;
-    private int currentLayer;
     private Dictionary<int, GameObject> nodesGameObject;
 
     // Start is called before the first frame update
@@ -108,9 +104,9 @@ public class GraphSpawner : MonoBehaviour
         Dictionary<int, int> dict = new Dictionary<int, int>{};
         for (var i = 0; i < nodePosition.Count; i ++) 
         {
-            foreach(int nodekey in nodePosition[i]) 
+            foreach(int nodeKey in nodePosition[i]) 
             {
-                dict.Add(nodekey, i);
+                dict.Add(nodeKey, i);
             }
         }
         return dict;
@@ -120,9 +116,9 @@ public class GraphSpawner : MonoBehaviour
         Dictionary<int, int> dict = new Dictionary<int, int>{};
         for (var i = 0; i < nodePosition.Count; i ++) 
         {
-            foreach (int key in nodePosition[i]) 
+            foreach (int nodeKey in nodePosition[i]) 
             {
-                dict.Add(key, nodePosition[i].Count);
+                dict.Add(nodeKey, nodePosition[i].Count);
             }
         }
         return dict;
