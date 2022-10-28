@@ -14,7 +14,7 @@ public class GraphSpawner : MonoBehaviour
 
     private GameObject edgeInstance;
     private GameObject nodeInstance;
-    private Dictionary<int, GameObject> nodesGameObject;
+    public static Dictionary<int, GameObject> nodesDict;
 
     // Start is called before the first frame update
     void Start()
@@ -22,7 +22,8 @@ public class GraphSpawner : MonoBehaviour
         List<List<int>> x = new List<List<int>>{
           new List<int> {0},
           new List<int> {1, 2},
-          new List<int> {3, 4, 5, 6, 7},
+          new List<int> {3, 4,},
+          new List<int> {5, 6, 7, 8, },
         };
 
         List<List<int>> y = new List<List<int>>{
@@ -30,10 +31,11 @@ public class GraphSpawner : MonoBehaviour
           new List<int> {0},
           new List<int> {0},
           new List<int> {1},
-          new List<int> {1},
           new List<int> {2},
-          new List<int> {2},
-          new List<int> {2},
+          new List<int> {3},
+          new List<int> {3},
+          new List<int> {4},
+          new List<int> {4},
         };
         StartCoroutine(SpawnGraph(x, y));
     }
@@ -43,7 +45,8 @@ public class GraphSpawner : MonoBehaviour
         yield return new WaitForSeconds(1);
         Dictionary<int, int> nodeLayer = GetNodeLayer(x);
         Dictionary<int, int> totalNodeInLayer = GetTotalNodeInLayer(x);
-        Dictionary<int, GameObject> nodesDict = new Dictionary<int, GameObject>{};
+        nodesDict = new Dictionary<int, GameObject>{};
+        int lastLayer = x.Count - 1;
         int horizontalSpace = 0;
         float calculatedHorizontalSpace = 0;
         float calculatedVerticalSpace = 0;
@@ -53,20 +56,24 @@ public class GraphSpawner : MonoBehaviour
         int currentNodeLayer = 1;
         for (var i = 0; i < y.Count; i++)
         {
-            Debug.Log("current i:" + i);
             nodeInstance = Instantiate(nodeReference);
+            nodeInstance.GetComponent<Node>().setKey(i);
+            if (i == 0)
+            {
+                nodeInstance.GetComponent<Node>().setState(3);
+                nodeInstance.GetComponent<Renderer>().material.color = Color.red;
+            }
+
             int totalInlayer = totalNodeInLayer[i];
             int layer = nodeLayer[i];
-            if (currentTotalLayer != totalInlayer) 
-            {
-                currentTotalLayer = totalInlayer;
-                calculatedHorizontalSpace = (currentTotalLayer + currentTotalLayer - 1) / 2;
-                horizontalSpace = 0;
-            }
+
             if (currentNodeLayer != layer)
-            {
+            {   
+                currentTotalLayer = totalInlayer;
                 currentNodeLayer = layer;
                 calculatedVerticalSpace += 1;
+                calculatedHorizontalSpace = (currentTotalLayer + currentTotalLayer - 1) / 2;
+                horizontalSpace = 0;
             }
             newXPos = transform.position.x - calculatedHorizontalSpace + horizontalSpace;
             newYPos = transform.position.y - nodeLayer[i] - calculatedVerticalSpace;
@@ -74,9 +81,11 @@ public class GraphSpawner : MonoBehaviour
             nodeInstance.transform.position = new Vector3(newXPos, newYPos , nodeInstance.transform.position.z);
 
             List<int> parentNodes = y[i];
+            nodeInstance.GetComponent<Node>().setParentNodes(parentNodes);
             foreach (int parentKey in parentNodes)
             {
                 GameObject parentObj = nodesDict[parentKey];
+                parentObj.GetComponent<Node>().childNodes.Add(i);
                 float midX = (newXPos + parentObj.transform.position.x) / 2;
                 float midY = (newYPos + parentObj.transform.position.y) / 2;
                 float distance = CalculateDistance(nodeInstance, parentObj);
@@ -86,18 +95,20 @@ public class GraphSpawner : MonoBehaviour
                 Quaternion rotation = Quaternion.Euler(0, 0, angle);
                 Vector3 scale = new Vector3(distance, (float)0.1, 0);
 
-                
                 edgeInstance = Instantiate(edgeReference);
                 edgeInstance.transform.position = midpoint;
                 edgeInstance.transform.rotation = rotation;
                 edgeInstance.transform.localScale = scale;
-
-
             }
             nodesDict.Add(i, nodeInstance);
-            
         }
-        Debug.Log(nodesDict.Count);
+        foreach(KeyValuePair<int, GameObject> entry in GraphSpawner.nodesDict)
+        {
+            if (entry.Value.GetComponent<Node>().childNodes.Count == 0)
+            {
+                entry.Value.GetComponent<Node>().lastLayer = true;
+            }
+        }
     }
 
     public Dictionary<int, int> GetNodeLayer(List<List<int>> nodePosition) {
