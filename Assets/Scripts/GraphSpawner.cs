@@ -42,7 +42,7 @@ public class GraphSpawner : MonoBehaviour
 
     IEnumerator SpawnGraph(List<List<int>> x, List<List<int>> y) 
     {
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(0.5f);
         Dictionary<int, int> nodeLayer = GetNodeLayer(x);
         Dictionary<int, int> totalNodeInLayer = GetTotalNodeInLayer(x);
         nodesDict = new Dictionary<int, GameObject>{};
