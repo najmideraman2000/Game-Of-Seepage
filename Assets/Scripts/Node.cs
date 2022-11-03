@@ -18,6 +18,7 @@ public class Node : MonoBehaviour
     public List<int> parentNodes;
     public bool lastLayer;
     public List<int> childNodes;
+    public GameObject gameOverText;
 
 
     public void OnMouseDown() {
@@ -31,7 +32,7 @@ public class Node : MonoBehaviour
                 GameController.player = 2;
                 if (attackerLose())
                 {
-                    textObject.GetComponent<Text>().text = "DEFENDER'S WIN";
+                    textObject.GetComponent<Text>().text = "DEFENDER WIN";
                 }
                 else {
                     textObject.GetComponent<Text>().text = "ATTACKER'S TURN";
@@ -50,7 +51,7 @@ public class Node : MonoBehaviour
                         state = 3;
                         GameController.player = 1;
                         if (lastLayer) {
-                            textObject.GetComponent<Text>().text = "ATTACKER's WIN";
+                            textObject.GetComponent<Text>().text = "ATTACKER WIN";
                             break;
                         }
                         textObject.GetComponent<Text>().text = "DEFENDER'S TURN";
