@@ -5,79 +5,22 @@ using System;
 
 public class GraphSpawner : MonoBehaviour
 {
-
     [SerializeField]
     private GameObject nodeReference;
     [SerializeField]
     private GameObject edgeReference;
-    private GameObject edgeInstance;
     private GameObject nodeInstance;
+    private GameObject edgeInstance;
     public static Dictionary<int, GameObject> nodesDict;
 
     // Start is called before the first frame update
     void Start()
     {
-        // List<List<int>> x = new List<List<int>>{
-        //   new List<int> {0},
-        //   new List<int> {1, 2},
-        //   new List<int> {3, 4,},
-        //   new List<int> {5, 6, 7, 8, },
-        // };
-
-        // List<List<int>> y = new List<List<int>>{
-        //   new List<int> {},
-        //   new List<int> {0},
-        //   new List<int> {0},
-        //   new List<int> {1},
-        //   new List<int> {2},
-        //   new List<int> {3},
-        //   new List<int> {3},
-        //   new List<int> {4},
-        //   new List<int> {4},
-        // };
-
-        // List<List<int>> x = new List<List<int>>{
-        //   new List<int> {0},
-        //   new List<int> {1},
-        //   new List<int> {2},
-        //   new List<int> {3},
-        //   new List<int> {4},
-        //   new List<int> {5},
-        //   new List<int> {6},
-        // };
-
-        // List<List<int>> y = new List<List<int>>{
-        //   new List<int> {},
-        //   new List<int> {0},
-        //   new List<int> {1},
-        //   new List<int> {2},
-        //   new List<int> {3},
-        //   new List<int> {4},
-        //   new List<int> {5},
-        // };
-
-        List<List<int>> x = new List<List<int>>{
-          new List<int> {0},
-          new List<int> {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14},
-        };
-
-        List<List<int>> y = new List<List<int>>{
-          new List<int> {},
-          new List<int> {0},
-          new List<int> {0},
-          new List<int> {0},
-          new List<int> {0},
-          new List<int> {0},
-          new List<int> {0},
-          new List<int> {0},
-          new List<int> {0},
-          new List<int> {0},
-          new List<int> {0},
-          new List<int> {0},
-          new List<int> {0},
-          new List<int> {0},
-          new List<int> {0},
-        };
+        System.Random rand = new System.Random();
+        int randint = rand.Next(0, GraphCollections.graphCollections.Count);
+        List<List<List<int>>> randomGraph = GraphCollections.graphCollections[randint];
+        List<List<int>> x = randomGraph[0];
+        List<List<int>> y = randomGraph[1];
         StartCoroutine(SpawnGraph(x, y));
     }
 
@@ -94,7 +37,6 @@ public class GraphSpawner : MonoBehaviour
         int currentTotalLayer = 1;
         int currentNodeLayer = 0;
         float minScale = findMinScale(x);
-        Debug.Log(minScale);
         for (var i = 0; i < y.Count; i++)
         {
             nodeInstance = Instantiate(nodeReference);
@@ -113,7 +55,6 @@ public class GraphSpawner : MonoBehaviour
                 horizontalSpace = 0;
                 currentTotalLayer = totalInlayer;
                 currentNodeLayer = layer;
-                Debug.Log(currentTotalLayer);
                 verticalSpace += 2 * minScale;
                 if (currentTotalLayer >= 10)
                 {
@@ -125,7 +66,6 @@ public class GraphSpawner : MonoBehaviour
                 }
             }
             newXPos = transform.position.x + horizontalSpace;
-            Debug.Log(newXPos);
             newYPos = transform.position.y - verticalSpace;
             nodeInstance.transform.position = new Vector3(newXPos, newYPos , nodeInstance.transform.position.z);
             horizontalSpace += 2 * minScale;
