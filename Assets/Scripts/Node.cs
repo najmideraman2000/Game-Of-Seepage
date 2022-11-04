@@ -73,7 +73,6 @@ public class Node : MonoBehaviour
                 {
                     if (GraphSpawner.nodesDict[parentKey].GetComponent<Node>().getState() == 3)
                     {
-                        Debug.Log(entry.Value.GetComponent<Node>().key);
                         if(hasPathToWin(entry.Value))
                         {
                             return false;
