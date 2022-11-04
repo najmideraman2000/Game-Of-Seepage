@@ -18,7 +18,7 @@ public class GraphSpawner : MonoBehaviour
     {
         System.Random rand = new System.Random();
         int randint = rand.Next(0, GraphCollections.graphCollections.Count);
-        List<List<List<int>>> randomGraph = GraphCollections.graphCollections[randint];
+        List<List<List<int>>> randomGraph = GraphCollections.graphCollections[5];
         List<List<int>> x = randomGraph[0];
         List<List<int>> y = randomGraph[1];
         StartCoroutine(SpawnGraph(x, y));
@@ -62,7 +62,7 @@ public class GraphSpawner : MonoBehaviour
                 }
                 else
                 {
-                    horizontalSpace = - ((currentTotalLayer + currentTotalLayer - 1) / 2);
+                    horizontalSpace = - ((float)(currentTotalLayer + currentTotalLayer - 1) / 2) * minScale + (minScale / 2);
                 }
             }
             newXPos = transform.position.x + horizontalSpace;
@@ -200,6 +200,6 @@ public class GraphSpawner : MonoBehaviour
 
         double distance = Math.Sqrt(Math.Pow(secondy-firsty, 2) + Math.Pow(secondx-firstx, 2));
 
-        return new Vector3((float)distance, (float)0.1, 0);
+        return new Vector3((float)distance, (float)0.05, 0);
     }
 }
