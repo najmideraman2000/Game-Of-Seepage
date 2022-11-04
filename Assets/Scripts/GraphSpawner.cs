@@ -8,10 +8,8 @@ public class GraphSpawner : MonoBehaviour
 
     [SerializeField]
     private GameObject nodeReference;
-
     [SerializeField]
     private GameObject edgeReference;
-
     private GameObject edgeInstance;
     private GameObject nodeInstance;
     public static Dictionary<int, GameObject> nodesDict;
@@ -19,23 +17,66 @@ public class GraphSpawner : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // List<List<int>> x = new List<List<int>>{
+        //   new List<int> {0},
+        //   new List<int> {1, 2},
+        //   new List<int> {3, 4,},
+        //   new List<int> {5, 6, 7, 8, },
+        // };
+
+        // List<List<int>> y = new List<List<int>>{
+        //   new List<int> {},
+        //   new List<int> {0},
+        //   new List<int> {0},
+        //   new List<int> {1},
+        //   new List<int> {2},
+        //   new List<int> {3},
+        //   new List<int> {3},
+        //   new List<int> {4},
+        //   new List<int> {4},
+        // };
+
+        // List<List<int>> x = new List<List<int>>{
+        //   new List<int> {0},
+        //   new List<int> {1},
+        //   new List<int> {2},
+        //   new List<int> {3},
+        //   new List<int> {4},
+        //   new List<int> {5},
+        //   new List<int> {6},
+        // };
+
+        // List<List<int>> y = new List<List<int>>{
+        //   new List<int> {},
+        //   new List<int> {0},
+        //   new List<int> {1},
+        //   new List<int> {2},
+        //   new List<int> {3},
+        //   new List<int> {4},
+        //   new List<int> {5},
+        // };
+
         List<List<int>> x = new List<List<int>>{
           new List<int> {0},
-          new List<int> {1, 2},
-          new List<int> {3, 4,},
-          new List<int> {5, 6, 7, 8, },
+          new List<int> {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14},
         };
 
         List<List<int>> y = new List<List<int>>{
           new List<int> {},
           new List<int> {0},
           new List<int> {0},
-          new List<int> {1},
-          new List<int> {2},
-          new List<int> {3},
-          new List<int> {3},
-          new List<int> {4},
-          new List<int> {4},
+          new List<int> {0},
+          new List<int> {0},
+          new List<int> {0},
+          new List<int> {0},
+          new List<int> {0},
+          new List<int> {0},
+          new List<int> {0},
+          new List<int> {0},
+          new List<int> {0},
+          new List<int> {0},
+          new List<int> {0},
+          new List<int> {0},
         };
         StartCoroutine(SpawnGraph(x, y));
     }
@@ -43,20 +84,21 @@ public class GraphSpawner : MonoBehaviour
     IEnumerator SpawnGraph(List<List<int>> x, List<List<int>> y) 
     {
         yield return new WaitForSeconds(0.5f);
-        Dictionary<int, int> nodeLayer = GetNodeLayer(x);
-        Dictionary<int, int> totalNodeInLayer = GetTotalNodeInLayer(x);
+        Dictionary<int, int> nodeLayer = getNodeLayer(x);
+        Dictionary<int, int> totalNodeInLayer = getTotalNodeInLayer(x);
         nodesDict = new Dictionary<int, GameObject>{};
-        int lastLayer = x.Count - 1;
-        int horizontalSpace = 0;
-        float calculatedHorizontalSpace = 0;
-        float calculatedVerticalSpace = 0;
+        float horizontalSpace = 0;
+        float verticalSpace = 0;
         float newXPos = 0;
         float newYPos = 0;
         int currentTotalLayer = 1;
-        int currentNodeLayer = 1;
+        int currentNodeLayer = 0;
+        float minScale = findMinScale(x);
+        Debug.Log(minScale);
         for (var i = 0; i < y.Count; i++)
         {
             nodeInstance = Instantiate(nodeReference);
+            nodeInstance.transform.localScale = new Vector3(minScale, minScale, 1);
             nodeInstance.GetComponent<Node>().setKey(i);
             if (i == 0)
             {
@@ -66,19 +108,27 @@ public class GraphSpawner : MonoBehaviour
 
             int totalInlayer = totalNodeInLayer[i];
             int layer = nodeLayer[i];
-
             if (currentNodeLayer != layer)
             {   
+                horizontalSpace = 0;
                 currentTotalLayer = totalInlayer;
                 currentNodeLayer = layer;
-                calculatedVerticalSpace += 1;
-                calculatedHorizontalSpace = (currentTotalLayer + currentTotalLayer - 1) / 2;
-                horizontalSpace = 0;
+                Debug.Log(currentTotalLayer);
+                verticalSpace += 2 * minScale;
+                if (currentTotalLayer >= 10)
+                {
+                    horizontalSpace = - 8 + (minScale / 2);
+                }
+                else
+                {
+                    horizontalSpace = - ((currentTotalLayer + currentTotalLayer - 1) / 2);
+                }
             }
-            newXPos = transform.position.x - calculatedHorizontalSpace + horizontalSpace;
-            newYPos = transform.position.y - nodeLayer[i] - calculatedVerticalSpace;
-            horizontalSpace += 2;
+            newXPos = transform.position.x + horizontalSpace;
+            Debug.Log(newXPos);
+            newYPos = transform.position.y - verticalSpace;
             nodeInstance.transform.position = new Vector3(newXPos, newYPos , nodeInstance.transform.position.z);
+            horizontalSpace += 2 * minScale;
 
             List<int> parentNodes = y[i];
             nodeInstance.GetComponent<Node>().setParentNodes(parentNodes);
@@ -86,19 +136,7 @@ public class GraphSpawner : MonoBehaviour
             {
                 GameObject parentObj = nodesDict[parentKey];
                 parentObj.GetComponent<Node>().childNodes.Add(i);
-                float midX = (newXPos + parentObj.transform.position.x) / 2;
-                float midY = (newYPos + parentObj.transform.position.y) / 2;
-                float distance = CalculateDistance(nodeInstance, parentObj);
-                float angle = CalculateAngle(nodeInstance, parentObj);
-
-                Vector3 midpoint = new Vector3(midX, midY, nodeInstance.transform.position.z);
-                Quaternion rotation = Quaternion.Euler(0, 0, angle);
-                Vector3 scale = new Vector3(distance, (float)0.1, 0);
-
-                edgeInstance = Instantiate(edgeReference);
-                edgeInstance.transform.position = midpoint;
-                edgeInstance.transform.rotation = rotation;
-                edgeInstance.transform.localScale = scale;
+                createEdge(nodeInstance, parentObj);
             }
             nodesDict.Add(i, nodeInstance);
         }
@@ -111,7 +149,7 @@ public class GraphSpawner : MonoBehaviour
         }
     }
 
-    public Dictionary<int, int> GetNodeLayer(List<List<int>> nodePosition) {
+    private Dictionary<int, int> getNodeLayer(List<List<int>> nodePosition) {
         Dictionary<int, int> dict = new Dictionary<int, int>{};
         for (var i = 0; i < nodePosition.Count; i ++) 
         {
@@ -123,7 +161,7 @@ public class GraphSpawner : MonoBehaviour
         return dict;
     }
 
-    public Dictionary<int, int> GetTotalNodeInLayer(List<List<int>> nodePosition) {
+    private Dictionary<int, int> getTotalNodeInLayer(List<List<int>> nodePosition) {
         Dictionary<int, int> dict = new Dictionary<int, int>{};
         for (var i = 0; i < nodePosition.Count; i ++) 
         {
@@ -135,19 +173,72 @@ public class GraphSpawner : MonoBehaviour
         return dict;
     }
 
-    public float CalculateDistance(GameObject currentObj, GameObject targetObj)
+    private float findMinScale(List<List<int>> nodePosition)
     {
-        float firstx = currentObj.transform.position.x;
-        float secondx = targetObj.transform.position.x;
-        float firsty = currentObj.transform.position.y;
-        float secondy = targetObj.transform.position.y;
+        float xScale = 1;
+        float yScale = 1;
+        float minScale = 0;
+        int maxNodeInLayer = findMaxNodeInLayer(nodePosition);
 
-        double distance = Math.Sqrt(Math.Pow(secondy-firsty, 2) + Math.Pow(secondx-firstx, 2));
+        if (maxNodeInLayer >= 10)
+        {
+            xScale = calculateXScale(maxNodeInLayer);
+        }
+        if (nodePosition.Count >= 5)
+        {
+            yScale = calculateYScale(nodePosition.Count);
+        }
+        minScale = Math.Min(xScale, yScale);
 
-        return (float)distance;
+        return minScale;
     }
 
-    public float CalculateAngle(GameObject currentObj, GameObject targetObj)
+    private int findMaxNodeInLayer(List<List<int>> nodePosition)
+    {
+        int maxNodeInLayer = 0;
+        for (var i = 0; i < nodePosition.Count; i ++) 
+        {
+            int currentTotal = nodePosition[i].Count;
+            if(currentTotal > maxNodeInLayer)
+            {
+                maxNodeInLayer = currentTotal;
+            }
+        }
+        return maxNodeInLayer;
+    }
+
+    private float calculateXScale(int maxNodeInLayer)
+    {
+        double xScale = 8.36376 / maxNodeInLayer;
+        return (float)xScale;
+    }
+
+    private float calculateYScale(int totalLayer) 
+    {
+        double yScale = 4.34347 / totalLayer;
+        return (float)yScale;
+    }
+
+    private void createEdge(GameObject childNode, GameObject parentNode)
+    {
+        Vector3 midpoint = calculateEdgePosition(childNode, parentNode);
+        Quaternion rotation = calculateEdgeRotation(childNode, parentNode);
+        Vector3 scale = calculateEdgeScale(nodeInstance, parentNode);
+
+        edgeInstance = Instantiate(edgeReference);
+        edgeInstance.transform.position = midpoint;
+        edgeInstance.transform.rotation = rotation;
+        edgeInstance.transform.localScale = scale;
+    }
+
+    private Vector3 calculateEdgePosition(GameObject currentObj, GameObject targetObj)
+    {
+        float midX = (currentObj.transform.position.x + targetObj.transform.position.x) / 2;
+        float midY = (currentObj.transform.position.y + targetObj.transform.position.y) / 2;
+        return new Vector3(midX, midY, currentObj.transform.position.z);
+    }
+
+    private Quaternion calculateEdgeRotation(GameObject currentObj, GameObject targetObj)
     {
         float firstx = currentObj.transform.position.x;
         float secondx = targetObj.transform.position.x;
@@ -157,6 +248,18 @@ public class GraphSpawner : MonoBehaviour
         double angle = Math.Atan((secondy-firsty) / (secondx-firstx));
         angle = angle * (180/Math.PI);
 
-        return (float)angle;
+        return Quaternion.Euler(0, 0, (float)angle);;
+    }
+
+    private Vector3 calculateEdgeScale(GameObject currentObj, GameObject targetObj)
+    {
+        float firstx = currentObj.transform.position.x;
+        float secondx = targetObj.transform.position.x;
+        float firsty = currentObj.transform.position.y;
+        float secondy = targetObj.transform.position.y;
+
+        double distance = Math.Sqrt(Math.Pow(secondy-firsty, 2) + Math.Pow(secondx-firstx, 2));
+
+        return new Vector3((float)distance, (float)0.1, 0);
     }
 }
