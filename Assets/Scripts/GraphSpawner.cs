@@ -18,7 +18,7 @@ public class GraphSpawner : MonoBehaviour
     {
         System.Random rand = new System.Random();
         int randint = rand.Next(0, GraphCollections.graphCollections.Count);
-        List<List<List<int>>> randomGraph = GraphCollections.graphCollections[5];
+        List<List<List<int>>> randomGraph = GraphCollections.graphCollections[randint];
         List<List<int>> x = randomGraph[0];
         List<List<int>> y = randomGraph[1];
         StartCoroutine(SpawnGraph(x, y));
