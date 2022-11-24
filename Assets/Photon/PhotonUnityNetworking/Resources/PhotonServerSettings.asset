@@ -43,6 +43,7 @@ MonoBehaviour:
   - UpdatePlayer1Name
   - UpdatePlayer2Name
   - UpdateRoomKey
+  - UpdateNodeKey
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

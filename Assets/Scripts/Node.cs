@@ -27,6 +27,7 @@ public class Node : MonoBehaviour
         {
             if (state == 0)
             {   
+                Debug.Log(key);
                 GetComponent<Renderer>().material.color = Color.green;
                 state = 1;
                 GameController.player = 2;

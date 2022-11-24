@@ -287,7 +287,7 @@ GameObject:
   - component: {fileID: 630919036}
   - component: {fileID: 630919035}
   m_Layer: 5
-  m_Name: Player1Text (2)
+  m_Name: Player2Name
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -326,7 +326,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'PLAYER 1:'
+  m_Text: 
 --- !u!222 &630919036
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -348,7 +348,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2017441927}
-  m_RootOrder: 7
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -367,7 +367,7 @@ GameObject:
   - component: {fileID: 642311130}
   - component: {fileID: 642311129}
   m_Layer: 5
-  m_Name: Player1Text (1)
+  m_Name: Player1Name
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -406,7 +406,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'PLAYER 1:'
+  m_Text: 
 --- !u!222 &642311130
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -428,7 +428,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2017441927}
-  m_RootOrder: 6
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -466,7 +466,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2017441927}
-  m_RootOrder: 3
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -754,7 +754,7 @@ GameObject:
   - component: {fileID: 1093970693}
   - component: {fileID: 1093970692}
   m_Layer: 5
-  m_Name: SingleplayerButton
+  m_Name: MultiplayerButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -774,7 +774,7 @@ RectTransform:
   m_Children:
   - {fileID: 1076854047}
   m_Father: {fileID: 2017441927}
-  m_RootOrder: 5
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -825,9 +825,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: MainMenuController, Assembly-CSharp
-        m_MethodName: playSingleplayerGame
+      - m_Target: {fileID: 1019900399}
+        m_TargetAssemblyTypeName: RoomController, Assembly-CSharp
+        m_MethodName: playMultiPlayer
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1066,7 +1066,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2017441927}
-  m_RootOrder: 4
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1210,11 +1210,11 @@ RectTransform:
   - {fileID: 976192128}
   - {fileID: 1183565455}
   - {fileID: 1199923799}
+  - {fileID: 642311131}
+  - {fileID: 630919037}
   - {fileID: 939628845}
   - {fileID: 1617024678}
   - {fileID: 1093970691}
-  - {fileID: 642311131}
-  - {fileID: 630919037}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

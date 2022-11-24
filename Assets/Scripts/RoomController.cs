@@ -12,6 +12,7 @@ public class RoomController : MonoBehaviour
     public Text roomKeyName;
     void Start()
     {
+        PhotonNetwork.AutomaticallySyncScene = true;
         PhotonView photonView = GetComponent<PhotonView>();
         int numOfPlayer = PhotonNetwork.CurrentRoom.PlayerCount;
         if (numOfPlayer == 1)
@@ -22,6 +23,11 @@ public class RoomController : MonoBehaviour
         else {
             photonView.RPC("UpdatePlayer2Name", RpcTarget.AllBuffered, CreateAndJoinRooms.playerName);
         }
+    }
+
+    public void playMultiPlayer()
+    {
+        PhotonNetwork.LoadLevel("GameplayMultiplayer");
     }
 
     [PunRPC]
