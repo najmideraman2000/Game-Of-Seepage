@@ -27,6 +27,18 @@ public class RoomController : MonoBehaviour
 
     public void playMultiPlayer()
     {
+        PhotonView photonView = GetComponent<PhotonView>();
+        int randomNumber = 0;
+        if (randomNumber == 0)
+        {
+            GameController.player = 0;
+            photonView.RPC("UpdatePlayer2Player", RpcTarget.Others, 1);
+        }
+        else
+        {
+            GameController.player = 1;
+            photonView.RPC("UpdatePlayer2Player", RpcTarget.Others, 0);
+        }
         PhotonNetwork.LoadLevel("GameplayMultiplayer");
     }
 
@@ -35,14 +47,22 @@ public class RoomController : MonoBehaviour
     {
         player1Name.GetComponent<Text>().text = text;
     }
+
     [PunRPC]
     public void UpdatePlayer2Name(string text)
     {
         player2Name.GetComponent<Text>().text = text;
     }
+
     [PunRPC]
     public void UpdateRoomKey(string text)
     {
         roomKeyName.GetComponent<Text>().text = text;
+    }
+
+    [PunRPC]
+    public void UpdatePlayer2Player(int player)
+    {
+        GameController.player = player;
     }
 }

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using Photon.Pun;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 
 public class GraphSpawnerMulti : MonoBehaviour
 {
@@ -30,8 +32,10 @@ public class GraphSpawnerMulti : MonoBehaviour
 
     IEnumerator SpawnGraph(List<List<int>> x, List<List<int>> y) 
     {
-        PhotonView photonView = GetComponent<PhotonView>();
         yield return new WaitForSeconds(0.5f);
+        PhotonView photonView = GetComponent<PhotonView>();
+        MemoryStream ms = new MemoryStream();
+        BinaryFormatter bf = new BinaryFormatter();
         Dictionary<int, int> nodeLayer = getNodeLayer(x);
         Dictionary<int, int> totalNodeInLayer = getTotalNodeInLayer(x);
         nodesDict = new Dictionary<int, GameObject>{};
@@ -46,14 +50,12 @@ public class GraphSpawnerMulti : MonoBehaviour
         {
             nodeInstance = PhotonNetwork.Instantiate("Node", new Vector3(0, 0, 0), Quaternion.identity);
             nodeInstance.transform.localScale = new Vector3(minScale, minScale, 1);
-            // nodeInstance.GetComponent<Node>().setKey(i);
             int viewID = nodeInstance.GetComponent<PhotonView>().ViewID;
-            Debug.Log(viewID);
             photonView.RPC("UpdateNodeKey", RpcTarget.AllBuffered, viewID, i);
             if (i == 0)
             {
-                nodeInstance.GetComponent<Node>().setState(3);
-                nodeInstance.GetComponent<Renderer>().material.color = Color.red;
+                photonView.RPC("UpdateNodeState", RpcTarget.AllBuffered, viewID, 3);
+                photonView.RPC("UpdateNodeColorRed", RpcTarget.AllBuffered, viewID);
             }
 
             int totalInlayer = totalNodeInLayer[i];
@@ -79,20 +81,24 @@ public class GraphSpawnerMulti : MonoBehaviour
             horizontalSpace += 2 * minScale;
 
             List<int> parentNodes = y[i];
-            nodeInstance.GetComponent<Node>().setParentNodes(parentNodes);
+            bf.Serialize(ms, parentNodes);
+            string parentNodesString = Convert.ToBase64String(ms.GetBuffer());
+            photonView.RPC("UpdateNodeParentNodes", RpcTarget.AllBuffered, viewID, parentNodesString);
             foreach (int parentKey in parentNodes)
             {
                 GameObject parentObj = nodesDict[parentKey];
-                parentObj.GetComponent<Node>().childNodes.Add(i);
+                int parentID = parentObj.GetComponent<PhotonView>().ViewID;
+                photonView.RPC("UpdateNodeChildNodes", RpcTarget.AllBuffered, parentID, i);
                 createEdge(nodeInstance, parentObj);
             }
-            nodesDict.Add(i, nodeInstance);
+            photonView.RPC("UpdateNodesDict", RpcTarget.AllBuffered, viewID, i);
         }
-        foreach(KeyValuePair<int, GameObject> entry in GraphSpawner.nodesDict)
+        foreach (KeyValuePair<int, GameObject> entry in nodesDict)
         {
             if (entry.Value.GetComponent<Node>().childNodes.Count == 0)
             {
-                entry.Value.GetComponent<Node>().lastLayer = true;
+                int nodeID = entry.Value.GetComponent<PhotonView>().ViewID;
+                photonView.RPC("UpdateNodeLastLayer", RpcTarget.AllBuffered, nodeID);
             }
         }
     }
@@ -214,8 +220,53 @@ public class GraphSpawnerMulti : MonoBehaviour
     [PunRPC]
     public void UpdateNodeKey(int viewID, int key)
     {
-        // PhotonView photonView = GetComponent<PhotonView>();
         GameObject node = PhotonView.Find(viewID).gameObject;
         node.GetComponent<Node>().setKey(key);
+    }
+
+    [PunRPC]
+    public void UpdateNodeColorRed(int viewID)
+    {
+        GameObject node = PhotonView.Find(viewID).gameObject;
+        node.GetComponent<Renderer>().material.color = Color.red;
+    }
+
+    [PunRPC]
+    public void UpdateNodeState(int viewID, int state)
+    {
+        GameObject node = PhotonView.Find(viewID).gameObject;
+        node.GetComponent<Node>().setState(state);
+    }
+
+    [PunRPC]
+    public void UpdateNodeParentNodes(int viewID, string parentNodesString)
+    {
+        MemoryStream ms = new MemoryStream(Convert.FromBase64String(parentNodesString));
+        BinaryFormatter bf = new BinaryFormatter();
+        List<int> parentNodes = (List<int>) bf.Deserialize(ms);
+        Debug.Log(parentNodes.Count);
+        GameObject node = PhotonView.Find(viewID).gameObject;
+        node.GetComponent<Node>().setParentNodes(parentNodes);
+    }
+
+    [PunRPC]
+    public void UpdateNodesDict(int viewID, int key)
+    {
+        GameObject node = PhotonView.Find(viewID).gameObject;
+        nodesDict.Add(key, node);
+    }
+
+    [PunRPC]
+    public void UpdateNodeChildNodes(int parentID, int key)
+    {
+        GameObject node = PhotonView.Find(parentID).gameObject;
+        node.GetComponent<Node>().childNodes.Add(key);
+    }
+
+    [PunRPC]
+    public void UpdateNodeLastLayer(int viewID)
+    {
+        GameObject node = PhotonView.Find(viewID).gameObject;
+        node.GetComponent<Node>().lastLayer = true;
     }
 }

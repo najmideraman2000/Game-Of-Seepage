@@ -44,6 +44,10 @@ MonoBehaviour:
   - UpdatePlayer2Name
   - UpdateRoomKey
   - UpdateNodeKey
+  - UpdateNodeColor
+  - UpdateNodeState
+  - UpdateNodeColorRed
+  - UpdateNodeParentNodes
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1
