@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+using Photon.Pun;
 
 public class Node : MonoBehaviour
 {
@@ -23,14 +24,16 @@ public class Node : MonoBehaviour
 
     public void OnMouseDown() {
         GameObject textObject = GameObject.FindWithTag("Text");
-        if (GameController.player == 1)
+        PhotonView photonView = GetComponent<PhotonView>();
+        int viewID = photonView.ViewID;
+        if (GameController.player == 0 && GameController.currentPlayer == 0) // if defender
         {
             if (state == 0)
             {   
                 Debug.Log(key);
-                GetComponent<Renderer>().material.color = Color.green;
-                state = 1;
-                GameController.player = 2;
+                photonView.RPC("UpdateNodeColorGreen", RpcTarget.All, viewID);
+                photonView.RPC("UpdateNodeState", RpcTarget.All, viewID, 1);
+                photonView.RPC("UpdateCurrentPlayer", RpcTarget.All, 1);
                 if (attackerLose())
                 {
                     textObject.GetComponent<Text>().text = "DEFENDER WIN";
@@ -40,7 +43,7 @@ public class Node : MonoBehaviour
                 }
             }
         }
-        if (GameController.player == 2)
+        else if (GameController.player == 1 && GameController.currentPlayer == 1) // if attacker
         {
             if (state == 0)
             {
@@ -124,5 +127,39 @@ public class Node : MonoBehaviour
             }
         }
         return false;
+    }
+
+    [PunRPC]
+    public void UpdateNodeState(int viewID, int state)
+    {
+        GameObject node = PhotonView.Find(viewID).gameObject;
+        node.GetComponent<Node>().setState(state);
+    }
+
+    [PunRPC]
+    public void UpdateNodeColorRed(int viewID)
+    {
+        GameObject node = PhotonView.Find(viewID).gameObject;
+        node.GetComponent<Renderer>().material.color = Color.red;
+    }
+
+    [PunRPC]
+    public void UpdateNodeColorGreen(int viewID)
+    {
+        GameObject node = PhotonView.Find(viewID).gameObject;
+        node.GetComponent<Renderer>().material.color = Color.green;
+    }
+
+    [PunRPC]
+    public void UpdateCurrrentPlayer(int currentPlayer)
+    {
+        GameController.currentPlayer = currentPlayer;
+    }
+
+    [PunRPC]
+    public void UpdateText(string text)
+    {
+        GameObject textObject = GameObject.FindWithTag("Text");
+        textObject.GetComponent<Text>().text = text;
     }
 }
