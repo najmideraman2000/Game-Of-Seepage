@@ -103,6 +103,7 @@ MonoBehaviour:
   lastLayer: 0
   childNodes: 
   gameOverText: {fileID: 6121796316643252955, guid: f908983e9b94f4b4fa8eddf653c19bf4, type: 3}
+  gameText: {fileID: 9006297141073189203, guid: b58193582fa0261459f1510a72b8b693, type: 3}
 --- !u!58 &346642971248043583
 CircleCollider2D:
   m_ObjectHideFlags: 0

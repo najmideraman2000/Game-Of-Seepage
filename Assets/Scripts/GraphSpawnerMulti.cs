@@ -14,7 +14,7 @@ public class GraphSpawnerMulti : MonoBehaviour
     private GameObject edgeReference;
     private GameObject nodeInstance;
     private GameObject edgeInstance;
-    public static Dictionary<int, GameObject> nodesDict;
+    public static Dictionary<int, GameObject> nodesDict = new Dictionary<int, GameObject>{};
 
     // Start is called before the first frame update
     void Start()
@@ -246,8 +246,13 @@ public class GraphSpawnerMulti : MonoBehaviour
     [PunRPC]
     public void UpdateNodesDict(int viewID, int key)
     {
+        Debug.Log(key);
+        Debug.Log(viewID);
         GameObject node = PhotonView.Find(viewID).gameObject;
-        nodesDict.Add(key, node);
+        Debug.Log(node.GetComponent<Node>().key);
+        Debug.Log(GraphSpawnerMulti.nodesDict.Count);
+        Debug.Log("lmaoo");
+        GraphSpawnerMulti.nodesDict.Add(key, node);
     }
 
     [PunRPC]

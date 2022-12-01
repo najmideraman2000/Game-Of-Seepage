@@ -35,12 +35,11 @@ public class Node : MonoBehaviour
                 photonView.RPC("UpdateCurrentPlayer", RpcTarget.All, 1);
                 if (attackerLose())
                 {
-                    Debug.Log("DEFENDER WIN");
-                    // textObject.GetComponent<Text>().text = "DEFENDER WIN";
+                    photonView.RPC("UpdateText", RpcTarget.All, "DEFENDER WIN");
                 }
                 else {
-                    Debug.Log("ATTACKER'S TURN");
-                    // textObject.GetComponent<Text>().text = "ATTACKER'S TURN";
+                    photonView.RPC("UpdateText", RpcTarget.All, "ATTACKER'S TURN");
+
                 }
             }
         }
@@ -50,16 +49,16 @@ public class Node : MonoBehaviour
             {
                 foreach (int parentKey in parentNodes)
                 {
-                    if (GraphSpawner.nodesDict[parentKey].GetComponent<Node>().getState() == 3)
+                    if (GraphSpawnerMulti.nodesDict[parentKey].GetComponent<Node>().getState() == 3)
                     {
-                        GetComponent<Renderer>().material.color = Color.red;
-                        state = 3;
-                        GameController.player = 1;
+                        photonView.RPC("UpdateNodeColorRed", RpcTarget.All, viewID);
+                        photonView.RPC("UpdateNodeState", RpcTarget.All, viewID, 3);
+                        photonView.RPC("UpdateCurrentPlayer", RpcTarget.All, 0);
                         if (lastLayer) {
-                            textObject.GetComponent<Text>().text = "ATTACKER WIN";
+                            photonView.RPC("UpdateText", RpcTarget.All, "ATTACKER WIN");
                             break;
                         }
-                        textObject.GetComponent<Text>().text = "DEFENDER'S TURN";
+                        photonView.RPC("UpdateText", RpcTarget.All, "DEFENDER'S TURN");
                         break;
                     }
                 }
