@@ -30,16 +30,17 @@ public class Node : MonoBehaviour
         {
             if (state == 0)
             {   
-                Debug.Log(key);
                 photonView.RPC("UpdateNodeColorGreen", RpcTarget.All, viewID);
                 photonView.RPC("UpdateNodeState", RpcTarget.All, viewID, 1);
                 photonView.RPC("UpdateCurrentPlayer", RpcTarget.All, 1);
                 if (attackerLose())
                 {
-                    textObject.GetComponent<Text>().text = "DEFENDER WIN";
+                    Debug.Log("DEFENDER WIN");
+                    // textObject.GetComponent<Text>().text = "DEFENDER WIN";
                 }
                 else {
-                    textObject.GetComponent<Text>().text = "ATTACKER'S TURN";
+                    Debug.Log("ATTACKER'S TURN");
+                    // textObject.GetComponent<Text>().text = "ATTACKER'S TURN";
                 }
             }
         }
@@ -69,13 +70,13 @@ public class Node : MonoBehaviour
 
     public bool attackerLose()
     {
-        foreach(KeyValuePair<int, GameObject> entry in GraphSpawner.nodesDict)
+        foreach(KeyValuePair<int, GameObject> entry in GraphSpawnerMulti.nodesDict)
         {
             if (entry.Value.GetComponent<Node>().getState() == 0)
             {
                 foreach(int parentKey in entry.Value.GetComponent<Node>().parentNodes)
                 {
-                    if (GraphSpawner.nodesDict[parentKey].GetComponent<Node>().getState() == 3)
+                    if (GraphSpawnerMulti.nodesDict[parentKey].GetComponent<Node>().getState() == 3)
                     {
                         if(hasPathToWin(entry.Value))
                         {
@@ -118,9 +119,9 @@ public class Node : MonoBehaviour
         }
         foreach(int childKey in node.GetComponent<Node>().childNodes)
         {
-            if (GraphSpawner.nodesDict[childKey].GetComponent<Node>().state == 0)
+            if (GraphSpawnerMulti.nodesDict[childKey].GetComponent<Node>().state == 0)
             {
-                if (hasPathToWin(GraphSpawner.nodesDict[childKey]))
+                if (hasPathToWin(GraphSpawnerMulti.nodesDict[childKey]))
                 {
                     return true;
                 }
@@ -151,7 +152,7 @@ public class Node : MonoBehaviour
     }
 
     [PunRPC]
-    public void UpdateCurrrentPlayer(int currentPlayer)
+    public void UpdateCurrentPlayer(int currentPlayer)
     {
         GameController.currentPlayer = currentPlayer;
     }

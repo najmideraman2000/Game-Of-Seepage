@@ -81,15 +81,13 @@ public class GraphSpawnerMulti : MonoBehaviour
             horizontalSpace += 2 * minScale;
 
             List<int> parentNodes = y[i];
-            bf.Serialize(ms, parentNodes);
-            string parentNodesString = Convert.ToBase64String(ms.GetBuffer());
-            photonView.RPC("UpdateNodeParentNodes", RpcTarget.AllBuffered, viewID, parentNodesString);
             foreach (int parentKey in parentNodes)
             {
                 GameObject parentObj = nodesDict[parentKey];
                 int parentID = parentObj.GetComponent<PhotonView>().ViewID;
-                photonView.RPC("UpdateNodeChildNodes", RpcTarget.AllBuffered, parentID, i);
                 createEdge(nodeInstance, parentObj);
+                photonView.RPC("UpdateNodeChildNodes", RpcTarget.AllBuffered, parentID, i);
+                photonView.RPC("UpdateNodeParentNodes", RpcTarget.AllBuffered, viewID, parentKey);
             }
             photonView.RPC("UpdateNodesDict", RpcTarget.AllBuffered, viewID, i);
         }
@@ -239,14 +237,10 @@ public class GraphSpawnerMulti : MonoBehaviour
     }
 
     [PunRPC]
-    public void UpdateNodeParentNodes(int viewID, string parentNodesString)
+    public void UpdateNodeParentNodes(int viewID, int parentKey)
     {
-        MemoryStream ms = new MemoryStream(Convert.FromBase64String(parentNodesString));
-        BinaryFormatter bf = new BinaryFormatter();
-        List<int> parentNodes = (List<int>) bf.Deserialize(ms);
-        Debug.Log(parentNodes.Count);
         GameObject node = PhotonView.Find(viewID).gameObject;
-        node.GetComponent<Node>().setParentNodes(parentNodes);
+        node.GetComponent<Node>().parentNodes.Add(parentKey);
     }
 
     [PunRPC]
