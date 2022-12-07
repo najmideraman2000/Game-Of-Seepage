@@ -50,7 +50,7 @@ public class GraphSpawnerMulti : MonoBehaviour
             photonView.RPC("UpdateNodeKey", RpcTarget.AllBuffered, viewID, i);
             if (i == 0)
             {
-                photonView.RPC("UpdateNodeState", RpcTarget.AllBuffered, viewID, 3);
+                photonView.RPC("UpdateNodeState", RpcTarget.AllBuffered, viewID, 2);
                 photonView.RPC("UpdateNodeColorRed", RpcTarget.AllBuffered, viewID);
             }
 

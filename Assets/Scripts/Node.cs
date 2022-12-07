@@ -13,9 +13,6 @@ public class Node : MonoBehaviour
     // 1: defended
     // 2: attacked
     public int state;
-    // player
-    // 1: defender
-    // 2: attacker
     public List<int> parentNodes;
     public List<int> childNodes;
     public bool lastLayer;
@@ -46,10 +43,10 @@ public class Node : MonoBehaviour
             {
                 foreach (int parentKey in parentNodes)
                 {
-                    if (PhotonView.Find(GraphSpawnerMulti.nodesDict[parentKey]).gameObject.GetComponent<Node>().state == 3)
+                    if (PhotonView.Find(GraphSpawnerMulti.nodesDict[parentKey]).gameObject.GetComponent<Node>().state == 2)
                     {
                         photonView.RPC("UpdateNodeColorRed", RpcTarget.All, viewID);
-                        photonView.RPC("UpdateNodeState", RpcTarget.All, viewID, 3);
+                        photonView.RPC("UpdateNodeState", RpcTarget.All, viewID, 2);
                         photonView.RPC("UpdateCurrentPlayer", RpcTarget.All, 0);
                         if (lastLayer) {
                             photonView.RPC("UpdateText", RpcTarget.All, "ATTACKER WIN");
@@ -72,7 +69,7 @@ public class Node : MonoBehaviour
             {
                 foreach(int parentKey in PhotonView.Find(entry.Value).gameObject.GetComponent<Node>().parentNodes)
                 {
-                    if (PhotonView.Find(GraphSpawnerMulti.nodesDict[parentKey]).gameObject.GetComponent<Node>().state == 3)
+                    if (PhotonView.Find(GraphSpawnerMulti.nodesDict[parentKey]).gameObject.GetComponent<Node>().state == 2)
                     {
                         if(hasPathToWin(entry.Value))
                         {

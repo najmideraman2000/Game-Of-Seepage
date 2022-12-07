@@ -44,7 +44,7 @@ public class GraphSpawner : MonoBehaviour
             nodeInstance.GetComponent<Node>().key = i;
             if (i == 0)
             {
-                nodeInstance.GetComponent<Node>().state = 3;
+                nodeInstance.GetComponent<Node>().state = 2;
                 nodeInstance.GetComponent<Renderer>().material.color = Color.red;
             }
 
