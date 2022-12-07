@@ -41,10 +41,10 @@ public class GraphSpawner : MonoBehaviour
         {
             nodeInstance = Instantiate(nodeReference);
             nodeInstance.transform.localScale = new Vector3(minScale, minScale, 1);
-            nodeInstance.GetComponent<Node>().setKey(i);
+            nodeInstance.GetComponent<Node>().key = i;
             if (i == 0)
             {
-                nodeInstance.GetComponent<Node>().setState(3);
+                nodeInstance.GetComponent<Node>().state = 3;
                 nodeInstance.GetComponent<Renderer>().material.color = Color.red;
             }
 
@@ -71,9 +71,9 @@ public class GraphSpawner : MonoBehaviour
             horizontalSpace += 2 * minScale;
 
             List<int> parentNodes = y[i];
-            nodeInstance.GetComponent<Node>().setParentNodes(parentNodes);
             foreach (int parentKey in parentNodes)
             {
+                nodeInstance.GetComponent<Node>().parentNodes.Add(parentKey);
                 GameObject parentObj = nodesDict[parentKey];
                 parentObj.GetComponent<Node>().childNodes.Add(i);
                 createEdge(nodeInstance, parentObj);

@@ -101,10 +101,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   key: 0
+  state: 0
   parentNodes: 
-  lastLayer: 0
   childNodes: 
-  gameOverText: {fileID: 6121796316643252955, guid: f908983e9b94f4b4fa8eddf653c19bf4, type: 3}
+  lastLayer: 0
 --- !u!58 &346642971248043583
 CircleCollider2D:
   m_ObjectHideFlags: 0

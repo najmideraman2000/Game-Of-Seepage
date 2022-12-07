@@ -12,18 +12,15 @@ public class Node : MonoBehaviour
     // 0: untouched
     // 1: defended
     // 2: attacked
-    private int state = 0;
+    public int state;
     // player
     // 1: defender
     // 2: attacker
     public List<int> parentNodes;
-    public bool lastLayer;
     public List<int> childNodes;
-    public GameObject gameOverText;
-
+    public bool lastLayer;
 
     public void OnMouseDown() {
-        GameObject textObject = GameObject.FindWithTag("Text");
         PhotonView photonView = GetComponent<PhotonView>();
         int viewID = photonView.ViewID;
         if (GameController.player == 0 && GameController.currentPlayer == 0) // if defender
@@ -49,7 +46,7 @@ public class Node : MonoBehaviour
             {
                 foreach (int parentKey in parentNodes)
                 {
-                    if (GraphSpawnerMulti.nodesDict[parentKey].GetComponent<Node>().getState() == 3)
+                    if (PhotonView.Find(GraphSpawnerMulti.nodesDict[parentKey]).gameObject.GetComponent<Node>().state == 3)
                     {
                         photonView.RPC("UpdateNodeColorRed", RpcTarget.All, viewID);
                         photonView.RPC("UpdateNodeState", RpcTarget.All, viewID, 3);
@@ -69,13 +66,13 @@ public class Node : MonoBehaviour
 
     public bool attackerLose()
     {
-        foreach(KeyValuePair<int, GameObject> entry in GraphSpawnerMulti.nodesDict)
+        foreach(KeyValuePair<int, int> entry in GraphSpawnerMulti.nodesDict)
         {
-            if (entry.Value.GetComponent<Node>().getState() == 0)
+            if (PhotonView.Find(entry.Value).gameObject.GetComponent<Node>().state == 0)
             {
-                foreach(int parentKey in entry.Value.GetComponent<Node>().parentNodes)
+                foreach(int parentKey in PhotonView.Find(entry.Value).gameObject.GetComponent<Node>().parentNodes)
                 {
-                    if (GraphSpawnerMulti.nodesDict[parentKey].GetComponent<Node>().getState() == 3)
+                    if (PhotonView.Find(GraphSpawnerMulti.nodesDict[parentKey]).gameObject.GetComponent<Node>().state == 3)
                     {
                         if(hasPathToWin(entry.Value))
                         {
@@ -88,37 +85,15 @@ public class Node : MonoBehaviour
         return true;
     }
 
-
-    
-    public void setKey(int k)
+    public bool hasPathToWin(int viewID)
     {
-        key = k;
-    }
-    
-    public void setParentNodes(List<int> pN)
-    {
-        parentNodes = pN;
-    }
-
-    public int getState()
-    {
-        return state;
-    }
-
-    public void setState(int s)
-    {
-        state = s;
-    }
-
-    public bool hasPathToWin(GameObject node)
-    {
-        if (node.GetComponent<Node>().lastLayer)
+        if (PhotonView.Find(viewID).gameObject.GetComponent<Node>().lastLayer)
         {
             return true;
         }
-        foreach(int childKey in node.GetComponent<Node>().childNodes)
+        foreach(int childKey in PhotonView.Find(viewID).gameObject.GetComponent<Node>().childNodes)
         {
-            if (GraphSpawnerMulti.nodesDict[childKey].GetComponent<Node>().state == 0)
+            if (PhotonView.Find(GraphSpawnerMulti.nodesDict[childKey]).gameObject.GetComponent<Node>().state == 0)
             {
                 if (hasPathToWin(GraphSpawnerMulti.nodesDict[childKey]))
                 {
@@ -130,24 +105,17 @@ public class Node : MonoBehaviour
     }
 
     [PunRPC]
-    public void UpdateNodeState(int viewID, int state)
-    {
-        GameObject node = PhotonView.Find(viewID).gameObject;
-        node.GetComponent<Node>().setState(state);
-    }
-
-    [PunRPC]
-    public void UpdateNodeColorRed(int viewID)
-    {
-        GameObject node = PhotonView.Find(viewID).gameObject;
-        node.GetComponent<Renderer>().material.color = Color.red;
-    }
-
-    [PunRPC]
     public void UpdateNodeColorGreen(int viewID)
     {
         GameObject node = PhotonView.Find(viewID).gameObject;
         node.GetComponent<Renderer>().material.color = Color.green;
+    }
+
+    [PunRPC]
+    public void UpdateNodeState(int viewID, int state)
+    {
+        GameObject node = PhotonView.Find(viewID).gameObject;
+        node.GetComponent<Node>().state = state;
     }
 
     [PunRPC]
@@ -161,5 +129,12 @@ public class Node : MonoBehaviour
     {
         GameObject textObject = GameObject.FindWithTag("Text");
         textObject.GetComponent<Text>().text = text;
+    }
+
+    [PunRPC]
+    public void UpdateNodeColorRed(int viewID)
+    {
+        GameObject node = PhotonView.Find(viewID).gameObject;
+        node.GetComponent<Renderer>().material.color = Color.red;
     }
 }
