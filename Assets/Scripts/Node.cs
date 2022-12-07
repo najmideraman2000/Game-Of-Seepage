@@ -20,7 +20,7 @@ public class Node : MonoBehaviour
     public void OnMouseDown() {
         PhotonView photonView = GetComponent<PhotonView>();
         int viewID = photonView.ViewID;
-        if (GameController.player == 0 && GameController.currentPlayer == 0) // if defender
+        if (!GameController.gameOver && GameController.player == 0 && GameController.currentPlayer == 0) // if defender
         {
             if (state == 0)
             {   
@@ -30,6 +30,7 @@ public class Node : MonoBehaviour
                 if (attackerLose())
                 {
                     photonView.RPC("UpdateText", RpcTarget.All, "DEFENDER WIN");
+                    photonView.RPC("UpdateGameOver", RpcTarget.All);
                 }
                 else {
                     photonView.RPC("UpdateText", RpcTarget.All, "ATTACKER'S TURN");
@@ -37,7 +38,7 @@ public class Node : MonoBehaviour
                 }
             }
         }
-        else if (GameController.player == 1 && GameController.currentPlayer == 1) // if attacker
+        else if (!GameController.gameOver && GameController.player == 1 && GameController.currentPlayer == 1) // if attacker
         {
             if (state == 0)
             {
@@ -50,6 +51,7 @@ public class Node : MonoBehaviour
                         photonView.RPC("UpdateCurrentPlayer", RpcTarget.All, 0);
                         if (lastLayer) {
                             photonView.RPC("UpdateText", RpcTarget.All, "ATTACKER WIN");
+                            photonView.RPC("UpdateGameOver", RpcTarget.All);
                             break;
                         }
                         photonView.RPC("UpdateText", RpcTarget.All, "DEFENDER'S TURN");
@@ -126,6 +128,12 @@ public class Node : MonoBehaviour
     {
         GameObject textObject = GameObject.FindWithTag("Text");
         textObject.GetComponent<Text>().text = text;
+    }
+
+    [PunRPC]
+    public void UpdateGameOver()
+    {
+        GameController.gameOver = true;
     }
 
     [PunRPC]
