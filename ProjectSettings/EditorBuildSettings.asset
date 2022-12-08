@@ -12,6 +12,9 @@ EditorBuildSettings:
     path: Assets/Scenes/LoadingLobby.unity
     guid: 274691b5aa74d5046aec2494f5f452d6
   - enabled: 1
+    path: Assets/Scenes/LobbyTest.unity
+    guid: 4a8807aa0fbf0c64299926ba8bcbb599
+  - enabled: 1
     path: Assets/Scenes/GameLobby.unity
     guid: 6b0dadba243784e40b61741263716b68
   - enabled: 1

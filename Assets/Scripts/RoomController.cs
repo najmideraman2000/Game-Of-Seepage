@@ -17,11 +17,11 @@ public class RoomController : MonoBehaviour
         int numOfPlayer = PhotonNetwork.CurrentRoom.PlayerCount;
         if (numOfPlayer == 1)
         {
-            photonView.RPC("UpdateRoomKey", RpcTarget.AllBuffered, CreateAndJoinRooms.roomKey);
-            photonView.RPC("UpdatePlayer1Name", RpcTarget.AllBuffered, CreateAndJoinRooms.playerName);
+            // photonView.RPC("UpdateRoomKey", RpcTarget.AllBuffered, CreateAndJoinRooms.roomKey);
+            photonView.RPC("UpdatePlayer1Name", RpcTarget.AllBuffered, JoinTest.playerName);
         }
         else {
-            photonView.RPC("UpdatePlayer2Name", RpcTarget.AllBuffered, CreateAndJoinRooms.playerName);
+            photonView.RPC("UpdatePlayer2Name", RpcTarget.AllBuffered, JoinTest.playerName);
         }
     }
 
