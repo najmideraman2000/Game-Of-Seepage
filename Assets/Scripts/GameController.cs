@@ -12,16 +12,12 @@ public class GameController : MonoBehaviourPunCallbacks
 
     public void leaveGame()
     {
-        Debug.Log("lmao");
         PhotonNetwork.LeaveRoom();
     }
 
     public override void OnLeftRoom()
     {
         resetGame();
-        // TODO load scene connecting to lobby
-        // PhotonNetwork.LoadLevel("LobbyTest");
-        // SceneManager.LoadScene("LobbyTest");
         PhotonNetwork.ConnectUsingSettings();
     }
 
@@ -33,11 +29,6 @@ public class GameController : MonoBehaviourPunCallbacks
 
     public override void OnConnectedToMaster()
     {
-        PhotonNetwork.JoinLobby();
-    }
-
-    public override void OnJoinedLobby()
-    {
-        SceneManager.LoadScene("LobbyTest");
+        SceneManager.LoadScene("FindGame");
     }
 }

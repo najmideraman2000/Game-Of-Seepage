@@ -7,6 +7,9 @@ TagManager:
   - Text
   - GameOverText
   - GameCanvas
+  - RoleChoiceText
+  - TimeChoiceText
+  - ModeChoiceText
   layers:
   - Default
   - TransparentFX
