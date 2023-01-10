@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
-public class RoomController : MonoBehaviour
+public class RoomController : MonoBehaviourPunCallbacks
 {
 
     public Text player1Name;
@@ -40,6 +41,27 @@ public class RoomController : MonoBehaviour
             photonView.RPC("UpdatePlayer2Player", RpcTarget.Others, 0);
         }
         PhotonNetwork.LoadLevel("GameplayMultiplayer");
+    }
+
+    public void leaveRoom()
+    {
+        PhotonNetwork.LeaveRoom();
+    }
+
+    public override void OnLeftRoom()
+    {
+        // TODO load scene connecting to lobby
+        PhotonNetwork.ConnectUsingSettings();
+    }
+
+    public override void OnConnectedToMaster()
+    {
+        PhotonNetwork.JoinLobby();
+    }
+
+    public override void OnJoinedLobby()
+    {
+        SceneManager.LoadScene("LobbyTest");
     }
 
     [PunRPC]

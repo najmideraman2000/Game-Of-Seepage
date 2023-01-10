@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using System;
 using System.Linq;
 using Photon.Realtime;
+using UnityEngine.SceneManagement;
 
 public class JoinTest : MonoBehaviourPunCallbacks
 {
@@ -66,5 +67,11 @@ public class JoinTest : MonoBehaviourPunCallbacks
             newRoom.SetRoomName(room.Name);
             roomItemsList.Add(newRoom);
         }
+    }
+
+    public void BackToMenu()
+    {
+        PhotonNetwork.Disconnect();
+        SceneManager.LoadScene("MainMenu");
     }
 }
