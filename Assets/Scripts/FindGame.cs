@@ -19,15 +19,29 @@ public class FindGame : MonoBehaviourPunCallbacks
     {
         choiceCanvas.SetActive(false);
         findCanvas.SetActive(true);
-        Hashtable expectedCustomRoomProperties = new Hashtable {
-            {"role", selectedRole.text},
-            {"time", selectedTime.text},
-            {"mode", selectedMode.text}
-        };
+        Hashtable expectedCustomRoomProperties = new Hashtable{};
+        if (selectedRole.text == "Defender") 
+        {
+            GameController.player = 0;
+            expectedCustomRoomProperties.Add("role", "Attacker");
+        }
+        else if (selectedRole.text == "Attacker") 
+        {
+            GameController.player = 1;
+            expectedCustomRoomProperties.Add("role", "Defender");
+        }
+        expectedCustomRoomProperties.Add("time", selectedTime.text);
+        expectedCustomRoomProperties.Add("mode", selectedMode.text);
+
         PhotonNetwork.JoinRandomRoom(expectedCustomRoomProperties, 2);
     }
 
     public override void OnJoinRandomFailed(short returnCode, string message)
+    {
+        makeRoom();
+    }
+
+    public void makeRoom()
     {
         RoomOptions roomOptions =  new RoomOptions()
         {
@@ -50,7 +64,7 @@ public class FindGame : MonoBehaviourPunCallbacks
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
-        if (PhotonNetwork.CurrentRoom.PlayerCount == 2  && PhotonNetwork.IsMasterClient)
+        if (PhotonNetwork.CurrentRoom.PlayerCount == 2 && PhotonNetwork.IsMasterClient)
         {
             PhotonNetwork.LoadLevel("GameNormalMulti");
         }
