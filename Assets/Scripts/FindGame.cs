@@ -66,7 +66,14 @@ public class FindGame : MonoBehaviourPunCallbacks
     {
         if (PhotonNetwork.CurrentRoom.PlayerCount == 2 && PhotonNetwork.IsMasterClient)
         {
-            PhotonNetwork.LoadLevel("GameNormalMulti");
+            if (PhotonNetwork.CurrentRoom.CustomProperties["mode"].ToString() == "Normal")
+            {
+                PhotonNetwork.LoadLevel("GameNormalMulti");
+            }
+            else if (PhotonNetwork.CurrentRoom.CustomProperties["mode"].ToString() == "Ability")
+            {
+                PhotonNetwork.LoadLevel("GameAbilityMulti");
+            }
         }
     }
 }
