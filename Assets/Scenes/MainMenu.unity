@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 20400580}
   - component: {fileID: 20400579}
   m_Layer: 5
-  m_Name: Text (Legacy)
+  m_Name: GameTitle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -299,7 +299,7 @@ GameObject:
   - component: {fileID: 886565213}
   - component: {fileID: 886565212}
   m_Layer: 5
-  m_Name: Text (Legacy)
+  m_Name: ButtonText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -378,7 +378,7 @@ GameObject:
   - component: {fileID: 1080354534}
   - component: {fileID: 1080354533}
   m_Layer: 0
-  m_Name: Main Menu Controller
+  m_Name: MainMenuController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -497,7 +497,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1080354533}
         m_TargetAssemblyTypeName: MainMenuController, Assembly-CSharp
-        m_MethodName: playMultiplayerGame
+        m_MethodName: PlayGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
