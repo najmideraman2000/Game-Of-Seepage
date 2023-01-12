@@ -155,3 +155,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8152e1ce87c1084d980730bb9af0d6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  key: 0
+  state: 0
+  parentNodes: 
+  childNodes: 
+  lastLayer: 0

@@ -20,15 +20,31 @@ public class FindGame : MonoBehaviourPunCallbacks
         choiceCanvas.SetActive(false);
         findCanvas.SetActive(true);
         Hashtable expectedCustomRoomProperties = new Hashtable{};
-        if (selectedRole.text == "Defender") 
+        if (selectedMode.text == "Normal")
         {
-            GameController.player = 0;
-            expectedCustomRoomProperties.Add("role", "Attacker");
+            if (selectedRole.text == "Defender") 
+            {
+                GameController.player = 0;
+                expectedCustomRoomProperties.Add("role", "Attacker");
+            }
+            else if (selectedRole.text == "Attacker") 
+            {
+                GameController.player = 1;
+                expectedCustomRoomProperties.Add("role", "Defender");
+            }
         }
-        else if (selectedRole.text == "Attacker") 
+        else if (selectedMode.text == "Ability")
         {
-            GameController.player = 1;
-            expectedCustomRoomProperties.Add("role", "Defender");
+            if (selectedRole.text == "Defender") 
+            {
+                GameControllerAbility.player = 0;
+                expectedCustomRoomProperties.Add("role", "Attacker");
+            }
+            else if (selectedRole.text == "Attacker") 
+            {
+                GameControllerAbility.player = 1;
+                expectedCustomRoomProperties.Add("role", "Defender");
+            }
         }
         expectedCustomRoomProperties.Add("time", selectedTime.text);
         expectedCustomRoomProperties.Add("mode", selectedMode.text);

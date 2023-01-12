@@ -11,6 +11,8 @@ public class GameControllerAbility : MonoBehaviourPunCallbacks
     public static bool gameOver = false;
 
     public static bool abilityChoosed = false;
+    public static bool firstNodeChoosed = false;
+    public static int firstKey;
 
     public void leaveGame()
     {

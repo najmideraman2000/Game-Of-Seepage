@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/GameNormalMulti.unity
     guid: cf898988351eabc4fa8a667be23665ee
+  - enabled: 1
+    path: Assets/Scenes/GameAbilityMulti.unity
+    guid: 397f8139922453041b37c9b68a0cb0fc
   m_configObjects: {}
