@@ -15,7 +15,7 @@ public class GameControllerAbility : MonoBehaviourPunCallbacks
     public static bool firstNodeChoosed = false;
     public static int firstKey;
     public static bool matchStart = false;
-    public double gameTime = 100;
+    public static double gameTime = 100;
     private double defenderTimeRemain = 100;
     private double attackerTimeRemain = 100;
     static double startTime;

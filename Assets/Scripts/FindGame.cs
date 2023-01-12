@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
@@ -15,13 +13,15 @@ public class FindGame : MonoBehaviourPunCallbacks
     public GameObject choiceCanvas;
     public GameObject findCanvas;
 
-    public void joinRoom()
+    public void JoinRoom()
     {
         choiceCanvas.SetActive(false);
         findCanvas.SetActive(true);
         Hashtable expectedCustomRoomProperties = new Hashtable{};
+        int gameTime = (selectedTime.text[0] - '0') * 60;
         if (selectedMode.text == "Normal")
         {
+            GameController.gameTime = gameTime;
             if (selectedRole.text == "Defender") 
             {
                 GameController.player = 0;
@@ -35,6 +35,7 @@ public class FindGame : MonoBehaviourPunCallbacks
         }
         else if (selectedMode.text == "Ability")
         {
+            GameControllerAbility.gameTime = gameTime;
             if (selectedRole.text == "Defender") 
             {
                 GameControllerAbility.player = 0;
@@ -54,10 +55,10 @@ public class FindGame : MonoBehaviourPunCallbacks
 
     public override void OnJoinRandomFailed(short returnCode, string message)
     {
-        makeRoom();
+        MakeRoom();
     }
 
-    public void makeRoom()
+    private void MakeRoom()
     {
         RoomOptions roomOptions =  new RoomOptions()
         {
@@ -91,6 +92,30 @@ public class FindGame : MonoBehaviourPunCallbacks
                 PhotonNetwork.LoadLevel("GameAbilityMulti");
             }
         }
+    }
+
+    public void BackToMenu()
+    {
+        PhotonNetwork.Disconnect();
+        SceneManager.LoadScene("MainMenu");
+    }
+
+    public void CancelFindGame()
+    {
+        if (PhotonNetwork.InRoom)
+        {
+            PhotonNetwork.LeaveRoom();
+        }
+        else
+        {
+            findCanvas.SetActive(false);
+            choiceCanvas.SetActive(true);
+        }
+    }
+
+    public override void OnLeftRoom()
+    {
+        SceneManager.LoadScene("ConnectServer");
     }
 
     // public override void OnJoinedRoom()
