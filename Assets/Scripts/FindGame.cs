@@ -19,7 +19,7 @@ public class FindGame : MonoBehaviourPunCallbacks
         findCanvas.SetActive(true);
         Hashtable expectedCustomRoomProperties = new Hashtable{};
         int gameTime = (selectedTime.text[0] - '0') * 60;
-        if (selectedMode.text == "Normal")
+        if (selectedMode.text == "Standard")
         {
             GameController.gameTime = gameTime;
             if (selectedRole.text == "Defender") 
@@ -83,9 +83,9 @@ public class FindGame : MonoBehaviourPunCallbacks
     {
         if (PhotonNetwork.CurrentRoom.PlayerCount == 2 && PhotonNetwork.IsMasterClient)
         {
-            if (PhotonNetwork.CurrentRoom.CustomProperties["mode"].ToString() == "Normal")
+            if (PhotonNetwork.CurrentRoom.CustomProperties["mode"].ToString() == "Standard")
             {
-                PhotonNetwork.LoadLevel("GameNormalMulti");
+                PhotonNetwork.LoadLevel("GameStandardMulti");
             }
             else if (PhotonNetwork.CurrentRoom.CustomProperties["mode"].ToString() == "Ability")
             {
