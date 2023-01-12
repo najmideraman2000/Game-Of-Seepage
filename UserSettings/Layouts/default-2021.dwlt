@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 1536
     height: 820.8
   m_ShowMode: 4
-  m_Title: Game
+  m_Title: Scene
   m_RootView: {fileID: 6}
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
@@ -48,7 +48,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 200}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 16
+  controlID: 84
 --- !u!114 &3
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -68,8 +68,8 @@ MonoBehaviour:
     y: 0
     width: 444.80005
     height: 770.8
-  m_MinSize: {x: 275, y: 50}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 276, y: 71}
+  m_MaxSize: {x: 4001, y: 4021}
   m_ActualView: {fileID: 13}
   m_Panes:
   - {fileID: 13}
@@ -111,7 +111,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 1
   m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: ProjectBrowser
+  m_Name: ConsoleWindow
   m_EditorClassIdentifier: 
   m_Children: []
   m_Position:
@@ -120,14 +120,14 @@ MonoBehaviour:
     y: 455.2
     width: 1091.2
     height: 315.59998
-  m_MinSize: {x: 231, y: 271}
-  m_MaxSize: {x: 10001, y: 10021}
-  m_ActualView: {fileID: 12}
+  m_MinSize: {x: 101, y: 121}
+  m_MaxSize: {x: 4001, y: 4021}
+  m_ActualView: {fileID: 17}
   m_Panes:
   - {fileID: 12}
   - {fileID: 17}
-  m_Selected: 0
-  m_LastSelected: 1
+  m_Selected: 1
+  m_LastSelected: 0
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -223,7 +223,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 200}
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 1
-  controlID: 17
+  controlID: 89
 --- !u!114 &10
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -248,7 +248,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 18
+  controlID: 90
 --- !u!114 &11
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -335,18 +335,18 @@ MonoBehaviour:
     m_ExpandedIDs: 0000000090630000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: 
-      m_OriginalName: 
+      m_Name: Resources
+      m_OriginalName: Resources
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 0
         height: 0
-      m_UserData: 0
+      m_UserData: 25504
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
-      m_OriginalEventType: 11
+      m_OriginalEventType: 0
       m_IsRenamingFilename: 1
       m_ClientGUIView: {fileID: 5}
     m_SearchString: 
@@ -490,7 +490,7 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: 38edffff7cedffff38f0ffff48f0ffff4ef0ffff52f0ffff5af5ffff9ef5ffff5af8ffff6af8ffff70f8ffff74f8ffffe6f8ffff00faffff26fbffff
+      m_ExpandedIDs: e014ffff2415ffffe017ffffea17fffffa17ffff0018ffff0418ffffcc37ffff1038ffffcc3affffd63affffe63affffec3afffff03affff603fffffa43fffff6042ffff6a42ffff7a42ffff8042ffff8442ffff3447ffff7847ffff344affff3e4affff4e4affff544affff584affff9251ffffd651ffff9254ffff9c54ffffac54ffffb254ffffb654ffff6457ffffa857ffff645affff6e5affff7e5affff845affff885afffffa5bffffc86cffff7470ffffb870ffff7473ffff7e73ffff8e73ffff9473ffff9873ffffee76ffff3277ffffea79fffff279ffff027affff087affff0c7afffffa8dffff3e8efffffa90ffff0491ffff1491ffff1a91ffff1e91ffff64a1ffffa8a1ffff64a4ffff6ea4ffff7ea4ffff84a4ffff88a4ffffeca4ffff80a5ffffdaa5ffff38a6ffff76a6ffffe6afffff2ab0ffffe6b2fffff0b2ffff00b3ffff06b3ffff0ab3ffff66bfffffaabfffff66c2ffff70c2ffff80c2ffff86c2ffff8ac2ffff9cc3ffff12c7ffff10c8ffff92d1ffffd6d1ffff92d4ffff9cd4ffffacd4ffffb2d4ffffb6d4ffff8ed8ffffd2d8ffff94dbffffa4dbffffaadbffffaedbffff90dfffffd4dfffff96e2ffffa6e2fffface2ffffb0e2ffff54e4ffffe6edffffdcf8fffff2f9ffff26fbffff8664000090640000d481000084a30000a0ea0000a0100100
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -547,8 +547,8 @@ MonoBehaviour:
       floating: 0
       collapsed: 0
       displayed: 1
-      snapOffset: {x: 0, y: 0}
-      snapOffsetDelta: {x: -100, y: -25.600006}
+      snapOffset: {x: -101, y: -26}
+      snapOffsetDelta: {x: 0, y: 0}
       snapCorner: 3
       id: Tool Settings
       index: 0
@@ -761,9 +761,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 1.0244051, y: -0.09640746, z: -10.006259}
+    m_Target: {x: 0.20691052, y: -0.60186785, z: -10.003399}
     speed: 2
-    m_Value: {x: 1.0244051, y: -0.09640746, z: -10.006259}
+    m_Value: {x: 0.20691052, y: -0.60186785, z: -10.003399}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -814,9 +814,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 6.3296323
+    m_Target: 6.390119
     speed: 2
-    m_Value: 6.3296323
+    m_Value: 6.390119
   m_Ortho:
     m_Target: 1
     speed: 2
