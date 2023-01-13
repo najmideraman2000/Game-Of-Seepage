@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using Photon.Pun;
+using Photon.Realtime;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 
@@ -23,7 +24,7 @@ public class GameController : MonoBehaviourPunCallbacks
     public Text resultText;
     public GameObject canvasGameOver;
 
-    void Start()
+    private void Start()
     {
         defenderTimeRemain = gameTime;
         attackerTimeRemain = gameTime;
@@ -40,7 +41,7 @@ public class GameController : MonoBehaviourPunCallbacks
         }
     }
 
-    void Update()
+    private void Update()
     {
         if (gameOver)
         {
@@ -57,14 +58,8 @@ public class GameController : MonoBehaviourPunCallbacks
             if (defenderTimeRemain <= 0)
             {
                 turnText.text = "ATTACKER WIN";
-                if (player == 0)
-                {
-                    resultText.text = "YOU LOSE";
-                }
-                else
-                {
-                    resultText.text = "YOU WIN";
-                }
+                if (player == 0) resultText.text = "YOU LOSE";
+                else if (player == 1) resultText.text = "YOU WIN";
                 gameOver = true;
                 matchStart = false;
             }
@@ -76,21 +71,15 @@ public class GameController : MonoBehaviourPunCallbacks
             if (attackerTimeRemain <= 0)
             {
                 turnText.text = "DEFENDER WIN";
-                if (player == 0)
-                {
-                    resultText.text = "YOU WIN";
-                }
-                else
-                {
-                    resultText.text = "YOU LOSE";
-                }
+                if (player == 0) resultText.text = "YOU WIN";
+                else if (player == 1) resultText.text = "YOU LOSE";
                 gameOver = true;
                 matchStart = false;
             }
         }
     }
 
-    public void UpdateTurnRoleText()
+    private void UpdateTurnRoleText()
     {
         if (player == 0)
         {
@@ -120,7 +109,7 @@ public class GameController : MonoBehaviourPunCallbacks
         }
     }
 
-    public void UpdateTimeDefenderUI()
+    private void UpdateTimeDefenderUI()
     {
         string minute = ((int) (defenderTimeRemain / 60)).ToString("00");
         string second = ((int) (defenderTimeRemain % 60)).ToString("00");
@@ -128,7 +117,7 @@ public class GameController : MonoBehaviourPunCallbacks
         defenderTimeText.text = timeText;
     }
 
-    public void UpdateTimeAttackerUI()
+    private void UpdateTimeAttackerUI()
     {
         string minute = ((int) (attackerTimeRemain / 60)).ToString("00");
         string second = ((int) (attackerTimeRemain % 60)).ToString("00");
@@ -147,7 +136,7 @@ public class GameController : MonoBehaviourPunCallbacks
         SceneManager.LoadScene("ConnectServer");
     }
 
-    public void ResetGame()
+    private void ResetGame()
     {
         GraphSpawnerMulti.nodesDict = new Dictionary<int, int>{};
         currentPlayer = 0;
@@ -156,17 +145,21 @@ public class GameController : MonoBehaviourPunCallbacks
     public void BackToMenu()
     {
         PhotonNetwork.Disconnect();
+    }
+
+    public override void OnDisconnected(DisconnectCause cause)
+    {
         SceneManager.LoadScene("MainMenu");
     }
 
     [PunRPC]
-    public void UpdateStartTime(double startTime)
+    private void UpdateStartTime(double startTime)
     {
         GameController.startTime = startTime;
     }
 
     [PunRPC]
-    public void UpdateMatchStart(bool state)
+    private void UpdateMatchStart(bool state)
     {
         GameController.matchStart = state;
     }
