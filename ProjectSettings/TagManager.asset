@@ -10,6 +10,7 @@ TagManager:
   - RoleChoiceText
   - TimeChoiceText
   - ModeChoiceText
+  - ResultText
   layers:
   - Default
   - TransparentFX
@@ -52,4 +53,7 @@ TagManager:
     locked: 0
   - name: Layer2
     uniqueID: 3082992137
+    locked: 0
+  - name: Layer3
+    uniqueID: 1203140967
     locked: 0

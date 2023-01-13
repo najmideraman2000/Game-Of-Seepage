@@ -16,14 +16,13 @@ public class GraphSpawnerMulti : MonoBehaviour
     private GameObject edgeInstance;
     public static Dictionary<int, int> nodesDict = new Dictionary<int, int>{};
 
-    // Start is called before the first frame update
     void Start()
     {
         if (PhotonNetwork.IsMasterClient)
         {
             System.Random rand = new System.Random();
             int randint = rand.Next(0, GraphCollections.graphCollections.Count);
-            List<List<List<int>>> randomGraph = GraphCollections.graphCollections[4];
+            List<List<List<int>>> randomGraph = GraphCollections.graphCollections[5];
             List<List<int>> x = randomGraph[0];
             List<List<int>> y = randomGraph[1];
             SpawnGraph(x, y);

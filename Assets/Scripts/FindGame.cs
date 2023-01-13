@@ -21,7 +21,7 @@ public class FindGame : MonoBehaviourPunCallbacks
         int gameTime = (selectedTime.text[0] - '0') * 60;
         if (selectedMode.text == "Standard")
         {
-            GameController.gameTime = gameTime;
+            // GameController.gameTime = gameTime;
             if (selectedRole.text == "Defender") 
             {
                 GameController.player = 0;
@@ -118,8 +118,8 @@ public class FindGame : MonoBehaviourPunCallbacks
         SceneManager.LoadScene("ConnectServer");
     }
 
-    // public override void OnJoinedRoom()
-    // {
-    //     PhotonNetwork.LoadLevel("GameAbilityMulti");
-    // }
+    public override void OnJoinedRoom()
+    {
+        PhotonNetwork.LoadLevel("GameStandardMulti");
+    }
 }

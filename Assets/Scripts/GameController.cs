@@ -1,9 +1,8 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using Photon.Pun;
 using UnityEngine.SceneManagement;
+using Photon.Pun;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 
@@ -13,12 +12,16 @@ public class GameController : MonoBehaviourPunCallbacks
     public static int currentPlayer = 0;
     public static bool gameOver = false;
     public static bool matchStart = false;
-    public static double gameTime = 100;
-    private double defenderTimeRemain = 100;
-    private double attackerTimeRemain = 100;
-    static double startTime;
+    public static double gameTime = 10;
+    private static double startTime;
+    private double defenderTimeRemain;
+    private double attackerTimeRemain;
+    public Text turnText;
+    public Text roleText;
     public Text defenderTimeText;
     public Text attackerTimeText;
+    public Text resultText;
+    public GameObject canvasGameOver;
 
     void Start()
     {
@@ -31,107 +34,140 @@ public class GameController : MonoBehaviourPunCallbacks
         attackerTimeText.text = timeText;
         if (PhotonNetwork.IsMasterClient)
         {
-            startTime = PhotonNetwork.Time;
-            // PhotonNetwork.CurrentRoom.CustomProperties.Add("startTime", startTime);
-            // startTime = double.Parse(PhotonNetwork.CurrentRoom.CustomProperties["startTime"].ToString());
             PhotonView photonView = GetComponent<PhotonView>();
-            photonView.RPC("UpdateStartTime", RpcTarget.All, startTime);
+            photonView.RPC("UpdateStartTime", RpcTarget.All, PhotonNetwork.Time);
             photonView.RPC("UpdateMatchStart", RpcTarget.All, true);
-            matchStart = true;
         }
-        // else
-        // {
-        //     startTime = double.Parse(PhotonNetwork.CurrentRoom.CustomProperties["startTime"].ToString());
-        //     matchStart = true;
-        // }
     }
 
     void Update()
     {
+        if (gameOver)
+        {
+            canvasGameOver.SetActive(true);
+            gameOver = false;
+            return;
+        }
         if (!matchStart) return;
+        UpdateTurnRoleText();
         if (currentPlayer == 0)
         {
-            // continue defender timer
-            defenderTimeRemain = 200 - attackerTimeRemain - (PhotonNetwork.Time - startTime);
-            updateTimeDefenderUI();
+            defenderTimeRemain = (2 * gameTime) - attackerTimeRemain - (PhotonNetwork.Time - startTime);
+            UpdateTimeDefenderUI();
             if (defenderTimeRemain <= 0)
             {
-                // gameOver
-                PhotonView photonView = GetComponent<PhotonView>();
-                photonView.RPC("UpdateGameOver", RpcTarget.All);
-                photonView.RPC("UpdateMatchStart", RpcTarget.All, false);
+                turnText.text = "ATTACKER WIN";
+                if (player == 0)
+                {
+                    resultText.text = "YOU LOSE";
+                }
+                else
+                {
+                    resultText.text = "YOU WIN";
+                }
+                gameOver = true;
+                matchStart = false;
             }
         }
         else if (currentPlayer == 1)
         {
-            // continue attacker timer
-            attackerTimeRemain = 200 - defenderTimeRemain - (PhotonNetwork.Time - startTime);
-            updateTimeAttackerUI();
+            attackerTimeRemain = (2 * gameTime) - defenderTimeRemain - (PhotonNetwork.Time - startTime);
+            UpdateTimeAttackerUI();
             if (attackerTimeRemain <= 0)
             {
-                // gameOver
-                PhotonView photonView = GetComponent<PhotonView>();
-                photonView.RPC("UpdateGameOver", RpcTarget.All);
-                photonView.RPC("UpdateMatchStart", RpcTarget.All, false);
+                turnText.text = "DEFENDER WIN";
+                if (player == 0)
+                {
+                    resultText.text = "YOU WIN";
+                }
+                else
+                {
+                    resultText.text = "YOU LOSE";
+                }
+                gameOver = true;
+                matchStart = false;
             }
         }
     }
 
-    public void updateTimeDefenderUI()
+    public void UpdateTurnRoleText()
     {
-        // Debug.Log(defenderTimeRemain);
+        if (player == 0)
+        {
+            if (currentPlayer == 0)
+            {
+                turnText.text = "YOUR TURN";
+                roleText.text = "(DEFENDER)";
+            }
+            else if (currentPlayer == 1)
+            {
+                turnText.text = "OPPONENT'S TURN";
+                roleText.text = "(ATTACKER)";
+            }
+        }
+        if (player == 1)
+        {
+            if (currentPlayer == 0)
+            {
+                turnText.text = "OPPONENT'S TURN";
+                roleText.text = "(DEFENDER)";
+            }
+            else if (currentPlayer == 1)
+            {
+                turnText.text ="YOUR TURN";
+                roleText.text = "(ATTACKER)";
+            }
+        }
+    }
+
+    public void UpdateTimeDefenderUI()
+    {
         string minute = ((int) (defenderTimeRemain / 60)).ToString("00");
         string second = ((int) (defenderTimeRemain % 60)).ToString("00");
         string timeText = minute + " : " + second;
         defenderTimeText.text = timeText;
     }
 
-    public void updateTimeAttackerUI()
+    public void UpdateTimeAttackerUI()
     {
-        // Debug.Log(attackerTimeRemain);
         string minute = ((int) (attackerTimeRemain / 60)).ToString("00");
         string second = ((int) (attackerTimeRemain % 60)).ToString("00");
         string timeText = minute + " : " + second;
         attackerTimeText.text = timeText;
     }
 
-    public void leaveGame()
+    public void LeaveGame()
     {
         PhotonNetwork.LeaveRoom();
     }
 
     public override void OnLeftRoom()
     {
-        resetGame();
-        PhotonNetwork.ConnectUsingSettings();
+        ResetGame();
+        SceneManager.LoadScene("ConnectServer");
     }
 
-    public void resetGame()
+    public void ResetGame()
     {
         GraphSpawnerMulti.nodesDict = new Dictionary<int, int>{};
         currentPlayer = 0;
     }
 
-    public override void OnConnectedToMaster()
+    public void BackToMenu()
     {
-        SceneManager.LoadScene("FindGame");
-    }
-
-    [PunRPC]
-    public void UpdateGameOver()
-    {
-        GameController.gameOver = true;
-    }
-
-    [PunRPC]
-    public void UpdateMatchStart(bool state)
-    {
-        GameController.matchStart = state;
+        PhotonNetwork.Disconnect();
+        SceneManager.LoadScene("MainMenu");
     }
 
     [PunRPC]
     public void UpdateStartTime(double startTime)
     {
         GameController.startTime = startTime;
+    }
+
+    [PunRPC]
+    public void UpdateMatchStart(bool state)
+    {
+        GameController.matchStart = state;
     }
 }
