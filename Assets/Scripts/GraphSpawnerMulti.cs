@@ -5,10 +5,6 @@ using Photon.Pun;
 
 public class GraphSpawnerMulti : MonoBehaviour
 {
-    [SerializeField]
-    private GameObject nodeReference;
-    [SerializeField]
-    private GameObject edgeReference;
     private GameObject nodeInstance;
     private GameObject edgeInstance;
     public static Dictionary<int, int> nodesDict = new Dictionary<int, int>{};

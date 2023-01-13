@@ -30,8 +30,7 @@ public class Node : MonoBehaviour
                     photonView.RPC("UpdateText", RpcTarget.All, "Text", "DEFENDER WIN");
                     photonView.RPC("UpdateGameOver", RpcTarget.All, true);
                     photonView.RPC("UpdateMatchStart", RpcTarget.All, false);
-                    if (GameController.player == 0) photonView.RPC("UpdateText", RpcTarget.All, "ResultText", "YOU WIN");
-                    else if (GameController.player == 1) photonView.RPC("UpdateText", RpcTarget.All, "ResultText", "YOU LOSE");
+                    GameController.winGame = true;
                 }
             }
         }
@@ -50,8 +49,7 @@ public class Node : MonoBehaviour
                             photonView.RPC("UpdateText", RpcTarget.All, "Text", "ATTACKER WIN");
                             photonView.RPC("UpdateGameOver", RpcTarget.All, true);
                             photonView.RPC("UpdateMatchStart", RpcTarget.All, false);
-                            if (GameController.player == 0) photonView.RPC("UpdateText", RpcTarget.All, "ResultText", "YOU LOSE");
-                            else if (GameController.player == 1) photonView.RPC("UpdateText", RpcTarget.All, "ResultText", "YOU WIN");
+                            GameController.winGame = true;
                         }
                         break;
                     }

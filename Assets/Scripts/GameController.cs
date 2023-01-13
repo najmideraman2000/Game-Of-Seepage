@@ -4,8 +4,6 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using Photon.Pun;
 using Photon.Realtime;
-using Hashtable = ExitGames.Client.Photon.Hashtable;
-
 
 public class GameController : MonoBehaviourPunCallbacks
 {
@@ -15,6 +13,7 @@ public class GameController : MonoBehaviourPunCallbacks
     public static bool matchStart = false;
     public static double gameTime = 10;
     private static double startTime;
+    public static bool winGame = false;
     private double defenderTimeRemain;
     private double attackerTimeRemain;
     public Text turnText;
@@ -28,8 +27,8 @@ public class GameController : MonoBehaviourPunCallbacks
     {
         defenderTimeRemain = gameTime;
         attackerTimeRemain = gameTime;
-        string minute = ((int) (gameTime / 60)).ToString();
-        string second = ((int) (gameTime % 60)).ToString();
+        string minute = ((int) (gameTime / 60)).ToString("00");
+        string second = ((int) (gameTime % 60)).ToString("00");
         string timeText = minute + " : " + second;
         defenderTimeText.text = timeText;
         attackerTimeText.text = timeText;
@@ -45,6 +44,7 @@ public class GameController : MonoBehaviourPunCallbacks
     {
         if (gameOver)
         {
+            if (winGame) resultText.text = "YOU WIN";
             canvasGameOver.SetActive(true);
             gameOver = false;
             return;
@@ -58,8 +58,7 @@ public class GameController : MonoBehaviourPunCallbacks
             if (defenderTimeRemain <= 0)
             {
                 turnText.text = "ATTACKER WIN";
-                if (player == 0) resultText.text = "YOU LOSE";
-                else if (player == 1) resultText.text = "YOU WIN";
+                if (player == 1) winGame = true;
                 gameOver = true;
                 matchStart = false;
             }
@@ -71,8 +70,7 @@ public class GameController : MonoBehaviourPunCallbacks
             if (attackerTimeRemain <= 0)
             {
                 turnText.text = "DEFENDER WIN";
-                if (player == 0) resultText.text = "YOU WIN";
-                else if (player == 1) resultText.text = "YOU LOSE";
+                if (player == 0) winGame = true;
                 gameOver = true;
                 matchStart = false;
             }
@@ -140,6 +138,7 @@ public class GameController : MonoBehaviourPunCallbacks
     {
         GraphSpawnerMulti.nodesDict = new Dictionary<int, int>{};
         currentPlayer = 0;
+        winGame = false;
     }
 
     public void BackToMenu()

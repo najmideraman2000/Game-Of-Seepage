@@ -1154,7 +1154,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: YOU WIN
+  m_Text: YOU LOSE
 --- !u!222 &1395602825
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1658,8 +1658,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dac2966c618ec25488832ad461fd4a82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nodeReference: {fileID: 4845116992827162929, guid: 9d7f4f594061ee342864f38c63974de7, type: 3}
-  edgeReference: {fileID: 5611774033209376707, guid: ae1fa0b39f629a14bbbb9766b0f5a3e1, type: 3}
 --- !u!114 &1828849060
 MonoBehaviour:
   m_ObjectHideFlags: 0
