@@ -11,6 +11,7 @@ public class GameControllerAbility : MonoBehaviourPunCallbacks
     public static int currentPlayer = 0;
     public static bool abilityChoosed = false;
     public static bool firstNodeChoosed = false;
+    public static bool abilityDone = false;
     public static int firstKey;
     public static bool gameOver = false;
     public static bool matchStart = false;
@@ -146,6 +147,8 @@ public class GameControllerAbility : MonoBehaviourPunCallbacks
     {
         GraphSpawnerAbility.nodesDict = new Dictionary<int, int>{};
         currentPlayer = 0;
+        winGame = false;
+        abilityDone = false;
     }
 
     public void BackToMenu()

@@ -21,11 +21,12 @@ public class NodeAbility : MonoBehaviour
         int viewID = photonView.ViewID;
         if (!GameControllerAbility.gameOver && GameControllerAbility.player == 0 && GameControllerAbility.currentPlayer == 0) // if defender
         {
-            if (GameControllerAbility.abilityChoosed)
+            if (GameControllerAbility.abilityChoosed && !GameControllerAbility.abilityDone)
             {
                 photonView.RPC("UpdateNodeColorBlue", RpcTarget.All, viewID);
                 photonView.RPC("UpdateNodeState", RpcTarget.All, viewID, 3);
                 GameControllerAbility.abilityChoosed = false;
+                GameControllerAbility.abilityDone = true;
             }
             else
             {
@@ -46,7 +47,7 @@ public class NodeAbility : MonoBehaviour
         }
         else if (!GameControllerAbility.gameOver && GameControllerAbility.player == 1 && GameControllerAbility.currentPlayer == 1) // if attacker
         {
-            if (GameControllerAbility.abilityChoosed)
+            if (GameControllerAbility.abilityChoosed && !GameControllerAbility.abilityDone)
             {
                 if (GameControllerAbility.firstNodeChoosed)
                 {
@@ -59,6 +60,7 @@ public class NodeAbility : MonoBehaviour
                     photonView.RPC("UpdateNodeParentNodes", RpcTarget.AllBuffered, secondNodeID, GameControllerAbility.firstKey);
                     GameControllerAbility.abilityChoosed = false;
                     GameControllerAbility.firstNodeChoosed = false;
+                    GameControllerAbility.abilityDone = true;
 
                 }
                 else
