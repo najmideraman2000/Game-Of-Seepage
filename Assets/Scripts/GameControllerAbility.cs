@@ -20,6 +20,9 @@ public class GameControllerAbility : MonoBehaviourPunCallbacks
     public static bool winGame = false;
     private double defenderTimeRemain;
     private double attackerTimeRemain;
+    public GameObject abilityButton;
+    public Sprite defenderAbilityImage;
+    public Sprite attackerAbilityImage;
     public Text turnText;
     public Text roleText;
     public Text defenderTimeText;
@@ -30,6 +33,8 @@ public class GameControllerAbility : MonoBehaviourPunCallbacks
 
     private void Start()
     {
+        if (player == 0) abilityButton.GetComponent<Image>().sprite = defenderAbilityImage;
+        else if (player == 1) abilityButton.GetComponent<Image>().sprite = attackerAbilityImage;
         defenderTimeRemain = gameTime;
         attackerTimeRemain = gameTime;
         string minute = ((int) (gameTime / 60)).ToString("00");
@@ -131,6 +136,7 @@ public class GameControllerAbility : MonoBehaviourPunCallbacks
     public void UseAbility()
     {
         abilityChoosed = true;
+        abilityButton.GetComponent<Button>().interactable = false;
     }
 
     public void OpenSetting()
