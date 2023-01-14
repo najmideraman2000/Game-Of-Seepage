@@ -149,6 +149,8 @@ public class GameController : MonoBehaviourPunCallbacks
     {
         GraphSpawnerMulti.nodesDict = new Dictionary<int, int>{};
         currentPlayer = 0;
+        gameOver = false;
+        matchStart = false;
         winGame = false;
     }
 

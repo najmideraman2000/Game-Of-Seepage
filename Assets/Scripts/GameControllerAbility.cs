@@ -158,8 +158,12 @@ public class GameControllerAbility : MonoBehaviourPunCallbacks
     {
         GraphSpawnerAbility.nodesDict = new Dictionary<int, int>{};
         currentPlayer = 0;
-        winGame = false;
+        abilityChoosed = false;
+        firstNodeChoosed = false;
         abilityDone = false;
+        gameOver = false;
+        matchStart = false;
+        winGame = false;
     }
 
     public void BackToMenu()
