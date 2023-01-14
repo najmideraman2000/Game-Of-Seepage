@@ -11,7 +11,7 @@ public class GameController : MonoBehaviourPunCallbacks
     public static int currentPlayer = 0;
     public static bool gameOver = false;
     public static bool matchStart = false;
-    public static double gameTime = 10;
+    public static double gameTime = 180;
     private static double startTime;
     public static bool winGame = false;
     private double defenderTimeRemain;
@@ -21,6 +21,7 @@ public class GameController : MonoBehaviourPunCallbacks
     public Text defenderTimeText;
     public Text attackerTimeText;
     public Text resultText;
+    public GameObject canvasSetting;
     public GameObject canvasGameOver;
 
     private void Start()
@@ -121,6 +122,16 @@ public class GameController : MonoBehaviourPunCallbacks
         string second = ((int) (attackerTimeRemain % 60)).ToString("00");
         string timeText = minute + " : " + second;
         attackerTimeText.text = timeText;
+    }
+
+    public void OpenSetting()
+    {
+        canvasSetting.SetActive(true);
+    }
+
+    public void CloseSetting()
+    {
+        canvasSetting.SetActive(false);
     }
 
     public void LeaveGame()

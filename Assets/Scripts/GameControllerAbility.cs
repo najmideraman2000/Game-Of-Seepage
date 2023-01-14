@@ -15,7 +15,7 @@ public class GameControllerAbility : MonoBehaviourPunCallbacks
     public static int firstKey;
     public static bool gameOver = false;
     public static bool matchStart = false;
-    public static double gameTime = 10;
+    public static double gameTime = 180;
     private static double startTime;
     public static bool winGame = false;
     private double defenderTimeRemain;
@@ -25,6 +25,7 @@ public class GameControllerAbility : MonoBehaviourPunCallbacks
     public Text defenderTimeText;
     public Text attackerTimeText;
     public Text resultText;
+    public GameObject canvasSetting;
     public GameObject canvasGameOver;
 
     private void Start()
@@ -130,6 +131,16 @@ public class GameControllerAbility : MonoBehaviourPunCallbacks
     public void UseAbility()
     {
         abilityChoosed = true;
+    }
+
+    public void OpenSetting()
+    {
+        canvasSetting.SetActive(true);
+    }
+
+    public void CloseSetting()
+    {
+        canvasSetting.SetActive(false);
     }
 
     public void LeaveGame()

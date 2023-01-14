@@ -11,6 +11,7 @@ public class NodeAbility : MonoBehaviour
     // 0: untouched
     // 1: defended
     // 2: attacked
+    // 4: frozen
     public int state;
     public List<int> parentNodes;
     public List<int> childNodes;
