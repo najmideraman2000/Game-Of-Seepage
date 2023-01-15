@@ -207,7 +207,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2055556991}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: GameControllerAbility, Assembly-CSharp
         m_MethodName: LeaveGame
         m_Mode: 1
@@ -341,7 +341,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2055556991}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: GameControllerAbility, Assembly-CSharp
         m_MethodName: UseAbility
         m_Mode: 1
@@ -683,7 +683,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2055556991}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: GameControllerAbility, Assembly-CSharp
         m_MethodName: OpenSetting
         m_Mode: 1
@@ -1002,6 +1002,83 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 248490626}
   m_CullTransparentMesh: 1
+--- !u!1 &269423597
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 269423600}
+  - component: {fileID: 269423599}
+  - component: {fileID: 269423598}
+  m_Layer: 0
+  m_Name: GameController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &269423598
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 269423597}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a9a9404ae921854bb990b76a5148b0c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  abilityButton: {fileID: 125580336}
+  defenderAbilityImage: {fileID: 21300000, guid: de336869c6c68c140bd623f206009ad4, type: 3}
+  attackerAbilityImage: {fileID: 21300000, guid: af5c11ddb3c0f094c944be91a48f44f1, type: 3}
+  turnText: {fileID: 248490628}
+  roleText: {fileID: 563516725}
+  defenderTimeText: {fileID: 2045896861}
+  attackerTimeText: {fileID: 427367063}
+  resultText: {fileID: 1395602824}
+  canvasSetting: {fileID: 154588862}
+  canvasGameOver: {fileID: 144674258}
+--- !u!114 &269423599
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 269423597}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 3
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!4 &269423600
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 269423597}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.6288015, y: 0.5399515, z: -10.036529}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &412635925
 GameObject:
   m_ObjectHideFlags: 0
@@ -1086,7 +1163,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2055556991}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: GameControllerAbility, Assembly-CSharp
         m_MethodName: BackToMenu
         m_Mode: 1
@@ -1696,7 +1773,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2055556991}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: GameControllerAbility, Assembly-CSharp
         m_MethodName: CloseSetting
         m_Mode: 1
@@ -1910,7 +1987,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2055556991}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: GameControllerAbility, Assembly-CSharp
         m_MethodName: LeaveGame
         m_Mode: 1
@@ -2811,80 +2888,3 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: '00 : 00'
---- !u!1 &2055556987
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2055556989}
-  - component: {fileID: 2055556990}
-  - component: {fileID: 2055556991}
-  m_Layer: 0
-  m_Name: GameController
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2055556989
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2055556987}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.6288015, y: 0.5399515, z: -10.036529}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 6
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2055556990
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2055556987}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
-  Group: 0
-  prefixField: -1
-  Synchronization: 3
-  OwnershipTransfer: 0
-  observableSearch: 2
-  ObservedComponents: []
-  sceneViewId: 2
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
---- !u!114 &2055556991
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2055556987}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a9a9404ae921854bb990b76a5148b0c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  abilityButton: {fileID: 125580336}
-  defenderAbilityImage: {fileID: 21300000, guid: de336869c6c68c140bd623f206009ad4, type: 3}
-  attackerAbilityImage: {fileID: 21300000, guid: af5c11ddb3c0f094c944be91a48f44f1, type: 3}
-  turnText: {fileID: 248490628}
-  roleText: {fileID: 563516725}
-  defenderTimeText: {fileID: 2045896861}
-  attackerTimeText: {fileID: 427367063}
-  resultText: {fileID: 1395602824}
-  canvasSetting: {fileID: 154588862}
-  canvasGameOver: {fileID: 144674258}

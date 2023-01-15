@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
@@ -60,6 +61,8 @@ public class FindGame : MonoBehaviourPunCallbacks
 
     private void MakeRoom()
     {
+        System.Random rand = new System.Random();
+        int randint = rand.Next(0, GraphCollections.graphCollections.Count);
         RoomOptions roomOptions =  new RoomOptions()
         {
             IsVisible = true,
@@ -71,6 +74,7 @@ public class FindGame : MonoBehaviourPunCallbacks
         roomCustomProperties.Add("role", selectedRole.text);
         roomCustomProperties.Add("time", selectedTime.text);
         roomCustomProperties.Add("mode", selectedMode.text);
+        roomCustomProperties.Add("graph", randint);
         roomOptions.CustomRoomProperties = roomCustomProperties;
 
         string[] customPropsForLobby = {"role", "time", "mode"};

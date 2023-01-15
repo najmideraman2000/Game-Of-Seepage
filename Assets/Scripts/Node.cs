@@ -1,7 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using Photon.Pun;
+using ExitGames.Client.Photon;
+using Photon.Realtime;
 
 public class Node : MonoBehaviour
 {
@@ -14,22 +15,20 @@ public class Node : MonoBehaviour
     public List<int> parentNodes;
     public List<int> childNodes;
     public bool lastLayer;
+    private RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All };
+    private object[] contents;
 
     private void OnMouseDown() {
-        PhotonView photonView = GetComponent<PhotonView>();
-        int viewID = photonView.ViewID;
         if (!GameController.gameOver && GameController.player == 0 && GameController.currentPlayer == 0) // if defender
         {
             if (state == 0)
             {   
-                photonView.RPC("UpdateSpriteDefended", RpcTarget.AllBuffered, viewID);
-                photonView.RPC("UpdateNodeState", RpcTarget.All, viewID, 1);
-                photonView.RPC("UpdateCurrentPlayer", RpcTarget.All, 1);
+                contents = new object[]{key, "Defended", 1, 1};
+                PhotonNetwork.RaiseEvent(0, contents, raiseEventOptions, SendOptions.SendReliable);
                 if (AttackerLose())
                 {
-                    photonView.RPC("UpdateText", RpcTarget.All, "Text", "DEFENDER WIN");
-                    photonView.RPC("UpdateGameOver", RpcTarget.All, true);
-                    photonView.RPC("UpdateMatchStart", RpcTarget.All, false);
+                    contents = new object[]{"Text", "DEFENDER WIN"};
+                    PhotonNetwork.RaiseEvent(1, contents, raiseEventOptions, SendOptions.SendReliable);
                     GameController.winGame = true;
                 }
             }
@@ -40,15 +39,14 @@ public class Node : MonoBehaviour
             {
                 foreach (int parentKey in parentNodes)
                 {
-                    if (PhotonView.Find(GraphSpawnerMulti.nodesDict[parentKey]).gameObject.GetComponent<Node>().state == 2)
+                    if (GraphSpawnerMulti.nodesDict[parentKey].GetComponent<Node>().state == 2)
                     {
-                        photonView.RPC("UpdateSpriteFire", RpcTarget.AllBuffered, viewID);
-                        photonView.RPC("UpdateNodeState", RpcTarget.All, viewID, 2);
-                        photonView.RPC("UpdateCurrentPlayer", RpcTarget.All, 0);
-                        if (lastLayer) {
-                            photonView.RPC("UpdateText", RpcTarget.All, "Text", "ATTACKER WIN");
-                            photonView.RPC("UpdateGameOver", RpcTarget.All, true);
-                            photonView.RPC("UpdateMatchStart", RpcTarget.All, false);
+                        contents = new object[]{key, "Attacked", 2, 0};
+                        PhotonNetwork.RaiseEvent(0, contents, raiseEventOptions, SendOptions.SendReliable);
+                        if (lastLayer) 
+                        {
+                            contents = new object[]{"Text", "ATTACKER WIN"};
+                            PhotonNetwork.RaiseEvent(1, contents, raiseEventOptions, SendOptions.SendReliable);
                             GameController.winGame = true;
                         }
                         break;
@@ -61,15 +59,15 @@ public class Node : MonoBehaviour
 
     private bool AttackerLose()
     {
-        foreach(KeyValuePair<int, int> entry in GraphSpawnerMulti.nodesDict)
+        foreach(KeyValuePair<int, GameObject> entry in GraphSpawnerMulti.nodesDict)
         {
-            if (PhotonView.Find(entry.Value).gameObject.GetComponent<Node>().state == 0)
+            if ((entry.Value).GetComponent<Node>().state == 0)
             {
-                foreach(int parentKey in PhotonView.Find(entry.Value).gameObject.GetComponent<Node>().parentNodes)
+                foreach(int parentKey in (entry.Value).gameObject.GetComponent<Node>().parentNodes)
                 {
-                    if (PhotonView.Find(GraphSpawnerMulti.nodesDict[parentKey]).gameObject.GetComponent<Node>().state == 2)
+                    if (GraphSpawnerMulti.nodesDict[parentKey].GetComponent<Node>().state == 2)
                     {
-                        if(HasPathToWin(entry.Value)) return false;
+                        if(HasPathToWin(entry.Key)) return false;
                     }
                 }
             }
@@ -77,79 +75,16 @@ public class Node : MonoBehaviour
         return true;
     }
 
-    private bool HasPathToWin(int viewID)
+    private bool HasPathToWin(int key)
     {
-        if (PhotonView.Find(viewID).gameObject.GetComponent<Node>().lastLayer) return true;
-        foreach(int childKey in PhotonView.Find(viewID).gameObject.GetComponent<Node>().childNodes)
+        if (GraphSpawnerMulti.nodesDict[key].GetComponent<Node>().lastLayer) return true;
+        foreach(int childKey in GraphSpawnerMulti.nodesDict[key].GetComponent<Node>().childNodes)
         {
-            if (PhotonView.Find(GraphSpawnerMulti.nodesDict[childKey]).gameObject.GetComponent<Node>().state == 0)
+            if (GraphSpawnerMulti.nodesDict[childKey].GetComponent<Node>().state == 0)
             {
-                if (HasPathToWin(GraphSpawnerMulti.nodesDict[childKey]))
-                {
-                    return true;
-                }
+                if (HasPathToWin(childKey)) return true;
             }
         }
         return false;
-    }
-
-    [PunRPC]
-    private void UpdateNodeColorGreen(int viewID)
-    {
-        GameObject node = PhotonView.Find(viewID).gameObject;
-        node.GetComponent<Renderer>().material.color = Color.green;
-    }
-
-    [PunRPC]
-    private void UpdateNodeColorRed(int viewID)
-    {
-        GameObject node = PhotonView.Find(viewID).gameObject;
-        node.GetComponent<Renderer>().material.color = Color.red;
-    }
-
-    [PunRPC]
-    private void UpdateNodeState(int viewID, int state)
-    {
-        GameObject node = PhotonView.Find(viewID).gameObject;
-        node.GetComponent<Node>().state = state;
-    }
-
-    [PunRPC]
-    private void UpdateCurrentPlayer(int currentPlayer)
-    {
-        GameController.currentPlayer = currentPlayer;
-    }
-
-    [PunRPC]
-    private void UpdateText(string tag, string text)
-    {
-        GameObject textObject = GameObject.FindWithTag(tag);
-        textObject.GetComponent<Text>().text = text;
-    }
-
-    [PunRPC]
-    private void UpdateGameOver(bool state)
-    {
-        GameController.gameOver = state;
-    }
-
-    [PunRPC]
-    private void UpdateMatchStart(bool state)
-    {
-        GameController.matchStart = state;
-    }
-
-    [PunRPC]
-    private void UpdateSpriteFire(int viewID)
-    {
-        GameObject node = PhotonView.Find(viewID).gameObject;
-        node.GetComponent<Animator>().SetBool("Attacked", true);
-    }
-
-    [PunRPC]
-    private void UpdateSpriteDefended(int viewID)
-    {
-        GameObject node = PhotonView.Find(viewID).gameObject;
-        node.GetComponent<Animator>().SetBool("Defended", true);
     }
 }
