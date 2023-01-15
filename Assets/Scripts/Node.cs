@@ -22,7 +22,7 @@ public class Node : MonoBehaviour
         {
             if (state == 0)
             {   
-                photonView.RPC("UpdateNodeColorGreen", RpcTarget.All, viewID);
+                photonView.RPC("UpdateSpriteDefended", RpcTarget.AllBuffered, viewID);
                 photonView.RPC("UpdateNodeState", RpcTarget.All, viewID, 1);
                 photonView.RPC("UpdateCurrentPlayer", RpcTarget.All, 1);
                 if (AttackerLose())
@@ -42,7 +42,7 @@ public class Node : MonoBehaviour
                 {
                     if (PhotonView.Find(GraphSpawnerMulti.nodesDict[parentKey]).gameObject.GetComponent<Node>().state == 2)
                     {
-                        photonView.RPC("UpdateNodeColorRed", RpcTarget.All, viewID);
+                        photonView.RPC("UpdateSpriteFire", RpcTarget.AllBuffered, viewID);
                         photonView.RPC("UpdateNodeState", RpcTarget.All, viewID, 2);
                         photonView.RPC("UpdateCurrentPlayer", RpcTarget.All, 0);
                         if (lastLayer) {
@@ -137,5 +137,19 @@ public class Node : MonoBehaviour
     private void UpdateMatchStart(bool state)
     {
         GameController.matchStart = state;
+    }
+
+    [PunRPC]
+    private void UpdateSpriteFire(int viewID)
+    {
+        GameObject node = PhotonView.Find(viewID).gameObject;
+        node.GetComponent<Animator>().SetBool("Attacked", true);
+    }
+
+    [PunRPC]
+    private void UpdateSpriteDefended(int viewID)
+    {
+        GameObject node = PhotonView.Find(viewID).gameObject;
+        node.GetComponent<Animator>().SetBool("Defended", true);
     }
 }

@@ -2212,6 +2212,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dac2966c618ec25488832ad461fd4a82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sinkNodeSprite: {fileID: 21300000, guid: f5cb34c5308aaac4babcc48e534ddb90, type: 3}
+  fireNodeSprite: {fileID: 1777913639, guid: 0d02b44a92359f14081bea1d2b557e61, type: 3}
 --- !u!114 &1828849060
 MonoBehaviour:
   m_ObjectHideFlags: 0

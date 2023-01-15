@@ -43,7 +43,7 @@ public class GraphSpawnerMulti : MonoBehaviour
             if (i == 0)
             {
                 photonView.RPC("UpdateNodeState", RpcTarget.AllBuffered, viewID, 2);
-                photonView.RPC("UpdateNodeColorRed", RpcTarget.AllBuffered, viewID);
+                photonView.RPC("UpdateSpriteFire", RpcTarget.AllBuffered, viewID);
             }
 
             int totalInlayer = totalNodeInLayer[i];
@@ -84,6 +84,7 @@ public class GraphSpawnerMulti : MonoBehaviour
 
             if (PhotonView.Find(entry.Value).gameObject.GetComponent<Node>().childNodes.Count == 0)
             {
+                photonView.RPC("UpdateSpriteSink", RpcTarget.AllBuffered, entry.Value);
                 photonView.RPC("UpdateNodeLastLayer", RpcTarget.AllBuffered, entry.Value);
             }
         }
@@ -249,5 +250,19 @@ public class GraphSpawnerMulti : MonoBehaviour
     {
         GameObject node = PhotonView.Find(viewID).gameObject;
         node.GetComponent<Node>().lastLayer = true;
+    }
+
+    [PunRPC]
+    private void UpdateSpriteSink(int viewID)
+    {
+        GameObject node = PhotonView.Find(viewID).gameObject;
+        node.GetComponent<Animator>().SetBool("IsSink", true);
+    }
+
+    [PunRPC]
+    private void UpdateSpriteFire(int viewID)
+    {
+        GameObject node = PhotonView.Find(viewID).gameObject;
+        node.GetComponent<Animator>().SetBool("Attacked", true);
     }
 }
