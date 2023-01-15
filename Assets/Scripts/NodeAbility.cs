@@ -1,8 +1,9 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using Photon.Pun;
+using Photon.Realtime;
+using ExitGames.Client.Photon;
 
 public class NodeAbility : MonoBehaviour
 {
@@ -11,21 +12,22 @@ public class NodeAbility : MonoBehaviour
     // 0: untouched
     // 1: defended
     // 2: attacked
-    // 4: frozen
+    // 3: frozen
     public int state;
     public List<int> parentNodes;
     public List<int> childNodes;
     public bool lastLayer;
+    public GameObject edgeObject;
+    private RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All };
+    private object[] contents;
 
     private void OnMouseDown() {
-        PhotonView photonView = GetComponent<PhotonView>();
-        int viewID = photonView.ViewID;
         if (!GameControllerAbility.gameOver && GameControllerAbility.player == 0 && GameControllerAbility.currentPlayer == 0) // if defender
         {
             if (GameControllerAbility.abilityChoosed && !GameControllerAbility.abilityDone)
             {
-                photonView.RPC("UpdateNodeColorBlue", RpcTarget.All, viewID);
-                photonView.RPC("UpdateNodeState", RpcTarget.All, viewID, 3);
+                contents = new object[]{key, "Frozen", true, 1};
+                PhotonNetwork.RaiseEvent(4, contents, raiseEventOptions, SendOptions.SendReliable);
                 GameControllerAbility.abilityChoosed = false;
                 GameControllerAbility.abilityDone = true;
             }
@@ -33,14 +35,12 @@ public class NodeAbility : MonoBehaviour
             {
                 if (state == 0 && state != 3)
                 {   
-                    photonView.RPC("UpdateNodeColorGreen", RpcTarget.All, viewID);
-                    photonView.RPC("UpdateNodeState", RpcTarget.All, viewID, 1);
-                    photonView.RPC("UpdateCurrentPlayer", RpcTarget.All, 1);
+                    contents = new object[]{key, "Defended", 1, 1};
+                    PhotonNetwork.RaiseEvent(2, contents, raiseEventOptions, SendOptions.SendReliable);
                     if (AttackerLose())
                     {
-                        photonView.RPC("UpdateText", RpcTarget.All, "Text", "DEFENDER WIN");
-                        photonView.RPC("UpdateGameOver", RpcTarget.All, true);
-                        photonView.RPC("UpdateMatchStart", RpcTarget.All, false);
+                        contents = new object[]{"Text", "DEFENDER WIN"};
+                        PhotonNetwork.RaiseEvent(3, contents, raiseEventOptions, SendOptions.SendReliable);
                         GameControllerAbility.winGame = true;
                     }
                 }
@@ -52,13 +52,11 @@ public class NodeAbility : MonoBehaviour
             {
                 if (GameControllerAbility.firstNodeChoosed)
                 {
-                    int firstNodeID = GraphSpawnerAbility.nodesDict[GameControllerAbility.firstKey];
-                    int secondNodeID = GraphSpawnerAbility.nodesDict[key];
-                    GameObject firstNodeObj = PhotonView.Find(firstNodeID).gameObject;
-                    GameObject secondNodeObj = PhotonView.Find(secondNodeID).gameObject;
+                    GameObject firstNodeObj = GraphSpawnerAbility.nodesDict[GameControllerAbility.firstKey];
+                    GameObject secondNodeObj = GraphSpawnerAbility.nodesDict[key];
                     CreateEdge(firstNodeObj, secondNodeObj);
-                    photonView.RPC("UpdateNodeChildNodes", RpcTarget.AllBuffered, firstNodeID, key);
-                    photonView.RPC("UpdateNodeParentNodes", RpcTarget.AllBuffered, secondNodeID, GameControllerAbility.firstKey);
+                    contents = new object[]{GameControllerAbility.firstKey, key};
+                    PhotonNetwork.RaiseEvent(5, contents, raiseEventOptions, SendOptions.SendReliable);
                     GameControllerAbility.abilityChoosed = false;
                     GameControllerAbility.firstNodeChoosed = false;
                     GameControllerAbility.abilityDone = true;
@@ -76,15 +74,13 @@ public class NodeAbility : MonoBehaviour
                 {
                     foreach (int parentKey in parentNodes)
                     {
-                        if (PhotonView.Find(GraphSpawnerAbility.nodesDict[parentKey]).gameObject.GetComponent<NodeAbility>().state == 2)
+                        if (GraphSpawnerAbility.nodesDict[parentKey].GetComponent<NodeAbility>().state == 2)
                         {
-                            photonView.RPC("UpdateNodeColorRed", RpcTarget.All, viewID);
-                            photonView.RPC("UpdateNodeState", RpcTarget.All, viewID, 2);
-                            photonView.RPC("UpdateCurrentPlayer", RpcTarget.All, 0);
+                            contents = new object[]{key, "Attacked", 2, 0};
+                            PhotonNetwork.RaiseEvent(2, contents, raiseEventOptions, SendOptions.SendReliable);
                             if (lastLayer) {
-                                photonView.RPC("UpdateText", RpcTarget.All, "Text", "ATTACKER WIN");
-                                photonView.RPC("UpdateGameOver", RpcTarget.All, true);
-                                photonView.RPC("UpdateMatchStart", RpcTarget.All, false);
+                                contents = new object[]{"Text", "ATTACKER WIN"};
+                                PhotonNetwork.RaiseEvent(3, contents, raiseEventOptions, SendOptions.SendReliable);
                                 GameControllerAbility.winGame = true;
                             }
                             CheckNodeFrozen();
@@ -99,18 +95,15 @@ public class NodeAbility : MonoBehaviour
 
     private bool AttackerLose()
     {
-        foreach(KeyValuePair<int, int> entry in GraphSpawnerAbility.nodesDict)
+        foreach(KeyValuePair<int, GameObject> entry in GraphSpawnerAbility.nodesDict)
         {
-            if (PhotonView.Find(entry.Value).gameObject.GetComponent<NodeAbility>().state == 0)
+            if ((entry.Value).GetComponent<NodeAbility>().state == 0)
             {
-                foreach(int parentKey in PhotonView.Find(entry.Value).gameObject.GetComponent<NodeAbility>().parentNodes)
+                foreach(int parentKey in (entry.Value).gameObject.GetComponent<NodeAbility>().parentNodes)
                 {
-                    if (PhotonView.Find(GraphSpawnerAbility.nodesDict[parentKey]).gameObject.GetComponent<NodeAbility>().state == 2)
+                    if (GraphSpawnerAbility.nodesDict[parentKey].GetComponent<NodeAbility>().state == 2)
                     {
-                        if(HasPathToWin(entry.Value))
-                        {
-                            return false;
-                        }
+                        if(HasPathToWin(entry.Key)) return false;
                     }
                 }
             }
@@ -118,20 +111,14 @@ public class NodeAbility : MonoBehaviour
         return true;
     }
 
-    private bool HasPathToWin(int viewID)
+    private bool HasPathToWin(int key)
     {
-        if (PhotonView.Find(viewID).gameObject.GetComponent<NodeAbility>().lastLayer)
+        if (GraphSpawnerAbility.nodesDict[key].GetComponent<NodeAbility>().lastLayer) return true;
+        foreach(int childKey in GraphSpawnerAbility.nodesDict[key].GetComponent<NodeAbility>().childNodes)
         {
-            return true;
-        }
-        foreach(int childKey in PhotonView.Find(viewID).gameObject.GetComponent<NodeAbility>().childNodes)
-        {
-            if (PhotonView.Find(GraphSpawnerAbility.nodesDict[childKey]).gameObject.GetComponent<NodeAbility>().state == 0)
+            if (GraphSpawnerAbility.nodesDict[childKey].GetComponent<NodeAbility>().state == 0)
             {
-                if (HasPathToWin(GraphSpawnerAbility.nodesDict[childKey]))
-                {
-                    return true;
-                }
+                if (HasPathToWin(childKey)) return true;
             }
         }
         return false;
@@ -143,7 +130,7 @@ public class NodeAbility : MonoBehaviour
         Quaternion rotation = CalculateEdgeRotation(childNode, parentNode);
         Vector3 scale = CalculateEdgeScale(childNode, parentNode);
 
-        GameObject edgeInstance = PhotonNetwork.Instantiate("Edge", new Vector3(0, 0, 0), Quaternion.identity);
+        GameObject edgeInstance = UnityEngine.Object.Instantiate(edgeObject, new Vector3(0, 0, 0), Quaternion.identity);
         edgeInstance.transform.position = midpoint;
         edgeInstance.transform.rotation = rotation;
         edgeInstance.transform.localScale = scale;
@@ -183,89 +170,13 @@ public class NodeAbility : MonoBehaviour
 
     private void CheckNodeFrozen()
     {
-        foreach(KeyValuePair<int, int> entry in GraphSpawnerAbility.nodesDict)
+        foreach(KeyValuePair<int, GameObject> entry in GraphSpawnerAbility.nodesDict)
         {
-            if (PhotonView.Find(entry.Value).gameObject.GetComponent<NodeAbility>().state == 3)
+            if ((entry.Value).GetComponent<NodeAbility>().state == 3)
             {
-                PhotonView photonView = GetComponent<PhotonView>();
-                photonView.RPC("UpdateNodeState", RpcTarget.All, entry.Value, 0);
-                photonView.RPC("UpdateNodeColorWhite", RpcTarget.All, entry.Value);
+                contents = new object[]{key, "Frozen", false, 0};
+                PhotonNetwork.RaiseEvent(4, contents, raiseEventOptions, SendOptions.SendReliable);
             }
         }
-    }
-
-    [PunRPC]
-    private void UpdateNodeColorGreen(int viewID)
-    {
-        GameObject node = PhotonView.Find(viewID).gameObject;
-        node.GetComponent<Renderer>().material.color = Color.green;
-    }
-
-    [PunRPC]
-    private void UpdateNodeColorRed(int viewID)
-    {
-        GameObject node = PhotonView.Find(viewID).gameObject;
-        node.GetComponent<Renderer>().material.color = Color.red;
-    }
-
-    [PunRPC]
-    private void UpdateNodeColorBlue(int viewID)
-    {
-        GameObject node = PhotonView.Find(viewID).gameObject;
-        node.GetComponent<Renderer>().material.color = Color.blue;
-    }
-
-    [PunRPC]
-    private void UpdateNodeColorWhite(int viewID)
-    {
-        GameObject node = PhotonView.Find(viewID).gameObject;
-        node.GetComponent<Renderer>().material.color = Color.white;
-    }
-
-    [PunRPC]
-    private void UpdateNodeState(int viewID, int state)
-    {
-        GameObject node = PhotonView.Find(viewID).gameObject;
-        node.GetComponent<NodeAbility>().state = state;
-    }
-
-    [PunRPC]
-    private void UpdateNodeChildNodes(int parentID, int key)
-    {
-        GameObject node = PhotonView.Find(parentID).gameObject;
-        node.GetComponent<NodeAbility>().childNodes.Add(key);
-    }
-    
-    [PunRPC]
-    private void UpdateNodeParentNodes(int viewID, int parentKey)
-    {
-        GameObject node = PhotonView.Find(viewID).gameObject;
-        node.GetComponent<NodeAbility>().parentNodes.Add(parentKey);
-    }
-
-    [PunRPC]
-    private void UpdateCurrentPlayer(int currentPlayer)
-    {
-        GameControllerAbility.currentPlayer = currentPlayer;
-    }
-
-    [PunRPC]
-    private void UpdateText(string tag, string text)
-    {
-        Debug.Log(tag);
-        GameObject textObject = GameObject.FindWithTag(tag);
-        textObject.GetComponent<Text>().text = text;
-    }
-
-    [PunRPC]
-    private void UpdateGameOver(bool state)
-    {
-        GameControllerAbility.gameOver = state;
-    }
-
-    [PunRPC]
-    private void UpdateMatchStart(bool state)
-    {
-        GameControllerAbility.matchStart = state;
     }
 }

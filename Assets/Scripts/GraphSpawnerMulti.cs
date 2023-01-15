@@ -79,7 +79,6 @@ public class GraphSpawnerMulti : MonoBehaviour
 
             if ((entry.Value).GetComponent<Node>().childNodes.Count == 0)
             {
-                Debug.Log("HEYY");
                 (entry.Value).GetComponent<Animator>().SetBool("IsSink", true);
                 (entry.Value).GetComponent<Node>().lastLayer = true;
             }

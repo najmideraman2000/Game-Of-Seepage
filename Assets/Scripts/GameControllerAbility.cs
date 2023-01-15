@@ -162,7 +162,7 @@ public class GameControllerAbility : MonoBehaviourPunCallbacks
 
     private void ResetGame()
     {
-        GraphSpawnerAbility.nodesDict = new Dictionary<int, int>{};
+        GraphSpawnerAbility.nodesDict = new Dictionary<int, GameObject>{};
         currentPlayer = 0;
         abilityChoosed = false;
         firstNodeChoosed = false;

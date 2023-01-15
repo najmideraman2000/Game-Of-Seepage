@@ -5,26 +5,23 @@ using Photon.Pun;
 
 public class GraphSpawnerAbility : MonoBehaviour
 {
+    public static Dictionary<int, GameObject> nodesDict = new Dictionary<int, GameObject>{};
     private GameObject nodeInstance;
     private GameObject edgeInstance;
-    public static Dictionary<int, int> nodesDict = new Dictionary<int, int>{};
+    public GameObject nodeObject;
+    public GameObject edgeObject;
 
     private void Start()
     {
-        if (PhotonNetwork.IsMasterClient)
-        {
-            System.Random rand = new System.Random();
-            int randint = rand.Next(0, GraphCollections.graphCollections.Count);
-            List<List<List<int>>> randomGraph = GraphCollections.graphCollections[5];
-            List<List<int>> x = randomGraph[0];
-            List<List<int>> y = randomGraph[1];
-            SpawnGraph(x, y);
-        }
+        int randint = (int)PhotonNetwork.CurrentRoom.CustomProperties["graph"];
+        List<List<List<int>>> randomGraph = GraphCollections.graphCollections[randint];
+        List<List<int>> x = randomGraph[0];
+        List<List<int>> y = randomGraph[1];
+        SpawnGraph(x, y);
     }
 
     private void SpawnGraph(List<List<int>> x, List<List<int>> y) 
     {
-        PhotonView photonView = GetComponent<PhotonView>();
         Dictionary<int, int> nodeLayer = GetNodeLayer(x);
         Dictionary<int, int> totalNodeInLayer = GetTotalNodeInLayer(x);
         float horizontalSpace = 0;
@@ -36,14 +33,13 @@ public class GraphSpawnerAbility : MonoBehaviour
         float minScale = FindMinScale(x);
         for (var i = 0; i < y.Count; i++)
         {
-            nodeInstance = PhotonNetwork.Instantiate("NodeAbility", new Vector3(0, 0, 0), Quaternion.identity);
+            nodeInstance = UnityEngine.Object.Instantiate(nodeObject, new Vector3(0, 0, 0), Quaternion.identity);
             nodeInstance.transform.localScale = new Vector3(minScale, minScale, 1);
-            int viewID = nodeInstance.GetComponent<PhotonView>().ViewID;
-            photonView.RPC("UpdateNodeKey", RpcTarget.AllBuffered, viewID, i);
+            nodeInstance.GetComponent<NodeAbility>().key = i;
             if (i == 0)
             {
-                photonView.RPC("UpdateNodeState", RpcTarget.AllBuffered, viewID, 2);
-                photonView.RPC("UpdateNodeColorRed", RpcTarget.AllBuffered, viewID);
+                nodeInstance.GetComponent<NodeAbility>().state = 2;
+                nodeInstance.GetComponent<Animator>().SetBool("Attacked", true);
             }
 
             int totalInlayer = totalNodeInLayer[i];
@@ -71,20 +67,20 @@ public class GraphSpawnerAbility : MonoBehaviour
             List<int> parentNodes = y[i];
             foreach (int parentKey in parentNodes)
             {
-                int parentID = nodesDict[parentKey];
-                GameObject parentObj = PhotonView.Find(parentID).gameObject;
+                GameObject parentObj = nodesDict[parentKey];
                 CreateEdge(nodeInstance, parentObj);
-                photonView.RPC("UpdateNodeChildNodes", RpcTarget.AllBuffered, parentID, i);
-                photonView.RPC("UpdateNodeParentNodes", RpcTarget.AllBuffered, viewID, parentKey);
+                parentObj.GetComponent<NodeAbility>().childNodes.Add(i);
+                nodeInstance.GetComponent<NodeAbility>().parentNodes.Add(parentKey);
             }
-            photonView.RPC("UpdateNodesDict", RpcTarget.AllBuffered, viewID, i);
+            nodesDict.Add(i, nodeInstance);
         }
-        foreach (KeyValuePair<int, int> entry in nodesDict)
+        foreach (KeyValuePair<int, GameObject> entry in nodesDict)
         {
 
-            if (PhotonView.Find(entry.Value).gameObject.GetComponent<NodeAbility>().childNodes.Count == 0)
+            if ((entry.Value).GetComponent<NodeAbility>().childNodes.Count == 0)
             {
-                photonView.RPC("UpdateNodeLastLayer", RpcTarget.AllBuffered, entry.Value);
+                (entry.Value).GetComponent<Animator>().SetBool("IsSink", true);
+                (entry.Value).GetComponent<NodeAbility>().lastLayer = true;
             }
         }
     }
@@ -165,7 +161,7 @@ public class GraphSpawnerAbility : MonoBehaviour
         Quaternion rotation = CalculateEdgeRotation(childNode, parentNode);
         Vector3 scale = CalculateEdgeScale(nodeInstance, parentNode);
 
-        edgeInstance = PhotonNetwork.Instantiate("Edge", new Vector3(0, 0, 0), Quaternion.identity);
+        edgeInstance = UnityEngine.Object.Instantiate(edgeObject, new Vector3(0, 0, 0), Quaternion.identity);
         edgeInstance.transform.position = midpoint;
         edgeInstance.transform.rotation = rotation;
         edgeInstance.transform.localScale = scale;
@@ -201,53 +197,5 @@ public class GraphSpawnerAbility : MonoBehaviour
         double distance = Math.Sqrt(Math.Pow(secondy-firsty, 2) + Math.Pow(secondx-firstx, 2));
 
         return new Vector3((float)distance, (float)0.05, 0);
-    }
-
-    [PunRPC]
-    private void UpdateNodeKey(int viewID, int key)
-    {
-        GameObject node = PhotonView.Find(viewID).gameObject;
-        node.GetComponent<NodeAbility>().key = key;
-    }
-
-     [PunRPC]
-    private void UpdateNodeState(int viewID, int state)
-    {
-        GameObject node = PhotonView.Find(viewID).gameObject;
-        node.GetComponent<NodeAbility>().state = state;
-    }
-
-    [PunRPC]
-    private void UpdateNodeColorRed(int viewID)
-    {
-        GameObject node = PhotonView.Find(viewID).gameObject;
-        node.GetComponent<Renderer>().material.color = Color.red;
-    }
-
-    [PunRPC]
-    private void UpdateNodeChildNodes(int parentID, int key)
-    {
-        GameObject node = PhotonView.Find(parentID).gameObject;
-        node.GetComponent<NodeAbility>().childNodes.Add(key);
-    }
-    
-    [PunRPC]
-    private void UpdateNodeParentNodes(int viewID, int parentKey)
-    {
-        GameObject node = PhotonView.Find(viewID).gameObject;
-        node.GetComponent<NodeAbility>().parentNodes.Add(parentKey);
-    }
-
-    [PunRPC]
-    private void UpdateNodesDict(int viewID, int key)
-    {
-        GraphSpawnerAbility.nodesDict.Add(key, viewID);
-    }
-
-    [PunRPC]
-    private void UpdateNodeLastLayer(int viewID)
-    {
-        GameObject node = PhotonView.Find(viewID).gameObject;
-        node.GetComponent<NodeAbility>().lastLayer = true;
     }
 }
