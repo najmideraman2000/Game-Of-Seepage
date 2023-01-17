@@ -23,9 +23,16 @@ public class GameController : MonoBehaviourPunCallbacks
     public Text resultText;
     public GameObject canvasSetting;
     public GameObject canvasGameOver;
+    public Slider volumeSlider;
 
     private void Start()
     {
+        if (!PlayerPrefs.HasKey("musicVolume"))
+        {
+            PlayerPrefs.SetFloat("musicVolume", 1);
+            LoadSetting();
+        }
+        else LoadSetting();
         defenderTimeRemain = gameTime;
         attackerTimeRemain = gameTime;
         string minute = ((int) (gameTime / 60)).ToString("00");
@@ -132,6 +139,22 @@ public class GameController : MonoBehaviourPunCallbacks
     public void CloseSetting()
     {
         canvasSetting.SetActive(false);
+    }
+
+    public void ChangeVolume()
+    {
+        AudioListener.volume = volumeSlider.value;
+        SaveSetting();
+    }
+
+    private void LoadSetting()
+    {
+        volumeSlider.value = PlayerPrefs.GetFloat("musicVolume");
+    }
+
+    private void SaveSetting()
+    {
+        PlayerPrefs.SetFloat("musicVolume", volumeSlider.value);
     }
 
     public void LeaveGame()

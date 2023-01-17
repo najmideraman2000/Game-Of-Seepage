@@ -13,6 +13,18 @@ public class FindGame : MonoBehaviourPunCallbacks
     public Text selectedMode;
     public GameObject choiceCanvas;
     public GameObject findCanvas;
+    public GameObject canvasSetting;
+    public Slider volumeSlider;
+
+    void Start()
+    {
+        if (!PlayerPrefs.HasKey("musicVolume"))
+        {
+            PlayerPrefs.SetFloat("musicVolume", 1);
+            LoadSetting();
+        }
+        else LoadSetting();
+    }
 
     public void JoinRoom()
     {
@@ -104,6 +116,32 @@ public class FindGame : MonoBehaviourPunCallbacks
         SceneManager.LoadScene("MainMenu");
     }
 
+    public void OpenSetting()
+    {
+        canvasSetting.SetActive(true);
+    }
+
+    public void CloseSetting()
+    {
+        canvasSetting.SetActive(false);
+    }
+
+    public void ChangeVolume()
+    {
+        AudioListener.volume = volumeSlider.value;
+        SaveSetting();
+    }
+
+    private void LoadSetting()
+    {
+        volumeSlider.value = PlayerPrefs.GetFloat("musicVolume");
+    }
+
+    private void SaveSetting()
+    {
+        PlayerPrefs.SetFloat("musicVolume", volumeSlider.value);
+    }
+
     public void CancelFindGame()
     {
         if (PhotonNetwork.InRoom)
@@ -122,8 +160,8 @@ public class FindGame : MonoBehaviourPunCallbacks
         SceneManager.LoadScene("ConnectServer");
     }
 
-    public override void OnJoinedRoom()
-    {
-        PhotonNetwork.LoadLevel("GameAbilityMulti");
-    }
+    // public override void OnJoinedRoom()
+    // {
+    //     PhotonNetwork.LoadLevel("GameAbilityMulti");
+    // }
 }

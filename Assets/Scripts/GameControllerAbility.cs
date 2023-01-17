@@ -30,9 +30,16 @@ public class GameControllerAbility : MonoBehaviourPunCallbacks
     public Text resultText;
     public GameObject canvasSetting;
     public GameObject canvasGameOver;
+    public Slider volumeSlider;
 
     private void Start()
     {
+        if (!PlayerPrefs.HasKey("musicVolume"))
+        {
+            PlayerPrefs.SetFloat("musicVolume", 1);
+            LoadSetting();
+        }
+        else LoadSetting();
         if (player == 0) abilityButton.GetComponent<Image>().sprite = defenderAbilityImage;
         else if (player == 1) abilityButton.GetComponent<Image>().sprite = attackerAbilityImage;
         defenderTimeRemain = gameTime;
@@ -147,6 +154,22 @@ public class GameControllerAbility : MonoBehaviourPunCallbacks
     public void CloseSetting()
     {
         canvasSetting.SetActive(false);
+    }
+
+    public void ChangeVolume()
+    {
+        AudioListener.volume = volumeSlider.value;
+        SaveSetting();
+    }
+
+    private void LoadSetting()
+    {
+        volumeSlider.value = PlayerPrefs.GetFloat("musicVolume");
+    }
+
+    private void SaveSetting()
+    {
+        PlayerPrefs.SetFloat("musicVolume", volumeSlider.value);
     }
 
     public void LeaveGame()
