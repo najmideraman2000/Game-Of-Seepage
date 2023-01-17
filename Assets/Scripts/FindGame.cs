@@ -160,8 +160,8 @@ public class FindGame : MonoBehaviourPunCallbacks
         SceneManager.LoadScene("ConnectServer");
     }
 
-    // public override void OnJoinedRoom()
-    // {
-    //     PhotonNetwork.LoadLevel("GameAbilityMulti");
-    // }
+    public override void OnJoinedRoom()
+    {
+        PhotonNetwork.LoadLevel("GameAbilityMulti");
+    }
 }

@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 7600246999d57794788f868c80c3c200
+guid: f947174709c9e7041a25acf4bf3390c4
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -117,106 +117,211 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: fireburningsrpite_0
+      name: Untitled design (20) 1_0
       rect:
         serializedVersion: 2
-        x: 25
-        y: 390
-        width: 100
-        height: 117
-      alignment: 9
-      pivot: {x: 0.5142062, y: 0.40286437}
+        x: 29
+        y: 638
+        width: 101
+        height: 101
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d1ee4225f29ac0b49afc4963967d9a29
-      internalID: -1562509598
+      spriteID: 96cfab163c5e7064a9a0fa56d11d95fd
+      internalID: 1465195177
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: fireburningsrpite_1
+      name: Untitled design (20) 1_1
       rect:
         serializedVersion: 2
-        x: 150
-        y: 390
-        width: 110
-        height: 124
-      alignment: 9
-      pivot: {x: 0.48062828, y: 0.39116323}
+        x: 187
+        y: 640
+        width: 101
+        height: 101
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5f2fba240ea2be242a9f43b3c6a9e0df
-      internalID: 2123523359
+      spriteID: 732cff7874426d44eb7ebdde5c39634c
+      internalID: -2067672705
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: fireburningsrpite_2
+      name: Untitled design (20) 1_2
       rect:
         serializedVersion: 2
-        x: 275
-        y: 390
-        width: 103
-        height: 114
+        x: 345
+        y: 638
+        width: 101
+        height: 107
       alignment: 9
-      pivot: {x: 0.5000003, y: 0.40030816}
+      pivot: {x: 0.5215759, y: 0.4898168}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f41daaee925366946bef513f56eb268f
-      internalID: -2002785183
+      spriteID: b0438f8d40fecc747b307eeca9c342e1
+      internalID: 1635058114
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: fireburningsrpite_3
+      name: Untitled design (20) 1_3
       rect:
         serializedVersion: 2
-        x: 391
-        y: 390
-        width: 115
-        height: 113
+        x: 503
+        y: 641
+        width: 99
+        height: 106
       alignment: 9
-      pivot: {x: 0.5247065, y: 0.39942595}
+      pivot: {x: 0.5, y: 0.45888305}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a1dba0b019787ea41863ac0ddfd6aa02
-      internalID: 1729923923
+      spriteID: fead48896ebfe164b83c0d5da4bb53e5
+      internalID: 1219753032
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: fireburningsrpite_5
+      name: Untitled design (20) 1_4
       rect:
         serializedVersion: 2
-        x: 15
-        y: 265
-        width: 119
-        height: 120
+        x: 656
+        y: 641
+        width: 104
+        height: 115
       alignment: 9
-      pivot: {x: 0.5083431, y: 0.38276368}
+      pivot: {x: 0.5104775, y: 0.43367654}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: af0ba5dd58c5c69478180d29b22f69ff
-      internalID: -983837833
+      spriteID: 2f73b60084a873e469abc0fa3cea6dc1
+      internalID: 748329183
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Untitled design (20) 1_5
+      rect:
+        serializedVersion: 2
+        x: 26
+        y: 453
+        width: 117
+        height: 130
+      alignment: 9
+      pivot: {x: 0.453436, y: 0.40780336}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ef77882f000ed8941852d3d4dba92d0c
+      internalID: -1054586018
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Untitled design (20) 1_6
+      rect:
+        serializedVersion: 2
+        x: 177
+        y: 450
+        width: 127
+        height: 133
+      alignment: 9
+      pivot: {x: 0.4914206, y: 0.4344604}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3a06c915f900a3845bebd62fd7c66021
+      internalID: 645125012
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Untitled design (20) 1_7
+      rect:
+        serializedVersion: 2
+        x: 323
+        y: 453
+        width: 132
+        height: 148
+      alignment: 9
+      pivot: {x: 0.5165089, y: 0.36011896}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b97899f1aa483e842a38be0200b19818
+      internalID: 1232650935
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Untitled design (20) 1_8
+      rect:
+        serializedVersion: 2
+        x: 487
+        y: 451
+        width: 137
+        height: 158
+      alignment: 9
+      pivot: {x: 0.5, y: 0.3275956}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4d9622020d5b00547ac02ee012e10ebd
+      internalID: -520997402
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Untitled design (20) 1_9
+      rect:
+        serializedVersion: 2
+        x: 647
+        y: 453
+        width: 136
+        height: 161
+      alignment: 9
+      pivot: {x: 0.4919878, y: 0.31727248}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d4aa408ca67cb31489f40efb256c02ad
+      internalID: -1709185823
       vertices: []
       indices: 
       edges: []
@@ -232,14 +337,16 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      fireburningsrpite_1: 2123523359
-      fireburningsrpite_0: -1562509598
-      fireburningsrpite_7: 322777888
-      fireburningsrpite_2: -2002785183
-      fireburningsrpite_3: 1729923923
-      fireburningsrpite_5: -983837833
-      fireburningsrpite_4: 1353546989
-      fireburningsrpite_6: -973539733
+      Untitled design (20) 1_6: 645125012
+      Untitled design (20) 1_1: -2067672705
+      Untitled design (20) 1_4: 748329183
+      Untitled design (20) 1_5: -1054586018
+      Untitled design (20) 1_8: -520997402
+      Untitled design (20) 1_9: -1709185823
+      Untitled design (20) 1_3: 1219753032
+      Untitled design (20) 1_0: 1465195177
+      Untitled design (20) 1_2: 1635058114
+      Untitled design (20) 1_7: 1232650935
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
