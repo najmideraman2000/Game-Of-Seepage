@@ -106,6 +106,7 @@ public class PhotonEventHandler : MonoBehaviour, IOnEventCallback
         Vector3 scale = CalculateEdgeScale(childNode, parentNode);
 
         GameObject edgeInstance = UnityEngine.Object.Instantiate(edgeObject, new Vector3(0, 0, 0), Quaternion.identity);
+        edgeInstance.GetComponent<Renderer>().material.color = Color.yellow;
         edgeInstance.transform.position = midpoint;
         edgeInstance.transform.rotation = rotation;
         edgeInstance.transform.localScale = scale;

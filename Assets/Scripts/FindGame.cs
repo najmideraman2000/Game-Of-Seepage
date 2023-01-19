@@ -86,7 +86,7 @@ public class FindGame : MonoBehaviourPunCallbacks
         roomCustomProperties.Add("role", selectedRole.text);
         roomCustomProperties.Add("time", selectedTime.text);
         roomCustomProperties.Add("mode", selectedMode.text);
-        roomCustomProperties.Add("graph", 0);
+        roomCustomProperties.Add("graph", randint);
         roomOptions.CustomRoomProperties = roomCustomProperties;
 
         string[] customPropsForLobby = {"role", "time", "mode"};
