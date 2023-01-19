@@ -23,6 +23,7 @@ public class Node : MonoBehaviour
         {
             if (state == 0)
             {   
+                state = 1;
                 contents = new object[]{key, "Defended", 1, 1};
                 PhotonNetwork.RaiseEvent(0, contents, raiseEventOptions, SendOptions.SendReliable);
                 if (AttackerLose())
@@ -63,7 +64,7 @@ public class Node : MonoBehaviour
         {
             if ((entry.Value).GetComponent<Node>().state == 0)
             {
-                foreach(int parentKey in (entry.Value).gameObject.GetComponent<Node>().parentNodes)
+                foreach(int parentKey in (entry.Value).GetComponent<Node>().parentNodes)
                 {
                     if (GraphSpawnerMulti.nodesDict[parentKey].GetComponent<Node>().state == 2)
                     {

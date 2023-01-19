@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
@@ -26,7 +25,7 @@ public class NodeAbility : MonoBehaviour
         {
             if (GameControllerAbility.abilityChoosed && !GameControllerAbility.abilityDone)
             {
-                contents = new object[]{key, "Frozen", true, 1};
+                contents = new object[]{key, "Frozen", true, 3};
                 PhotonNetwork.RaiseEvent(4, contents, raiseEventOptions, SendOptions.SendReliable);
                 GameControllerAbility.abilityChoosed = false;
                 GameControllerAbility.abilityDone = true;
@@ -35,6 +34,7 @@ public class NodeAbility : MonoBehaviour
             {
                 if (state == 0 && state != 3)
                 {   
+                    state = 1;
                     contents = new object[]{key, "Defended", 1, 1};
                     PhotonNetwork.RaiseEvent(2, contents, raiseEventOptions, SendOptions.SendReliable);
                     if (AttackerLose())
@@ -50,22 +50,20 @@ public class NodeAbility : MonoBehaviour
         {
             if (GameControllerAbility.abilityChoosed && !GameControllerAbility.abilityDone)
             {
-                if (GameControllerAbility.firstNodeChoosed)
+                if (GameControllerAbility.firstNodeChoosed && state == 0)
                 {
-                    GameObject firstNodeObj = GraphSpawnerAbility.nodesDict[GameControllerAbility.firstKey];
-                    GameObject secondNodeObj = GraphSpawnerAbility.nodesDict[key];
-                    CreateEdge(firstNodeObj, secondNodeObj);
                     contents = new object[]{GameControllerAbility.firstKey, key};
                     PhotonNetwork.RaiseEvent(5, contents, raiseEventOptions, SendOptions.SendReliable);
                     GameControllerAbility.abilityChoosed = false;
                     GameControllerAbility.firstNodeChoosed = false;
                     GameControllerAbility.abilityDone = true;
-
+                    GraphSpawnerAbility.nodesDict[GameControllerAbility.firstKey].GetComponent<Animator>().SetBool("ChosenFirstNode", false);
                 }
-                else
+                else if (state == 0)
                 {
                     GameControllerAbility.firstNodeChoosed = true;
                     GameControllerAbility.firstKey = key;
+                    GetComponent<Animator>().SetBool("ChosenFirstNode", true);
                 }
             }
             else
@@ -99,7 +97,7 @@ public class NodeAbility : MonoBehaviour
         {
             if ((entry.Value).GetComponent<NodeAbility>().state == 0)
             {
-                foreach(int parentKey in (entry.Value).gameObject.GetComponent<NodeAbility>().parentNodes)
+                foreach(int parentKey in (entry.Value).GetComponent<NodeAbility>().parentNodes)
                 {
                     if (GraphSpawnerAbility.nodesDict[parentKey].GetComponent<NodeAbility>().state == 2)
                     {
@@ -124,57 +122,13 @@ public class NodeAbility : MonoBehaviour
         return false;
     }
 
-    private void CreateEdge(GameObject childNode, GameObject parentNode)
-    {
-        Vector3 midpoint = CalculateEdgePosition(childNode, parentNode);
-        Quaternion rotation = CalculateEdgeRotation(childNode, parentNode);
-        Vector3 scale = CalculateEdgeScale(childNode, parentNode);
-
-        GameObject edgeInstance = UnityEngine.Object.Instantiate(edgeObject, new Vector3(0, 0, 0), Quaternion.identity);
-        edgeInstance.transform.position = midpoint;
-        edgeInstance.transform.rotation = rotation;
-        edgeInstance.transform.localScale = scale;
-    }
-
-    private Vector3 CalculateEdgePosition(GameObject currentObj, GameObject targetObj)
-    {
-        float midX = (currentObj.transform.position.x + targetObj.transform.position.x) / 2;
-        float midY = (currentObj.transform.position.y + targetObj.transform.position.y) / 2;
-        return new Vector3(midX, midY, currentObj.transform.position.z);
-    }
-
-    private Quaternion CalculateEdgeRotation(GameObject currentObj, GameObject targetObj)
-    {
-        float firstx = currentObj.transform.position.x;
-        float secondx = targetObj.transform.position.x;
-        float firsty = currentObj.transform.position.y;
-        float secondy = targetObj.transform.position.y;
-
-        double angle = Math.Atan((secondy-firsty) / (secondx-firstx));
-        angle = angle * (180/Math.PI);
-
-        return Quaternion.Euler(0, 0, (float)angle);;
-    }
-
-    private Vector3 CalculateEdgeScale(GameObject currentObj, GameObject targetObj)
-    {
-        float firstx = currentObj.transform.position.x;
-        float secondx = targetObj.transform.position.x;
-        float firsty = currentObj.transform.position.y;
-        float secondy = targetObj.transform.position.y;
-
-        double distance = Math.Sqrt(Math.Pow(secondy-firsty, 2) + Math.Pow(secondx-firstx, 2));
-
-        return new Vector3((float)distance, (float)0.05, 0);
-    }
-
     private void CheckNodeFrozen()
     {
         foreach(KeyValuePair<int, GameObject> entry in GraphSpawnerAbility.nodesDict)
         {
             if ((entry.Value).GetComponent<NodeAbility>().state == 3)
             {
-                contents = new object[]{key, "Frozen", false, 0};
+                contents = new object[]{entry.Key, "Frozen", false, 0};
                 PhotonNetwork.RaiseEvent(4, contents, raiseEventOptions, SendOptions.SendReliable);
             }
         }

@@ -131,6 +131,11 @@ public class GameController : MonoBehaviourPunCallbacks
         attackerTimeText.text = timeText;
     }
 
+    public void CloseGameOver()
+    {
+        canvasGameOver.SetActive(false);
+    }
+
     public void OpenSetting()
     {
         canvasSetting.SetActive(true);

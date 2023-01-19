@@ -146,6 +146,11 @@ public class GameControllerAbility : MonoBehaviourPunCallbacks
         abilityButton.GetComponent<Button>().interactable = false;
     }
 
+    public void CloseGameOver()
+    {
+        canvasGameOver.SetActive(false);
+    }
+
     public void OpenSetting()
     {
         canvasSetting.SetActive(true);
