@@ -24,6 +24,8 @@ public class GameController : MonoBehaviourPunCallbacks
     public GameObject canvasSetting;
     public GameObject canvasGameOver;
     public Slider volumeSlider;
+    public AudioSource musicSource;
+    public AudioSource effectSource;
 
     private void Start()
     {
@@ -148,7 +150,7 @@ public class GameController : MonoBehaviourPunCallbacks
 
     public void ChangeVolume()
     {
-        AudioListener.volume = volumeSlider.value;
+        musicSource.volume = volumeSlider.value;
         SaveSetting();
     }
 

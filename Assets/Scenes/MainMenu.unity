@@ -2718,6 +2718,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canvasSetting: {fileID: 81010083}
   volumeSlider: {fileID: 572124212}
+  musicSource: {fileID: 1080354535}
 --- !u!4 &1080354534
 Transform:
   m_ObjectHideFlags: 0

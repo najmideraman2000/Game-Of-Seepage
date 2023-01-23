@@ -8,6 +8,11 @@ using UnityEngine.UI;
 public class PhotonEventHandler : MonoBehaviour, IOnEventCallback
 {
     public GameObject edgeObject;
+    public GameObject gameController;
+    public AudioClip defendEffect;
+    public AudioClip attackEffect;
+    public AudioClip iceEffect;
+    public AudioClip addEdgeEffect;
 
     private void OnEnable()
     {
@@ -29,10 +34,10 @@ public class PhotonEventHandler : MonoBehaviour, IOnEventCallback
             int state = (int) contents[2];
             int currentPlayer = (int) contents[3];
             GameObject node = GraphSpawnerMulti.nodesDict[key];
-            // AudioSource audSrc = gameController.GetComponent<GameController>().soundEffect;
+            AudioSource audSrc = gameController.GetComponent<GameController>().effectSource;
 
-            // if (animBool == "Defended") audSrc.PlayOneShot(defendEffect, audSrc.volume);
-            // else if (animBool == "Attacked") audSrc.PlayOneShot(attackEffect, audSrc.volume);
+            if (animBool == "Defended") audSrc.PlayOneShot(defendEffect, audSrc.volume);
+            else if (animBool == "Attacked") audSrc.PlayOneShot(attackEffect, audSrc.volume);
 
             node.GetComponent<Animator>().SetBool(animBool, true);
             node.GetComponent<Node>().state = state;
@@ -59,10 +64,10 @@ public class PhotonEventHandler : MonoBehaviour, IOnEventCallback
             int state = (int) contents[2];
             int currentPlayer = (int) contents[3];
             GameObject node = GraphSpawnerAbility.nodesDict[key];
-            // AudioSource audSrc = gameController.GetComponent<GameController>().soundEffect;
+            AudioSource audSrc = gameController.GetComponent<GameController>().effectSource;
 
-            // if (animBool == "Defended") audSrc.PlayOneShot(defendEffect, audSrc.volume);
-            // else if (animBool == "Attacked") audSrc.PlayOneShot(attackEffect, audSrc.volume);
+            if (animBool == "Defended") audSrc.PlayOneShot(defendEffect, audSrc.volume);
+            else if (animBool == "Attacked") audSrc.PlayOneShot(attackEffect, audSrc.volume);
 
             node.GetComponent<Animator>().SetBool(animBool, true);
             node.GetComponent<NodeAbility>().state = state;
@@ -89,6 +94,8 @@ public class PhotonEventHandler : MonoBehaviour, IOnEventCallback
             bool animBool = (bool) contents[2];
             int state = (int) contents[3];
             GameObject node = GraphSpawnerAbility.nodesDict[key];
+            AudioSource audSrc = gameController.GetComponent<GameController>().effectSource;
+            audSrc.PlayOneShot(iceEffect, audSrc.volume);
 
             node.GetComponent<Animator>().SetBool(animTag, animBool);
             node.GetComponent<NodeAbility>().state = state;
@@ -99,6 +106,9 @@ public class PhotonEventHandler : MonoBehaviour, IOnEventCallback
             object[] contents = (object[]) photonEvent.CustomData;
             int firstKey = (int) contents[0];
             int secondKey = (int) contents[1];
+            AudioSource audSrc = gameController.GetComponent<GameController>().effectSource;
+            audSrc.PlayOneShot(addEdgeEffect, audSrc.volume);
+
             GameObject firstNodeObj = GraphSpawnerAbility.nodesDict[firstKey];
             GameObject secondNodeObj = GraphSpawnerAbility.nodesDict[secondKey];
             firstNodeObj.GetComponent<NodeAbility>().childNodes.Add(secondKey);

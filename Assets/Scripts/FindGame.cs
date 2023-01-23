@@ -15,6 +15,7 @@ public class FindGame : MonoBehaviourPunCallbacks
     public GameObject findCanvas;
     public GameObject canvasSetting;
     public Slider volumeSlider;
+    public AudioSource musicSource;
 
     void Start()
     {
@@ -128,7 +129,7 @@ public class FindGame : MonoBehaviourPunCallbacks
 
     public void ChangeVolume()
     {
-        AudioListener.volume = volumeSlider.value;
+        musicSource.volume = volumeSlider.value;
         SaveSetting();
     }
 

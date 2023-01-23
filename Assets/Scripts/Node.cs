@@ -80,7 +80,7 @@ public class Node : MonoBehaviour
         if (hovered)
         {
             float scale = transform.localScale.x;
-            transform.localScale = new Vector3(1.2f / scale, 1.2f / scale, 1);
+            transform.localScale = new Vector3(scale / 1.2f,scale / 1.2f, 1);
             hovered = false;
         }
     }

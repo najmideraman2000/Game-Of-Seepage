@@ -7,12 +7,13 @@ public class MainMenuController : MonoBehaviour
 {
     public GameObject canvasSetting;
     public Slider volumeSlider;
+    public AudioSource musicSource;
 
     void Start()
     {
         if (!PlayerPrefs.HasKey("musicVolume"))
         {
-            PlayerPrefs.SetFloat("musicVolume", 1);
+            PlayerPrefs.SetFloat("musicVolume", 0.5f);
             LoadSetting();
         }
         else LoadSetting();
@@ -36,7 +37,7 @@ public class MainMenuController : MonoBehaviour
 
     public void ChangeVolume()
     {
-        AudioListener.volume = volumeSlider.value;
+        musicSource.volume = volumeSlider.value;
         SaveSetting();
     }
 
