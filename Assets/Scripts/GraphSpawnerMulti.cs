@@ -52,7 +52,7 @@ public class GraphSpawnerMulti : MonoBehaviour
                 verticalSpace += 2 * minScale;
                 if (currentTotalLayer >= 10)
                 {
-                    horizontalSpace = - 8 + (minScale / 2);
+                    horizontalSpace = - 6 + (minScale / 2);
                 }
                 else
                 {
@@ -116,11 +116,11 @@ public class GraphSpawnerMulti : MonoBehaviour
         float minScale = 0;
         int maxNodeInLayer = FindMaxNodeInLayer(nodePosition);
 
-        if (maxNodeInLayer >= 10)
+        if (maxNodeInLayer >= 6)
         {
             xScale = CalculateXScale(maxNodeInLayer);
         }
-        if (nodePosition.Count >= 5)
+        if (nodePosition.Count >= 4)
         {
             yScale = CalculateYScale(nodePosition.Count);
         }
@@ -145,13 +145,13 @@ public class GraphSpawnerMulti : MonoBehaviour
 
     private float CalculateXScale(int maxNodeInLayer)
     {
-        double xScale = 8.36376 / maxNodeInLayer;
+        double xScale = 6.38327 / maxNodeInLayer;
         return (float)xScale;
     }
 
     private float CalculateYScale(int totalLayer) 
     {
-        double yScale = 4.34347 / totalLayer;
+        double yScale = 3.88952 / totalLayer;
         return (float)yScale;
     }
 

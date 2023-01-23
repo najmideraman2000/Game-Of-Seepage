@@ -29,6 +29,10 @@ public class PhotonEventHandler : MonoBehaviour, IOnEventCallback
             int state = (int) contents[2];
             int currentPlayer = (int) contents[3];
             GameObject node = GraphSpawnerMulti.nodesDict[key];
+            // AudioSource audSrc = gameController.GetComponent<GameController>().soundEffect;
+
+            // if (animBool == "Defended") audSrc.PlayOneShot(defendEffect, audSrc.volume);
+            // else if (animBool == "Attacked") audSrc.PlayOneShot(attackEffect, audSrc.volume);
 
             node.GetComponent<Animator>().SetBool(animBool, true);
             node.GetComponent<Node>().state = state;
@@ -55,6 +59,10 @@ public class PhotonEventHandler : MonoBehaviour, IOnEventCallback
             int state = (int) contents[2];
             int currentPlayer = (int) contents[3];
             GameObject node = GraphSpawnerAbility.nodesDict[key];
+            // AudioSource audSrc = gameController.GetComponent<GameController>().soundEffect;
+
+            // if (animBool == "Defended") audSrc.PlayOneShot(defendEffect, audSrc.volume);
+            // else if (animBool == "Attacked") audSrc.PlayOneShot(attackEffect, audSrc.volume);
 
             node.GetComponent<Animator>().SetBool(animBool, true);
             node.GetComponent<NodeAbility>().state = state;
