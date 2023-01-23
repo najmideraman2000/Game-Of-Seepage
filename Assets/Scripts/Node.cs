@@ -17,44 +17,71 @@ public class Node : MonoBehaviour
     public bool lastLayer;
     private RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All };
     private object[] contents;
+    private bool hovered = false;
 
     private void OnMouseDown() {
-        if (!GameController.gameOver && GameController.player == 0 && GameController.currentPlayer == 0) // if defender
+        if (!GameController.gameOver && GameController.player == 0 && GameController.currentPlayer == 0 && state == 0) // if defender
         {
-            if (state == 0)
-            {   
-                state = 1;
-                contents = new object[]{key, "Defended", 1, 1};
-                PhotonNetwork.RaiseEvent(0, contents, raiseEventOptions, SendOptions.SendReliable);
-                if (AttackerLose())
+            state = 1;
+            contents = new object[]{key, "Defended", 1, 1};
+            PhotonNetwork.RaiseEvent(0, contents, raiseEventOptions, SendOptions.SendReliable);
+            if (AttackerLose())
+            {
+                contents = new object[]{"Text", "DEFENDER WIN"};
+                PhotonNetwork.RaiseEvent(1, contents, raiseEventOptions, SendOptions.SendReliable);
+                GameController.winGame = true;
+            }
+        }
+        else if (!GameController.gameOver && GameController.player == 1 && GameController.currentPlayer == 1 && state == 0) // if attacker
+        {
+            foreach (int parentKey in parentNodes)
+            {
+                if (GraphSpawnerMulti.nodesDict[parentKey].GetComponent<Node>().state == 2)
                 {
-                    contents = new object[]{"Text", "DEFENDER WIN"};
-                    PhotonNetwork.RaiseEvent(1, contents, raiseEventOptions, SendOptions.SendReliable);
-                    GameController.winGame = true;
+                    contents = new object[]{key, "Attacked", 2, 0};
+                    PhotonNetwork.RaiseEvent(0, contents, raiseEventOptions, SendOptions.SendReliable);
+                    if (lastLayer) 
+                    {
+                        contents = new object[]{"Text", "ATTACKER WIN"};
+                        PhotonNetwork.RaiseEvent(1, contents, raiseEventOptions, SendOptions.SendReliable);
+                        GameController.winGame = true;
+                    }
+                    break;
                 }
             }
         }
-        else if (!GameController.gameOver && GameController.player == 1 && GameController.currentPlayer == 1) // if attacker
+    }
+
+    private void OnMouseEnter()
+    {
+        if (!GameController.gameOver && GameController.player == 0 && GameController.currentPlayer == 0 && state == 0)
         {
-            if (state == 0)
+            float scale = transform.localScale.x;
+            transform.localScale = new Vector3(1.2f * scale, 1.2f * scale, 1);
+            hovered = true;
+        }
+        else if (!GameController.gameOver && GameController.player == 1 && GameController.currentPlayer == 1 && state == 0)
+        {
+            foreach (int parentKey in parentNodes)
             {
-                foreach (int parentKey in parentNodes)
+                if (GraphSpawnerMulti.nodesDict[parentKey].GetComponent<Node>().state == 2)
                 {
-                    if (GraphSpawnerMulti.nodesDict[parentKey].GetComponent<Node>().state == 2)
-                    {
-                        contents = new object[]{key, "Attacked", 2, 0};
-                        PhotonNetwork.RaiseEvent(0, contents, raiseEventOptions, SendOptions.SendReliable);
-                        if (lastLayer) 
-                        {
-                            contents = new object[]{"Text", "ATTACKER WIN"};
-                            PhotonNetwork.RaiseEvent(1, contents, raiseEventOptions, SendOptions.SendReliable);
-                            GameController.winGame = true;
-                        }
-                        break;
-                    }
+                    float scale = transform.localScale.x;
+                    transform.localScale = new Vector3(1.2f * scale, 1.2f * scale, 1);
+                    hovered = true;
+                    break;
                 }
-                
             }
+        }
+    }
+
+    private void OnMouseExit()
+    {
+        if (hovered)
+        {
+            float scale = transform.localScale.x;
+            transform.localScale = new Vector3(1.2f / scale, 1.2f / scale, 1);
+            hovered = false;
         }
     }
 

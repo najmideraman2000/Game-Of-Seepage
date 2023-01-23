@@ -19,9 +19,10 @@ public class NodeAbility : MonoBehaviour
     public GameObject edgeObject;
     private RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All };
     private object[] contents;
+    private bool hovered = false;
 
     private void OnMouseDown() {
-        if (!GameControllerAbility.gameOver && GameControllerAbility.player == 0 && GameControllerAbility.currentPlayer == 0) // if defender
+        if (!GameControllerAbility.gameOver && GameControllerAbility.player == 0 && GameControllerAbility.currentPlayer == 0 && state == 0) // if defender
         {
             if (GameControllerAbility.abilityChoosed && !GameControllerAbility.abilityDone)
             {
@@ -32,25 +33,22 @@ public class NodeAbility : MonoBehaviour
             }
             else
             {
-                if (state == 0 && state != 3)
-                {   
-                    state = 1;
-                    contents = new object[]{key, "Defended", 1, 1};
-                    PhotonNetwork.RaiseEvent(2, contents, raiseEventOptions, SendOptions.SendReliable);
-                    if (AttackerLose())
-                    {
-                        contents = new object[]{"Text", "DEFENDER WIN"};
-                        PhotonNetwork.RaiseEvent(3, contents, raiseEventOptions, SendOptions.SendReliable);
-                        GameControllerAbility.winGame = true;
-                    }
+                state = 1;
+                contents = new object[]{key, "Defended", 1, 1};
+                PhotonNetwork.RaiseEvent(2, contents, raiseEventOptions, SendOptions.SendReliable);
+                if (AttackerLose())
+                {
+                    contents = new object[]{"Text", "DEFENDER WIN"};
+                    PhotonNetwork.RaiseEvent(3, contents, raiseEventOptions, SendOptions.SendReliable);
+                    GameControllerAbility.winGame = true;
                 }
             }
         }
-        else if (!GameControllerAbility.gameOver && GameControllerAbility.player == 1 && GameControllerAbility.currentPlayer == 1) // if attacker
+        else if (!GameControllerAbility.gameOver && GameControllerAbility.player == 1 && GameControllerAbility.currentPlayer == 1 && state == 0) // if attacker
         {
             if (GameControllerAbility.abilityChoosed && !GameControllerAbility.abilityDone)
             {
-                if (GameControllerAbility.firstNodeChoosed && state == 0)
+                if (GameControllerAbility.firstNodeChoosed)
                 {
                     contents = new object[]{GameControllerAbility.firstKey, key};
                     PhotonNetwork.RaiseEvent(5, contents, raiseEventOptions, SendOptions.SendReliable);
@@ -59,7 +57,7 @@ public class NodeAbility : MonoBehaviour
                     GameControllerAbility.abilityDone = true;
                     GraphSpawnerAbility.nodesDict[GameControllerAbility.firstKey].GetComponent<Animator>().SetBool("ChosenFirstNode", false);
                 }
-                else if (state == 0)
+                else
                 {
                     GameControllerAbility.firstNodeChoosed = true;
                     GameControllerAbility.firstKey = key;
@@ -68,26 +66,65 @@ public class NodeAbility : MonoBehaviour
             }
             else
             {
-                if (state == 0)
+                foreach (int parentKey in parentNodes)
                 {
-                    foreach (int parentKey in parentNodes)
+                    if (GraphSpawnerAbility.nodesDict[parentKey].GetComponent<NodeAbility>().state == 2)
                     {
-                        if (GraphSpawnerAbility.nodesDict[parentKey].GetComponent<NodeAbility>().state == 2)
-                        {
-                            contents = new object[]{key, "Attacked", 2, 0};
-                            PhotonNetwork.RaiseEvent(2, contents, raiseEventOptions, SendOptions.SendReliable);
-                            if (lastLayer) {
-                                contents = new object[]{"Text", "ATTACKER WIN"};
-                                PhotonNetwork.RaiseEvent(3, contents, raiseEventOptions, SendOptions.SendReliable);
-                                GameControllerAbility.winGame = true;
-                            }
-                            CheckNodeFrozen();
-                            break;
+                        contents = new object[]{key, "Attacked", 2, 0};
+                        PhotonNetwork.RaiseEvent(2, contents, raiseEventOptions, SendOptions.SendReliable);
+                        if (lastLayer) {
+                            contents = new object[]{"Text", "ATTACKER WIN"};
+                            PhotonNetwork.RaiseEvent(3, contents, raiseEventOptions, SendOptions.SendReliable);
+                            GameControllerAbility.winGame = true;
                         }
+                        CheckNodeFrozen();
+                        break;
                     }
-                    
                 }
             }
+        }
+    }
+
+    private void OnMouseEnter()
+    {
+        if (!GameControllerAbility.gameOver && GameControllerAbility.player == 0 && GameControllerAbility.currentPlayer == 0 && state == 0) // if defender
+        {
+            float scale = transform.localScale.x;
+            transform.localScale = new Vector3(1.2f * scale, 1.2f * scale, 1);
+            hovered = true;
+        }
+        else if (!GameControllerAbility.gameOver && GameControllerAbility.player == 1 && GameControllerAbility.currentPlayer == 1 && state == 0) // if attacker
+        {
+            if (GameControllerAbility.abilityChoosed && !GameControllerAbility.abilityDone)
+            {
+                float scale = transform.localScale.x;
+                transform.localScale = new Vector3(1.2f * scale, 1.2f * scale, 1);
+                hovered = true;
+            }
+            else
+            {
+                foreach (int parentKey in parentNodes)
+                {
+                    if (GraphSpawnerAbility.nodesDict[parentKey].GetComponent<NodeAbility>().state == 2)
+                    {
+                        float scale = transform.localScale.x;
+                        transform.localScale = new Vector3(1.2f * scale, 1.2f * scale, 1);
+                        hovered = true;
+                        break;
+                    }
+                }
+                    
+            }
+        }
+    }
+
+    private void OnMouseExit()
+    {
+        if (hovered)
+        {
+            float scale = transform.localScale.x;
+            transform.localScale = new Vector3(scale / 1.2f, scale / 1.2f, 1);
+            hovered = false;
         }
     }
 
