@@ -132,6 +132,7 @@ public class FindGame : MonoBehaviourPunCallbacks
     private void LoadSetting()
     {
         musicSlider.value = PlayerPrefs.GetFloat("musicVolume");
+        musicSource.volume = musicSlider.value;
     }
 
     private void SaveSetting()

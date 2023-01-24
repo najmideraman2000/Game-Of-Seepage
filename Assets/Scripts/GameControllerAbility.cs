@@ -175,6 +175,8 @@ public class GameControllerAbility : MonoBehaviourPunCallbacks
     {
         musicSlider.value = PlayerPrefs.GetFloat("musicVolume");
         effectSlider.value = PlayerPrefs.GetFloat("effectVolume");
+        musicSource.volume = musicSlider.value;
+        effectSource.volume = effectSlider.value;
     }
 
     private void SaveSetting()
