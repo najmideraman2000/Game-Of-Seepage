@@ -5496,7 +5496,7 @@ MonoBehaviour:
   choiceCanvas: {fileID: 1770649791}
   findCanvas: {fileID: 265387863}
   canvasSetting: {fileID: 602583266}
-  volumeSlider: {fileID: 1141473369}
+  musicSlider: {fileID: 1141473369}
   musicSource: {fileID: 1815119399}
 --- !u!82 &1815119399
 AudioSource:

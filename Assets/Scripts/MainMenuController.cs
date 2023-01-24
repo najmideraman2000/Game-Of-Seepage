@@ -6,17 +6,13 @@ using Photon.Pun;
 public class MainMenuController : MonoBehaviour
 {
     public GameObject canvasSetting;
-    public Slider volumeSlider;
+    public Slider musicSlider;
     public AudioSource musicSource;
 
     void Start()
     {
-        if (!PlayerPrefs.HasKey("musicVolume"))
-        {
-            PlayerPrefs.SetFloat("musicVolume", 0.5f);
-            LoadSetting();
-        }
-        else LoadSetting();
+        if (!PlayerPrefs.HasKey("musicVolume")) PlayerPrefs.SetFloat("musicVolume", 0.5f);
+        LoadSetting();
     }
 
     public void PlayGame()
@@ -33,21 +29,21 @@ public class MainMenuController : MonoBehaviour
     public void CloseSetting()
     {
         canvasSetting.SetActive(false);
+        SaveSetting();
     }
 
     public void ChangeVolume()
     {
-        musicSource.volume = volumeSlider.value;
-        SaveSetting();
+        musicSource.volume = musicSlider.value;
     }
 
     private void LoadSetting()
     {
-        volumeSlider.value = PlayerPrefs.GetFloat("musicVolume");
+        musicSlider.value = PlayerPrefs.GetFloat("musicVolume");
     }
 
     private void SaveSetting()
     {
-        PlayerPrefs.SetFloat("musicVolume", volumeSlider.value);
+        PlayerPrefs.SetFloat("musicVolume", musicSlider.value);
     }
 }

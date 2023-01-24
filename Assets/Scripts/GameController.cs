@@ -11,6 +11,7 @@ public class GameController : MonoBehaviourPunCallbacks
     public static int currentPlayer = 0;
     public static bool gameOver = false;
     public static bool matchStart = false;
+    public static bool settingOpened = false;
     public static double gameTime = 180;
     private static double startTime;
     public static bool winGame = false;
@@ -23,18 +24,16 @@ public class GameController : MonoBehaviourPunCallbacks
     public Text resultText;
     public GameObject canvasSetting;
     public GameObject canvasGameOver;
-    public Slider volumeSlider;
+    public Slider musicSlider;
+    public Slider effectSlider;
     public AudioSource musicSource;
     public AudioSource effectSource;
 
     private void Start()
     {
-        if (!PlayerPrefs.HasKey("musicVolume"))
-        {
-            PlayerPrefs.SetFloat("musicVolume", 1);
-            LoadSetting();
-        }
-        else LoadSetting();
+        if (!PlayerPrefs.HasKey("musicVolume")) PlayerPrefs.SetFloat("musicVolume", 0.5f);
+        if (!PlayerPrefs.HasKey("effectVolume")) PlayerPrefs.SetFloat("effectVolume", 0.5f);
+        LoadSetting();
         defenderTimeRemain = gameTime;
         attackerTimeRemain = gameTime;
         string minute = ((int) (gameTime / 60)).ToString("00");
@@ -141,31 +140,37 @@ public class GameController : MonoBehaviourPunCallbacks
     public void OpenSetting()
     {
         canvasSetting.SetActive(true);
+        settingOpened = true;
     }
 
     public void CloseSetting()
     {
         canvasSetting.SetActive(false);
+        settingOpened = false;
+        SaveSetting();
     }
 
     public void ChangeVolume()
     {
-        musicSource.volume = volumeSlider.value;
-        SaveSetting();
+        musicSource.volume = musicSlider.value;
+        effectSource.volume = effectSlider.value;
     }
 
     private void LoadSetting()
     {
-        volumeSlider.value = PlayerPrefs.GetFloat("musicVolume");
+        musicSlider.value = PlayerPrefs.GetFloat("musicVolume");
+        effectSlider.value = PlayerPrefs.GetFloat("effectVolume");
     }
 
     private void SaveSetting()
     {
-        PlayerPrefs.SetFloat("musicVolume", volumeSlider.value);
+        PlayerPrefs.SetFloat("musicVolume", musicSlider.value);
+        PlayerPrefs.SetFloat("effectVolume", effectSlider.value);
     }
 
     public void LeaveGame()
     {
+        SaveSetting();
         PhotonNetwork.LeaveRoom();
     }
 
@@ -182,6 +187,7 @@ public class GameController : MonoBehaviourPunCallbacks
         gameOver = false;
         matchStart = false;
         winGame = false;
+        settingOpened = false;
     }
 
     public void BackToMenu()

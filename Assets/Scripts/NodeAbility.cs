@@ -22,6 +22,7 @@ public class NodeAbility : MonoBehaviour
     private bool hovered = false;
 
     private void OnMouseDown() {
+        if (GameControllerAbility.settingOpened) return;
         if (!GameControllerAbility.gameOver && GameControllerAbility.player == 0 && GameControllerAbility.currentPlayer == 0 && state == 0) // if defender
         {
             if (GameControllerAbility.abilityChoosed && !GameControllerAbility.abilityDone)
@@ -87,6 +88,7 @@ public class NodeAbility : MonoBehaviour
 
     private void OnMouseEnter()
     {
+        if (GameControllerAbility.settingOpened) return;
         if (!GameControllerAbility.gameOver && GameControllerAbility.player == 0 && GameControllerAbility.currentPlayer == 0 && state == 0) // if defender
         {
             float scale = transform.localScale.x;
@@ -120,6 +122,7 @@ public class NodeAbility : MonoBehaviour
 
     private void OnMouseExit()
     {
+        if (GameControllerAbility.settingOpened) return;
         if (hovered)
         {
             float scale = transform.localScale.x;
