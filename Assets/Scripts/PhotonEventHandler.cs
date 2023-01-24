@@ -64,7 +64,7 @@ public class PhotonEventHandler : MonoBehaviour, IOnEventCallback
             int state = (int) contents[2];
             int currentPlayer = (int) contents[3];
             GameObject node = GraphSpawnerAbility.nodesDict[key];
-            AudioSource audSrc = gameController.GetComponent<GameController>().effectSource;
+            AudioSource audSrc = gameController.GetComponent<GameControllerAbility>().effectSource;
 
             if (animBool == "Defended") audSrc.PlayOneShot(defendEffect, audSrc.volume);
             else if (animBool == "Attacked") audSrc.PlayOneShot(attackEffect, audSrc.volume);
@@ -94,7 +94,7 @@ public class PhotonEventHandler : MonoBehaviour, IOnEventCallback
             bool animBool = (bool) contents[2];
             int state = (int) contents[3];
             GameObject node = GraphSpawnerAbility.nodesDict[key];
-            AudioSource audSrc = gameController.GetComponent<GameController>().effectSource;
+            AudioSource audSrc = gameController.GetComponent<GameControllerAbility>().effectSource;
             audSrc.PlayOneShot(iceEffect, audSrc.volume);
 
             node.GetComponent<Animator>().SetBool(animTag, animBool);
@@ -106,7 +106,7 @@ public class PhotonEventHandler : MonoBehaviour, IOnEventCallback
             object[] contents = (object[]) photonEvent.CustomData;
             int firstKey = (int) contents[0];
             int secondKey = (int) contents[1];
-            AudioSource audSrc = gameController.GetComponent<GameController>().effectSource;
+            AudioSource audSrc = gameController.GetComponent<GameControllerAbility>().effectSource;
             audSrc.PlayOneShot(addEdgeEffect, audSrc.volume);
 
             GameObject firstNodeObj = GraphSpawnerAbility.nodesDict[firstKey];
