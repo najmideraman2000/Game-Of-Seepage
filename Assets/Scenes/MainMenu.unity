@@ -193,8 +193,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1203140967
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 23963b3cf04eead419aadb5762dcad78, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -962,8 +962,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: On attacker turn, attacker can choose any of unattacked node that have
-    attacked node as their parent
+  m_Text: On Attacker's turn, the Attacker can attack any of unattacked nodes that
+    have attacked node as their parent (nodes above it).
 --- !u!222 &201593026
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1353,8 +1353,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -173}
-  m_SizeDelta: {x: 1388.65, y: 224.6}
+  m_AnchoredPosition: {x: 0, y: -185}
+  m_SizeDelta: {x: 1388.65, y: 270.03}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &266020324
 MonoBehaviour:
@@ -1389,8 +1389,10 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: The attacker will be given an ability to create a new edge from one unattacked
-    node to the other unattacked node.
+  m_Text: The Attacker will be given an ability to create a new edge from one unattacked
+    node to another unattacked node, including the spaceship. The new edge created
+    is yellow colored. Both Defender and Attacker can only use their abilities before
+    they made their move (defend or attack).
 --- !u!222 &266020325
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1677,8 +1679,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1203140967
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: ac1f2bc644134b84683da1046871ed62, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -2254,8 +2256,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: On the defender's turn, the defender can choose any of the unattacked node
-    to defend.
+  m_Text: On the Defender's turn, the Defender can choose any of the unattacked nodes
+    to defend, including the spaceship (the attacked nodes are the ones that are
+    on fire).
 --- !u!222 &690159667
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2375,8 +2378,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -173}
-  m_SizeDelta: {x: 1388.65, y: 280.31}
+  m_AnchoredPosition: {x: 19.21, y: -173}
+  m_SizeDelta: {x: 1427.08, y: 280.31}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &869493868
 MonoBehaviour:
@@ -2411,9 +2414,10 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: The game has an additional mode called Ability. In this mode, it will follow
-    the Standard Mode's rules with both Defender and Attacker given one additional
-    ability each. Both player can only use the ability once for each game.
+  m_Text: The game has an additional mode called Ability mode. In this mode, it will
+    follow the Standard mode's rules with both Defender and Attacker given one ability
+    each. Both players can only use the ability once each game. The button for the
+    ability can be found at the bottom left of the screen.
 --- !u!222 &869493869
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2673,8 +2677,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1203140967
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: d1d510e81d8f8c942a19d28100f9a121, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -2985,8 +2989,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1203140967
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 007c4cd56cb57b44bacbebbc4a00fd2b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -3149,8 +3153,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1203140967
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: a6037019c7252cc4a84c7231340d9013, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -4524,8 +4528,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1203140967
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 007c4cd56cb57b44bacbebbc4a00fd2b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -4873,8 +4877,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: The defender win when then attacker don't have any available moves that
-    can reach the spaceship
+  m_Text: The Defender win when the Attacker don't have any available path that can
+    reach the spaceship.
 --- !u!222 &1785024600
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4919,7 +4923,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1388.65, y: 224.6}
+  m_SizeDelta: {x: 1388.65, y: 263.03}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1810316853
 MonoBehaviour:
@@ -4958,7 +4962,8 @@ MonoBehaviour:
 
     The game will begin
     with the Defender''s turn, followed by the Attacker''s turn. The game proceed
-    with both players taking their turns alternately.'
+    with both players taking their turns alternately. The defender need to protect
+    the spaceships from being attacked by Attacker.'
 --- !u!222 &1810316854
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5221,8 +5226,8 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: The Defender will be given an ability to freeze an unattacked node for
-    one round. The attacker will not be able to attack the frozen node on their next
-    turn. The node will return to normal unattacked node on subsequent turns.
+    one turn. The Attacker will not be able to attack the frozen node on the next
+    turn. The node will return to normal on subsequent turns.
 --- !u!222 &1910747396
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5647,8 +5652,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: The attacker win when they have successfully attack the sink node (the
-    spaceship)
+  m_Text: The attacker win when they have successfully attack one of the spaceships.
 --- !u!222 &2135872974
 CanvasRenderer:
   m_ObjectHideFlags: 0

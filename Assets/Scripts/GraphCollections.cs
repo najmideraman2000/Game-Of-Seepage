@@ -5,38 +5,38 @@ using UnityEngine;
 public class GraphCollections : MonoBehaviour
 {
     public static List<List<List<List<int>>>> graphCollections = new List<List<List<List<int>>>>{
-        // 0
-        new List<List<List<int>>>{
-            new List<List<int>>{
-                new List<int> {0},
-                new List<int> {1, 2},
-                new List<int> {3, 4, 5}
-            },
-            new List<List<int>>{
-                new List<int> {},
-                new List<int> {0},
-                new List<int> {0},
-                new List<int> {1},
-                new List<int> {2},
-                new List<int> {2}
-            }
-        },
-        // 1
-        new List<List<List<int>>>{
-            new List<List<int>>{
-                new List<int> {0},
-                new List<int> {1, 2},
-                new List<int> {3, 4, 5}
-            },
-            new List<List<int>>{
-                new List<int> {},
-                new List<int> {0},
-                new List<int> {0},
-                new List<int> {1},
-                new List<int> {1, 2},
-                new List<int> {2}
-            }
-        },
+        // // 0
+        // new List<List<List<int>>>{
+        //     new List<List<int>>{
+        //         new List<int> {0},
+        //         new List<int> {1, 2},
+        //         new List<int> {3, 4, 5}
+        //     },
+        //     new List<List<int>>{
+        //         new List<int> {},
+        //         new List<int> {0},
+        //         new List<int> {0},
+        //         new List<int> {1},
+        //         new List<int> {2},
+        //         new List<int> {2}
+        //     }
+        // },
+        // // 1
+        // new List<List<List<int>>>{
+        //     new List<List<int>>{
+        //         new List<int> {0},
+        //         new List<int> {1, 2},
+        //         new List<int> {3, 4, 5}
+        //     },
+        //     new List<List<int>>{
+        //         new List<int> {},
+        //         new List<int> {0},
+        //         new List<int> {0},
+        //         new List<int> {1},
+        //         new List<int> {1, 2},
+        //         new List<int> {2}
+        //     }
+        // },
         // 2
         new List<List<List<int>>>{
             new List<List<int>>{
@@ -390,7 +390,6 @@ public class GraphCollections : MonoBehaviour
                 new List<int> {6},
                 new List<int> {7},
                 new List<int> {7},
-                new List<int> {8, 9, 10},
                 new List<int> {8, 9, 10},
                 new List<int> {8, 9, 10},
             }
