@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
@@ -11,16 +12,24 @@ public class FindGame : MonoBehaviourPunCallbacks
     public Text selectedRole;
     public Text selectedTime;
     public Text selectedMode;
+    public Text selectedGraph;
     public GameObject choiceCanvas;
     public GameObject findCanvas;
     public GameObject canvasSetting;
     public Slider musicSlider;
     public AudioSource musicSource;
+    public Dropdown graphDropdown;
 
     void Start()
     {
         if (!PlayerPrefs.HasKey("musicVolume")) PlayerPrefs.SetFloat("musicVolume", 0.5f);
         LoadSetting();
+        List<string> graphOptions = new List<string>{};
+        for (int i = 0; i < GraphCollections.graphCollections.Count; i++)
+        {
+            graphOptions.Add("Graph " + (i + 1).ToString());
+        }
+        graphDropdown.AddOptions(graphOptions);
     }
 
     public void JoinRoom()
@@ -59,6 +68,7 @@ public class FindGame : MonoBehaviourPunCallbacks
         }
         expectedCustomRoomProperties.Add("time", selectedTime.text);
         expectedCustomRoomProperties.Add("mode", selectedMode.text);
+        expectedCustomRoomProperties.Add("graph", selectedGraph.text);
 
         PhotonNetwork.JoinRandomRoom(expectedCustomRoomProperties, 2);
     }
@@ -70,8 +80,6 @@ public class FindGame : MonoBehaviourPunCallbacks
 
     private void MakeRoom()
     {
-        System.Random rand = new System.Random();
-        int randint = rand.Next(0, GraphCollections.graphCollections.Count);
         RoomOptions roomOptions =  new RoomOptions()
         {
             IsVisible = true,
@@ -83,7 +91,7 @@ public class FindGame : MonoBehaviourPunCallbacks
         roomCustomProperties.Add("role", selectedRole.text);
         roomCustomProperties.Add("time", selectedTime.text);
         roomCustomProperties.Add("mode", selectedMode.text);
-        roomCustomProperties.Add("graph", randint);
+        roomCustomProperties.Add("graph", selectedGraph.text);
         roomOptions.CustomRoomProperties = roomCustomProperties;
 
         string[] customPropsForLobby = {"role", "time", "mode"};
