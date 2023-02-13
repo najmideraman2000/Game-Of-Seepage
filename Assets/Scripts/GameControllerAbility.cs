@@ -13,6 +13,7 @@ public class GameControllerAbility : MonoBehaviourPunCallbacks
     public static bool firstNodeChoosed = false;
     public static bool abilityDone = false;
     public static int firstKey;
+    public static int firstLayer;
     public static bool gameOver = false;
     public static bool matchStart = false;
     public static bool settingOpened = false;

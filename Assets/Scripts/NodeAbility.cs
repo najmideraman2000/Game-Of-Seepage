@@ -13,6 +13,7 @@ public class NodeAbility : MonoBehaviour
     // 2: attacked
     // 3: frozen
     public int state;
+    public int layer;
     public List<int> parentNodes;
     public List<int> childNodes;
     public bool lastLayer;
@@ -49,7 +50,7 @@ public class NodeAbility : MonoBehaviour
         {
             if (GameControllerAbility.abilityChoosed && !GameControllerAbility.abilityDone)
             {
-                if (GameControllerAbility.firstNodeChoosed)
+                if (GameControllerAbility.firstNodeChoosed && layer == GameControllerAbility.firstLayer + 1)
                 {
                     contents = new object[]{GameControllerAbility.firstKey, key};
                     PhotonNetwork.RaiseEvent(5, contents, raiseEventOptions, SendOptions.SendReliable);
@@ -58,10 +59,11 @@ public class NodeAbility : MonoBehaviour
                     GameControllerAbility.abilityDone = true;
                     GraphSpawnerAbility.nodesDict[GameControllerAbility.firstKey].GetComponent<Animator>().SetBool("ChosenFirstNode", false);
                 }
-                else
+                else if (!GameControllerAbility.firstNodeChoosed && !lastLayer)
                 {
                     GameControllerAbility.firstNodeChoosed = true;
                     GameControllerAbility.firstKey = key;
+                    GameControllerAbility.firstLayer = layer;
                     GetComponent<Animator>().SetBool("ChosenFirstNode", true);
                 }
             }

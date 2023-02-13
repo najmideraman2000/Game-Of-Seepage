@@ -45,6 +45,7 @@ public class GraphSpawnerAbility : MonoBehaviour
 
             int totalInlayer = totalNodeInLayer[i];
             int layer = nodeLayer[i];
+            nodeInstance.GetComponent<NodeAbility>().layer = layer;
             if (currentNodeLayer != layer)
             {   
                 horizontalSpace = 0;

@@ -1401,7 +1401,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &252774266
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5541,8 +5541,6 @@ MonoBehaviour:
     m_Options:
     - m_Text: Standard
       m_Image: {fileID: 0}
-    - m_Text: Ability
-      m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -6696,7 +6694,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1900691166
 RectTransform:
   m_ObjectHideFlags: 0

@@ -225,7 +225,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &26258631
 RectTransform:
   m_ObjectHideFlags: 0
@@ -962,8 +962,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: On Attacker's turn, the Attacker can attack any of unattacked nodes that
-    have attacked node as their parent (nodes above it).
+  m_Text: On the Attacker's turn, the Attacker can attack any unattacked nodes that
+    have attacked nodes as their parent (nodes above it).
 --- !u!222 &201593026
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2257,8 +2257,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: On the Defender's turn, the Defender can choose any of the unattacked nodes
-    to defend, including the spaceship (the attacked nodes are the ones that are
-    on fire).
+    to defend, including the spaceship (the attacked nodes are the ones on fire).
 --- !u!222 &690159667
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2414,7 +2413,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: The game has an additional mode called Ability mode. In this mode, it will
+  m_Text: The game has an additional mode called Extra mode. In this mode, it will
     follow the Standard mode's rules with both Defender and Attacker given one ability
     each. Both players can only use the ability once each game. The button for the
     ability can be found at the bottom left of the screen.
@@ -4369,7 +4368,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: ABILITY MODE
+  m_Text: EXTRA MODE
 --- !u!222 &1649681332
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4877,7 +4876,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: The Defender win when the Attacker don't have any available path that can
+  m_Text: The Defender wins when the Attacker doesn't have any available path to
     reach the spaceship.
 --- !u!222 &1785024600
 CanvasRenderer:
@@ -4958,11 +4957,11 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'This  game has two roles: Attacker and Defender.
+  m_Text: 'This game has two roles: Attacker and Defender.
 
     The game will begin
-    with the Defender''s turn, followed by the Attacker''s turn. The game proceed
-    with both players taking their turns alternately. The defender need to protect
+    with the Defender''s turn, followed by the Attacker''s turn. The game will proceed
+    with both players taking their turns alternately. The Defender needs to protect
     the spaceships from being attacked by Attacker.'
 --- !u!222 &1810316854
 CanvasRenderer:
@@ -5652,7 +5651,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: The attacker win when they have successfully attack one of the spaceships.
+  m_Text: The Attacker wins when they have successfully attacked one of the spaceships.
 --- !u!222 &2135872974
 CanvasRenderer:
   m_ObjectHideFlags: 0

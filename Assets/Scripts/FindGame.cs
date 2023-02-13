@@ -52,7 +52,7 @@ public class FindGame : MonoBehaviourPunCallbacks
                 expectedCustomRoomProperties.Add("role", "Defender");
             }
         }
-        else if (selectedMode.text == "Ability")
+        else if (selectedMode.text == "Extra")
         {
             GameControllerAbility.gameTime = gameTime;
             if (selectedRole.text == "Defender") 
@@ -68,7 +68,7 @@ public class FindGame : MonoBehaviourPunCallbacks
         }
         expectedCustomRoomProperties.Add("time", selectedTime.text);
         expectedCustomRoomProperties.Add("mode", selectedMode.text);
-        expectedCustomRoomProperties.Add("graph", selectedGraph.text);
+        // expectedCustomRoomProperties.Add("graph", selectedGraph.text);
 
         PhotonNetwork.JoinRandomRoom(expectedCustomRoomProperties, 2);
     }
@@ -80,6 +80,9 @@ public class FindGame : MonoBehaviourPunCallbacks
 
     private void MakeRoom()
     {
+        System.Random rand = new System.Random();
+        int randint = rand.Next(0, GraphCollections.graphCollections.Count);
+
         RoomOptions roomOptions =  new RoomOptions()
         {
             IsVisible = true,
@@ -91,10 +94,10 @@ public class FindGame : MonoBehaviourPunCallbacks
         roomCustomProperties.Add("role", selectedRole.text);
         roomCustomProperties.Add("time", selectedTime.text);
         roomCustomProperties.Add("mode", selectedMode.text);
-        roomCustomProperties.Add("graph", selectedGraph.text);
+        roomCustomProperties.Add("graph", randint);
         roomOptions.CustomRoomProperties = roomCustomProperties;
 
-        string[] customPropsForLobby = {"role", "time", "mode"};
+        string[] customPropsForLobby = {"role", "time", "mode", "graph"};
         roomOptions.CustomRoomPropertiesForLobby = customPropsForLobby;
 
         PhotonNetwork.CreateRoom(null, roomOptions);
@@ -108,7 +111,7 @@ public class FindGame : MonoBehaviourPunCallbacks
             {
                 PhotonNetwork.LoadLevel("GameStandardMulti");
             }
-            else if (PhotonNetwork.CurrentRoom.CustomProperties["mode"].ToString() == "Ability")
+            else if (PhotonNetwork.CurrentRoom.CustomProperties["mode"].ToString() == "Extra")
             {
                 PhotonNetwork.LoadLevel("GameAbilityMulti");
             }
@@ -168,6 +171,6 @@ public class FindGame : MonoBehaviourPunCallbacks
 
     // public override void OnJoinedRoom()
     // {
-    //     PhotonNetwork.LoadLevel("GameAbilityMulti");
+    //     PhotonNetwork.LoadLevel("GameStandardMulti");
     // }
 }
