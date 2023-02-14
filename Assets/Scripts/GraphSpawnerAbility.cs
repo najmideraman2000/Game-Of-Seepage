@@ -13,8 +13,7 @@ public class GraphSpawnerAbility : MonoBehaviour
 
     private void Start()
     {
-        string graph = (string)PhotonNetwork.CurrentRoom.CustomProperties["graph"];
-        int randint = int.Parse(graph.Substring(6)) - 1;
+        int randint = (int)PhotonNetwork.CurrentRoom.CustomProperties["graph"];
         List<List<List<int>>> randomGraph = GraphCollections.graphCollections[randint];
         List<List<int>> x = randomGraph[0];
         List<List<int>> y = randomGraph[1];
