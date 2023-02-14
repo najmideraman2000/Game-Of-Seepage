@@ -13,6 +13,8 @@ public class PhotonEventHandler : MonoBehaviour, IOnEventCallback
     public AudioClip attackEffect;
     public AudioClip iceEffect;
     public AudioClip addEdgeEffect;
+    public GameObject canvasGameOver;
+    public Text resultText;
 
     private void OnEnable()
     {
@@ -54,6 +56,7 @@ public class PhotonEventHandler : MonoBehaviour, IOnEventCallback
             textObject.GetComponent<Text>().text = text;
             GameController.gameOver = true;
             GameController.matchStart = false;
+            GameOver();
         }
 
         else if (photonEvent.Code == 2)
@@ -84,6 +87,7 @@ public class PhotonEventHandler : MonoBehaviour, IOnEventCallback
             textObject.GetComponent<Text>().text = text;
             GameControllerAbility.gameOver = true;
             GameControllerAbility.matchStart = false;
+            GameOver();
         }
 
         else if (photonEvent.Code == 4)
@@ -160,5 +164,11 @@ public class PhotonEventHandler : MonoBehaviour, IOnEventCallback
         double distance = Math.Sqrt(Math.Pow(secondy-firsty, 2) + Math.Pow(secondx-firstx, 2));
 
         return new Vector3((float)distance, (float)0.05, 0);
+    }
+
+    private void GameOver()
+    {
+        if (GameController.winGame) resultText.text = "YOU WIN";
+        canvasGameOver.SetActive(true);
     }
 }

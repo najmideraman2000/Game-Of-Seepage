@@ -2171,6 +2171,8 @@ MonoBehaviour:
   attackEffect: {fileID: 8300000, guid: e6fcbb1ac7f322c43a5eafa57cf9339a, type: 3}
   iceEffect: {fileID: 8300000, guid: fcffb31ce0eb35d4da6e773d94c2a940, type: 3}
   addEdgeEffect: {fileID: 8300000, guid: b23925f3bf04ed54186846123e25b8e7, type: 3}
+  canvasGameOver: {fileID: 1835039914}
+  resultText: {fileID: 713364862}
 --- !u!4 &650852718
 Transform:
   m_ObjectHideFlags: 0
