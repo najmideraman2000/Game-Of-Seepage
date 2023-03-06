@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using Photon.Pun;
 using Photon.Realtime;
 using ExitGames.Client.Photon;
@@ -15,6 +16,14 @@ public class PhotonEventHandler : MonoBehaviour, IOnEventCallback
     public AudioClip addEdgeEffect;
     public GameObject canvasGameOver;
     public Text resultText;
+    public Image feedbackBox;
+    public Text feedbackText;
+
+    private void Start()
+    {
+        feedbackBox.canvasRenderer.SetAlpha(0);
+        feedbackText.canvasRenderer.SetAlpha(0);
+    }
 
     private void OnEnable()
     {
@@ -119,6 +128,24 @@ public class PhotonEventHandler : MonoBehaviour, IOnEventCallback
             secondNodeObj.GetComponent<NodeAbility>().parentNodes.Add(firstKey);
             CreateEdge(firstNodeObj, secondNodeObj);
         }
+
+        else if (photonEvent.Code == 6)
+        {
+            if (GameController.player != GameController.currentPlayer) return;
+            object[] contents = (object[]) photonEvent.CustomData;
+            int textInt = (int) contents[0];
+
+            StartCoroutine(ShowFeedbackText(textInt));
+        }
+
+        else if (photonEvent.Code == 7)
+        {
+            if (GameControllerAbility.player != GameControllerAbility.currentPlayer) return;
+            object[] contents = (object[]) photonEvent.CustomData;
+            int textInt = (int) contents[0];
+
+            StartCoroutine(ShowFeedbackText(textInt));
+        }
     }
 
     private void CreateEdge(GameObject childNode, GameObject parentNode)
@@ -170,5 +197,20 @@ public class PhotonEventHandler : MonoBehaviour, IOnEventCallback
     {
         if (GameController.winGame) resultText.text = "YOU WIN";
         canvasGameOver.SetActive(true);
+    }
+
+    public IEnumerator ShowFeedbackText(int textInt)
+    {
+        if (textInt == 0) feedbackText.text = "Not your turn";
+        else if (textInt == 1) feedbackText.text = "The node doesn't have attacked node as the parents";
+        else if (textInt == 2) feedbackText.text = "The node has been defended";
+        else if (textInt == 3) feedbackText.text = "The node has been attacked";
+        else if (textInt == 4) feedbackText.text = "The node has been frozen for a round";
+        
+        feedbackBox.CrossFadeAlpha(1.0f, 1.0f, false);
+        feedbackText.CrossFadeAlpha(1.0f, 1.0f, false);
+        yield return new WaitForSeconds(1.75f);
+        feedbackBox.CrossFadeAlpha(0.0f, 1.0f, false);
+        feedbackText.CrossFadeAlpha(0.0f, 1.0f, false);
     }
 }

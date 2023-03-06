@@ -52,7 +52,7 @@ public class FindGame : MonoBehaviourPunCallbacks
                 expectedCustomRoomProperties.Add("role", "Defender");
             }
         }
-        else if (selectedMode.text == "Extra")
+        else if (selectedMode.text == "Advantage")
         {
             GameControllerAbility.gameTime = gameTime;
             if (selectedRole.text == "Defender") 
@@ -111,7 +111,7 @@ public class FindGame : MonoBehaviourPunCallbacks
             {
                 PhotonNetwork.LoadLevel("GameStandardMulti");
             }
-            else if (PhotonNetwork.CurrentRoom.CustomProperties["mode"].ToString() == "Extra")
+            else if (PhotonNetwork.CurrentRoom.CustomProperties["mode"].ToString() == "Advantage")
             {
                 PhotonNetwork.LoadLevel("GameAbilityMulti");
             }
@@ -171,6 +171,6 @@ public class FindGame : MonoBehaviourPunCallbacks
 
     // public override void OnJoinedRoom()
     // {
-    //     PhotonNetwork.LoadLevel("GameStandardMulti");
+    //     PhotonNetwork.LoadLevel("GameAbilityMulti");
     // }
 }

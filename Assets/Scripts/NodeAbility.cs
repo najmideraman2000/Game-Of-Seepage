@@ -22,52 +22,43 @@ public class NodeAbility : MonoBehaviour
     private object[] contents;
     private bool hovered = false;
 
-    private void OnMouseDown() {
+    private void OnMouseDown()
+    {
         if (GameControllerAbility.settingOpened) return;
-        if (!GameControllerAbility.gameOver && GameControllerAbility.player == 0 && GameControllerAbility.currentPlayer == 0 && state == 0) // if defender
+        if (GameControllerAbility.gameOver) return;
+
+        if (GameControllerAbility.currentPlayer != GameControllerAbility.player)
         {
-            if (GameControllerAbility.abilityChoosed && !GameControllerAbility.abilityDone)
-            {
-                contents = new object[]{key, "Frozen", true, 3};
-                PhotonNetwork.RaiseEvent(4, contents, raiseEventOptions, SendOptions.SendReliable);
-                GameControllerAbility.abilityChoosed = false;
-                GameControllerAbility.abilityDone = true;
-            }
-            else
-            {
-                state = 1;
-                contents = new object[]{key, "Defended", 1, 1};
-                PhotonNetwork.RaiseEvent(2, contents, raiseEventOptions, SendOptions.SendReliable);
-                if (AttackerLose())
-                {
-                    contents = new object[]{"Text", "DEFENDER WIN"};
-                    PhotonNetwork.RaiseEvent(3, contents, raiseEventOptions, SendOptions.SendReliable);
-                    GameControllerAbility.winGame = true;
-                }
-            }
+            contents = new object[]{0};
+            PhotonNetwork.RaiseEvent(7, contents, raiseEventOptions, SendOptions.SendReliable);
+            return;
         }
-        else if (!GameControllerAbility.gameOver && GameControllerAbility.player == 1 && GameControllerAbility.currentPlayer == 1 && state == 0) // if attacker
+
+        if (state == 0)
         {
-            if (GameControllerAbility.abilityChoosed && !GameControllerAbility.abilityDone)
+            if (GameControllerAbility.player == 0)
             {
-                if (GameControllerAbility.firstNodeChoosed && layer == GameControllerAbility.firstLayer + 1)
+                if (GameControllerAbility.abilityChoosed && !GameControllerAbility.abilityDone)
                 {
-                    contents = new object[]{GameControllerAbility.firstKey, key};
-                    PhotonNetwork.RaiseEvent(5, contents, raiseEventOptions, SendOptions.SendReliable);
+                    contents = new object[]{key, "Frozen", true, 3};
+                    PhotonNetwork.RaiseEvent(4, contents, raiseEventOptions, SendOptions.SendReliable);
                     GameControllerAbility.abilityChoosed = false;
-                    GameControllerAbility.firstNodeChoosed = false;
                     GameControllerAbility.abilityDone = true;
-                    GraphSpawnerAbility.nodesDict[GameControllerAbility.firstKey].GetComponent<Animator>().SetBool("ChosenFirstNode", false);
                 }
-                else if (!GameControllerAbility.firstNodeChoosed && !lastLayer)
+                else
                 {
-                    GameControllerAbility.firstNodeChoosed = true;
-                    GameControllerAbility.firstKey = key;
-                    GameControllerAbility.firstLayer = layer;
-                    GetComponent<Animator>().SetBool("ChosenFirstNode", true);
+                    state = 1;
+                    contents = new object[]{key, "Defended", 1, 1};
+                    PhotonNetwork.RaiseEvent(2, contents, raiseEventOptions, SendOptions.SendReliable);
+                    if (AttackerLose())
+                    {
+                        contents = new object[]{"Text", "DEFENDER WIN"};
+                        PhotonNetwork.RaiseEvent(3, contents, raiseEventOptions, SendOptions.SendReliable);
+                        GameControllerAbility.winGame = true;
+                    }
                 }
             }
-            else
+            else if (GameControllerAbility.player == 1)
             {
                 foreach (int parentKey in parentNodes)
                 {
@@ -81,10 +72,27 @@ public class NodeAbility : MonoBehaviour
                             GameControllerAbility.winGame = true;
                         }
                         CheckNodeFrozen();
-                        break;
+                        return;
                     }
                 }
+                contents = new object[]{1};
+                PhotonNetwork.RaiseEvent(7, contents, raiseEventOptions, SendOptions.SendReliable);
             }
+        }
+        else if (state == 1)
+        {
+            contents = new object[]{2};
+            PhotonNetwork.RaiseEvent(7, contents, raiseEventOptions, SendOptions.SendReliable);
+        }
+        else if (state == 2)
+        {
+            contents = new object[]{3};
+            PhotonNetwork.RaiseEvent(7, contents, raiseEventOptions, SendOptions.SendReliable);
+        }
+        else if (state == 2)
+        {
+            contents = new object[]{4};
+            PhotonNetwork.RaiseEvent(7, contents, raiseEventOptions, SendOptions.SendReliable);
         }
     }
 

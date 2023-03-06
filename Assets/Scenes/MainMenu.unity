@@ -225,7 +225,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &26258631
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1389,10 +1389,10 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: The Attacker will be given an ability to create a new edge from one unattacked
-    node to another unattacked node, including the spaceship. The new edge created
-    is yellow colored. Both Defender and Attacker can only use their abilities before
-    they made their move (defend or attack).
+  m_Text: The Attacker will be given the advantage of creating a new edge from one
+    unattacked node to another unattacked node, including the spaceship. The new
+    edge created is yellow coloured. Defender and Attacker can only use their advantage
+    before making their move (defend or attack).
 --- !u!222 &266020325
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2413,10 +2413,10 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: The game has an additional mode called Extra mode. In this mode, it will
-    follow the Standard mode's rules with both Defender and Attacker given one ability
-    each. Both players can only use the ability once each game. The button for the
-    ability can be found at the bottom left of the screen.
+  m_Text: The game has an additional mode called Advantage mode. This mode will follow
+    the Standard mode's rules, with both Defender and Attacker being given one advantage
+    each. Both players can only use the advantage once in each game. The button for
+    the advantage can be found at the bottom left of the screen.
 --- !u!222 &869493869
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4368,7 +4368,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: EXTRA MODE
+  m_Text: ADVANTAGE MODE
 --- !u!222 &1649681332
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5224,9 +5224,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: The Defender will be given an ability to freeze an unattacked node for
-    one turn. The Attacker will not be able to attack the frozen node on the next
-    turn. The node will return to normal on subsequent turns.
+  m_Text: The Defender will be given the advantage of freezing an unattacked node
+    for one turn. The Attacker will not be able to attack the frozen node on the
+    next turn. The node will return to normal on subsequent turns.
 --- !u!222 &1910747396
 CanvasRenderer:
   m_ObjectHideFlags: 0

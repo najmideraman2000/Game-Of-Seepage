@@ -61,13 +61,6 @@ public class GameControllerAbility : MonoBehaviourPunCallbacks
 
     private void Update()
     {
-        // if (gameOver)
-        // {
-        //     if (winGame) resultText.text = "YOU WIN";
-        //     canvasGameOver.SetActive(true);
-        //     gameOver = false;
-        //     return;
-        // }
         if (!matchStart) return;
         UpdateTurnRoleText();
         if (currentPlayer == 0)
@@ -144,6 +137,7 @@ public class GameControllerAbility : MonoBehaviourPunCallbacks
 
     public void UseAbility()
     {
+        if (player != currentPlayer) return;
         abilityChoosed = true;
         abilityButton.GetComponent<Button>().interactable = false;
     }

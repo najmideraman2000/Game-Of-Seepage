@@ -51,13 +51,6 @@ public class GameController : MonoBehaviourPunCallbacks
 
     private void Update()
     {
-        // if (gameOver)
-        // {
-        //     if (winGame) resultText.text = "YOU WIN";
-        //     canvasGameOver.SetActive(true);
-        //     gameOver = false;
-        //     return;
-        // }
         if (!matchStart) return;
         UpdateTurnRoleText();
         if (currentPlayer == 0)

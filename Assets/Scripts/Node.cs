@@ -19,37 +19,62 @@ public class Node : MonoBehaviour
     private object[] contents;
     private bool hovered = false;
 
-    private void OnMouseDown() {
+    private void OnMouseDown()
+    {
         if (GameController.settingOpened) return;
-        if (!GameController.gameOver && GameController.player == 0 && GameController.currentPlayer == 0 && state == 0) // if defender
+        if (GameController.gameOver) return;
+
+        if (GameController.currentPlayer != GameController.player)
         {
-            state = 1;
-            contents = new object[]{key, "Defended", 1, 1};
-            PhotonNetwork.RaiseEvent(0, contents, raiseEventOptions, SendOptions.SendReliable);
-            if (AttackerLose())
-            {
-                contents = new object[]{"Text", "DEFENDER WIN"};
-                PhotonNetwork.RaiseEvent(1, contents, raiseEventOptions, SendOptions.SendReliable);
-                GameController.winGame = true;
-            }
+            contents = new object[]{0};
+            PhotonNetwork.RaiseEvent(6, contents, raiseEventOptions, SendOptions.SendReliable);
+            return;
         }
-        else if (!GameController.gameOver && GameController.player == 1 && GameController.currentPlayer == 1 && state == 0) // if attacker
+
+        if (state == 0)
         {
-            foreach (int parentKey in parentNodes)
+            if (GameController.player == 0)
             {
-                if (GraphSpawnerMulti.nodesDict[parentKey].GetComponent<Node>().state == 2)
+                state = 1;
+                contents = new object[]{key, "Defended", 1, 1};
+                PhotonNetwork.RaiseEvent(0, contents, raiseEventOptions, SendOptions.SendReliable);
+                if (AttackerLose())
                 {
-                    contents = new object[]{key, "Attacked", 2, 0};
-                    PhotonNetwork.RaiseEvent(0, contents, raiseEventOptions, SendOptions.SendReliable);
-                    if (lastLayer) 
-                    {
-                        contents = new object[]{"Text", "ATTACKER WIN"};
-                        PhotonNetwork.RaiseEvent(1, contents, raiseEventOptions, SendOptions.SendReliable);
-                        GameController.winGame = true;
-                    }
-                    break;
+                    contents = new object[]{"Text", "DEFENDER WIN"};
+                    PhotonNetwork.RaiseEvent(1, contents, raiseEventOptions, SendOptions.SendReliable);
+                    GameController.winGame = true;
                 }
             }
+            else if (GameController.player == 1)
+            {
+                foreach (int parentKey in parentNodes)
+                {
+                    if (GraphSpawnerMulti.nodesDict[parentKey].GetComponent<Node>().state == 2)
+                    {
+                        contents = new object[]{key, "Attacked", 2, 0};
+                        PhotonNetwork.RaiseEvent(0, contents, raiseEventOptions, SendOptions.SendReliable);
+                        if (lastLayer) 
+                        {
+                            contents = new object[]{"Text", "ATTACKER WIN"};
+                            PhotonNetwork.RaiseEvent(1, contents, raiseEventOptions, SendOptions.SendReliable);
+                            GameController.winGame = true;
+                        }
+                        return;
+                    }
+                }
+                contents = new object[]{1};
+                PhotonNetwork.RaiseEvent(6, contents, raiseEventOptions, SendOptions.SendReliable);
+            }
+        }
+        else if (state == 1)
+        {
+            contents = new object[]{2};
+            PhotonNetwork.RaiseEvent(6, contents, raiseEventOptions, SendOptions.SendReliable);
+        }
+        else if (state == 2)
+        {
+            contents = new object[]{3};
+            PhotonNetwork.RaiseEvent(6, contents, raiseEventOptions, SendOptions.SendReliable);
         }
     }
 
