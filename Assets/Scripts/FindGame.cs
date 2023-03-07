@@ -171,6 +171,6 @@ public class FindGame : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom()
     {
-        PhotonNetwork.LoadLevel("GameAbilityMulti");
+        PhotonNetwork.LoadLevel("GameStandardMulti");
     }
 }
