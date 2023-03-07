@@ -80,6 +80,12 @@ public class Node : MonoBehaviour
 
     private void OnMouseEnter()
     {
+        List<GameObject> edges = GraphSpawnerMulti.connectedEdges[key];
+        foreach (GameObject edge in edges) {
+            edge.GetComponent<Renderer>().material.color = Color.yellow;
+            edge.GetComponent<Renderer>().sortingLayerName = "Layer1.5";
+        }
+
         if (GameController.settingOpened) return;
         if (!GameController.gameOver && GameController.player == 0 && GameController.currentPlayer == 0 && state == 0)
         {
@@ -104,6 +110,13 @@ public class Node : MonoBehaviour
 
     private void OnMouseExit()
     {
+        List<GameObject> edges = GraphSpawnerMulti.connectedEdges[key];
+        foreach (GameObject edge in edges) {
+            Color color = new Color32((byte)(0xFF), (byte)(0xFF), (byte)(0xFF), (byte)(0xFF));
+            edge.GetComponent<Renderer>().material.color = color;
+            edge.GetComponent<Renderer>().sortingLayerName = "Layer1";
+        }
+        
         if (GameController.settingOpened) return;
         if (hovered)
         {

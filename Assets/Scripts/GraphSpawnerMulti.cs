@@ -6,6 +6,7 @@ using Photon.Pun;
 public class GraphSpawnerMulti : MonoBehaviour
 {
     public static Dictionary<int, GameObject> nodesDict = new Dictionary<int, GameObject>{};
+    public static Dictionary<int, List<GameObject>> connectedEdges = new Dictionary<int, List<GameObject>>{};
     private GameObject nodeInstance;
     private GameObject edgeInstance;
     public GameObject nodeObject;
@@ -165,6 +166,21 @@ public class GraphSpawnerMulti : MonoBehaviour
         edgeInstance.transform.position = midpoint;
         edgeInstance.transform.rotation = rotation;
         edgeInstance.transform.localScale = scale;
+
+        int childKey = childNode.GetComponent<Node>().key;
+        int parentKey = parentNode.GetComponent<Node>().key;
+        if (connectedEdges.ContainsKey(childKey)) {
+            List<GameObject> edgeList = connectedEdges[childKey];
+            edgeList.Add(edgeInstance);
+            connectedEdges[childKey] = edgeList;
+        }
+        else {connectedEdges[childKey] = new List<GameObject>{edgeInstance};}
+        if (connectedEdges.ContainsKey(parentKey)) {
+            List<GameObject> edgeList = connectedEdges[parentKey];
+            edgeList.Add(edgeInstance);
+            connectedEdges[parentKey] = edgeList;
+        }
+        else {connectedEdges[parentKey] = new List<GameObject>{edgeInstance};}
     }
 
     private Vector3 CalculateEdgePosition(GameObject currentObj, GameObject targetObj)
