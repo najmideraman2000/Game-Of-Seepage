@@ -105,8 +105,6 @@ MonoBehaviour:
   parentNodes: 
   childNodes: 
   lastLayer: 0
-  soundEffect: {fileID: -4728970939440443482}
-  testEffect: {fileID: 8300000, guid: ef6e76d14e68945e08b6e99b51ee557a, type: 3}
 --- !u!58 &346642971248043583
 CircleCollider2D:
   m_ObjectHideFlags: 0

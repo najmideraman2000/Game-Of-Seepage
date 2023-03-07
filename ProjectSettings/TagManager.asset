@@ -11,6 +11,7 @@ TagManager:
   - TimeChoiceText
   - ModeChoiceText
   - ResultText
+  - Bullet
   layers:
   - Default
   - TransparentFX
@@ -48,6 +49,9 @@ TagManager:
   - name: Layer1
     uniqueID: 401937163
     locked: 0
+  - name: Layer1.5
+    uniqueID: 3543059745
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
@@ -56,4 +60,7 @@ TagManager:
     locked: 0
   - name: Layer3
     uniqueID: 1203140967
+    locked: 0
+  - name: Layer4
+    uniqueID: 3617440783
     locked: 0

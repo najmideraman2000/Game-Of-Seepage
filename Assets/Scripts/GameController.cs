@@ -178,6 +178,8 @@ public class GameController : MonoBehaviourPunCallbacks
     private void ResetGame()
     {
         GraphSpawnerMulti.nodesDict = new Dictionary<int, GameObject>{};
+        GraphSpawnerMulti.connectedEdges = new Dictionary<int, List<GameObject>>{};
+        GraphSpawnerMulti.allObjects = new List<GameObject>{};
         currentPlayer = 0;
         gameOver = false;
         matchStart = false;

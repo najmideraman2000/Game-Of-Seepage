@@ -26,6 +26,13 @@ public class TutorialButton : MonoBehaviour
         prevBtn.GetComponent<Button>().interactable = false;
         nextBtn.GetComponent<Button>().interactable = true;
         tutoPagesStandard[0].SetActive(true);
+
+        foreach (GameObject obj in GraphSpawnerMulti.allObjects) {
+            obj.SetActive(false);
+        }
+        foreach (GameObject obj in GraphSpawnerAbility.allObjects) {
+            obj.SetActive(false);
+        }
     }
 
     public void CloseTuto()
@@ -42,6 +49,13 @@ public class TutorialButton : MonoBehaviour
         tutoPage = 0;
         canvasMenu.SetActive(true);
         howToBtn.SetActive(true);
+
+        foreach (GameObject obj in GraphSpawnerMulti.allObjects) {
+            obj.SetActive(true);
+        }
+        foreach (GameObject obj in GraphSpawnerAbility.allObjects) {
+            obj.SetActive(true);
+        }
     }
 
     public void ChangeTutoMode()

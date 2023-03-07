@@ -7,6 +7,7 @@ public class GraphSpawnerMulti : MonoBehaviour
 {
     public static Dictionary<int, GameObject> nodesDict = new Dictionary<int, GameObject>{};
     public static Dictionary<int, List<GameObject>> connectedEdges = new Dictionary<int, List<GameObject>>{};
+    public static List<GameObject> allObjects = new List<GameObject>{};
     private GameObject nodeInstance;
     private GameObject edgeInstance;
     public GameObject nodeObject;
@@ -35,6 +36,8 @@ public class GraphSpawnerMulti : MonoBehaviour
         for (var i = 0; i < y.Count; i++)
         {
             nodeInstance = UnityEngine.Object.Instantiate(nodeObject, new Vector3(0, 0, 0), Quaternion.identity);
+            allObjects.Add(nodeInstance);
+            nodeInstance.GetComponent<Animator>().keepAnimatorControllerStateOnDisable = true;
             nodeInstance.transform.localScale = new Vector3(minScale, minScale, 1);
             nodeInstance.GetComponent<Node>().key = i;
             if (i == 0)
@@ -163,6 +166,7 @@ public class GraphSpawnerMulti : MonoBehaviour
         Vector3 scale = CalculateEdgeScale(nodeInstance, parentNode);
 
         edgeInstance = UnityEngine.Object.Instantiate(edgeObject, new Vector3(0, 0, 0), Quaternion.identity);
+        allObjects.Add(edgeInstance);
         edgeInstance.transform.position = midpoint;
         edgeInstance.transform.rotation = rotation;
         edgeInstance.transform.localScale = scale;
