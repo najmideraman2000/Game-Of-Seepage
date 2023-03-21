@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -73,6 +74,7 @@ public class GameControllerAbility : MonoBehaviourPunCallbacks
                 if (player == 1) winGame = true;
                 gameOver = true;
                 matchStart = false;
+                StartCoroutine(GameOver());
             }
         }
         else if (currentPlayer == 1)
@@ -85,6 +87,7 @@ public class GameControllerAbility : MonoBehaviourPunCallbacks
                 if (player == 0) winGame = true;
                 gameOver = true;
                 matchStart = false;
+                StartCoroutine(GameOver());
             }
         }
     }
@@ -133,6 +136,13 @@ public class GameControllerAbility : MonoBehaviourPunCallbacks
         string second = ((int) (attackerTimeRemain % 60)).ToString("00");
         string timeText = minute + " : " + second;
         attackerTimeText.text = timeText;
+    }
+
+    private IEnumerator GameOver()
+    {
+        yield return new WaitForSeconds(1.0f);
+        if (winGame) resultText.text = "YOU WIN";
+        canvasGameOver.SetActive(true);
     }
 
     public void UseAbility()

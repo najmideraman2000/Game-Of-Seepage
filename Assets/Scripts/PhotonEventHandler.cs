@@ -65,7 +65,7 @@ public class PhotonEventHandler : MonoBehaviour, IOnEventCallback
             textObject.GetComponent<Text>().text = text;
             GameController.gameOver = true;
             GameController.matchStart = false;
-            GameOver();
+            StartCoroutine(GameOver());
         }
 
         else if (photonEvent.Code == 2)
@@ -96,7 +96,7 @@ public class PhotonEventHandler : MonoBehaviour, IOnEventCallback
             textObject.GetComponent<Text>().text = text;
             GameControllerAbility.gameOver = true;
             GameControllerAbility.matchStart = false;
-            GameOver();
+            StartCoroutine(GameOver());
         }
 
         else if (photonEvent.Code == 4)
@@ -193,8 +193,9 @@ public class PhotonEventHandler : MonoBehaviour, IOnEventCallback
         return new Vector3((float)distance, (float)0.05, 0);
     }
 
-    private void GameOver()
+    private IEnumerator GameOver()
     {
+        yield return new WaitForSeconds(1.0f);
         if (GameController.winGame) resultText.text = "YOU WIN";
         canvasGameOver.SetActive(true);
     }
