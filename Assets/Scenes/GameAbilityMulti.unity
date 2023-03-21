@@ -1320,8 +1320,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 19.21, y: -173}
-  m_SizeDelta: {x: 1427.08, y: 280.31}
+  m_AnchoredPosition: {x: 38.18, y: -173}
+  m_SizeDelta: {x: 1465.02, y: 280.31}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &218223060
 MonoBehaviour:
@@ -1356,10 +1356,10 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: The game has an additional mode called Advantage mode. This mode will follow
-    the Standard mode's rules, with both Defender and Attacker being given one advantage
-    each. Both players can only use the advantage once in each game. The button for
-    the advantage can be found at the bottom left of the screen.
+  m_Text: The game has an additional mode called Edge-Step mode. This mode will follow
+    the Standard mode's rules, with both Defender and Attacker being given one extra
+    advantage each. Both players can only use the advantage once in each game. The
+    button for the advantage can be found at the bottom left of the screen.
 --- !u!222 &218223061
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -7873,7 +7873,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: ADVANTAGE MODE
+  m_Text: EDGE-STEP MODE
 --- !u!222 &2105626297
 CanvasRenderer:
   m_ObjectHideFlags: 0

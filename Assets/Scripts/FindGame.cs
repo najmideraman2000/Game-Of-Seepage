@@ -52,7 +52,7 @@ public class FindGame : MonoBehaviourPunCallbacks
                 expectedCustomRoomProperties.Add("role", "Defender");
             }
         }
-        else if (selectedMode.text == "Advantage")
+        else if (selectedMode.text == "Edge-Step")
         {
             GameControllerAbility.gameTime = gameTime;
             if (selectedRole.text == "Defender") 
@@ -111,7 +111,7 @@ public class FindGame : MonoBehaviourPunCallbacks
             {
                 PhotonNetwork.LoadLevel("GameStandardMulti");
             }
-            else if (PhotonNetwork.CurrentRoom.CustomProperties["mode"].ToString() == "Advantage")
+            else if (PhotonNetwork.CurrentRoom.CustomProperties["mode"].ToString() == "Edge-Step")
             {
                 PhotonNetwork.LoadLevel("GameAbilityMulti");
             }
@@ -169,8 +169,8 @@ public class FindGame : MonoBehaviourPunCallbacks
         SceneManager.LoadScene("ConnectServer");
     }
 
-    public override void OnJoinedRoom()
-    {
-        PhotonNetwork.LoadLevel("GameStandardMulti");
-    }
+    // public override void OnJoinedRoom()
+    // {
+    //     PhotonNetwork.LoadLevel("GameStandardMulti");
+    // }
 }

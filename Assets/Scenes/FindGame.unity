@@ -5541,7 +5541,7 @@ MonoBehaviour:
     m_Options:
     - m_Text: Standard
       m_Image: {fileID: 0}
-    - m_Text: Advantage
+    - m_Text: Edge-Step
       m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
