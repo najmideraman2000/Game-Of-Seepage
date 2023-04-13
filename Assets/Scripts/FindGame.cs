@@ -94,7 +94,7 @@ public class FindGame : MonoBehaviourPunCallbacks
         roomCustomProperties.Add("role", selectedRole.text);
         roomCustomProperties.Add("time", selectedTime.text);
         roomCustomProperties.Add("mode", selectedMode.text);
-        roomCustomProperties.Add("graph", randint);
+        roomCustomProperties.Add("graph", 19);
         roomOptions.CustomRoomProperties = roomCustomProperties;
 
         string[] customPropsForLobby = {"role", "time", "mode", "graph"};
@@ -169,8 +169,8 @@ public class FindGame : MonoBehaviourPunCallbacks
         SceneManager.LoadScene("ConnectServer");
     }
 
-    // public override void OnJoinedRoom()
-    // {
-    //     PhotonNetwork.LoadLevel("GameStandardMulti");
-    // }
+    public override void OnJoinedRoom()
+    {
+        PhotonNetwork.LoadLevel("GameStandardMulti");
+    }
 }

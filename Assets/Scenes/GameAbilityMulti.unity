@@ -232,7 +232,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -677526513
-  m_SortingLayer: 3
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 5ef462817312c4b478aeb019eab289c3, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -396,7 +396,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -677526513
-  m_SortingLayer: 3
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 007c4cd56cb57b44bacbebbc4a00fd2b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1955,7 +1955,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -677526513
-  m_SortingLayer: 3
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 007c4cd56cb57b44bacbebbc4a00fd2b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -2119,7 +2119,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -677526513
-  m_SortingLayer: 3
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: a6037019c7252cc4a84c7231340d9013, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -3046,7 +3046,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -677526513
-  m_SortingLayer: 3
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 23963b3cf04eead419aadb5762dcad78, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -3722,9 +3722,9 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: The Attacker will be given the advantage of creating a new edge from one
-    unattacked node to another unattacked node, including the spaceship. The new
-    edge created is yellow coloured. Defender and Attacker can only use their advantage
-    before making their move (defend or attack).
+    unattacked vertex to another unattacked vertex, including the spaceship. The
+    new edge created is green coloured. Defender and Attacker can only use their
+    advantage before making their move (defend or attack).
 --- !u!222 &682553591
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4366,7 +4366,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -677526513
-  m_SortingLayer: 3
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: d1d510e81d8f8c942a19d28100f9a121, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -4575,7 +4575,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
-  m_SortingLayerID: 1203140967
+  m_SortingLayerID: -586275905
   m_SortingOrder: 0
   m_TargetDisplay: 0
 --- !u!224 &992140910
@@ -4792,7 +4792,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -677526513
-  m_SortingLayer: 3
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: ac1f2bc644134b84683da1046871ed62, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -4876,7 +4876,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -677526513
-  m_SortingLayer: 3
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: b9dda22388de29e4f98bc323b3ce8ecc, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -4926,7 +4926,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -91.290016}
+  m_AnchoredPosition: {x: 0, y: -135}
   m_SizeDelta: {x: 367.9, y: 134.29}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1217531313
@@ -5347,8 +5347,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: On the Defender's turn, the Defender can choose any of the unattacked nodes
-    to defend, including the spaceship (the attacked nodes are the ones on fire).
+  m_Text: On the Defender's turn, the Defender can choose any of the unattacked vertices
+    to defend, including the spaceship (the attacked vertices are the ones on fire).
 --- !u!222 &1329930590
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5762,7 +5762,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
-  m_SortingLayerID: 1203140967
+  m_SortingLayerID: 1552204577
   m_SortingOrder: 0
   m_TargetDisplay: 0
 --- !u!224 &1452747500
@@ -5857,7 +5857,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1203140967
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 25e3b32acf6751840a4c96f731fd68cc, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -6093,7 +6093,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -677526513
-  m_SortingLayer: 3
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: c60a2a37ff46f8f4994998cc7f3006fd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -6523,7 +6523,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -677526513
-  m_SortingLayer: 3
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: a9df95277b65eed4c9cffab8cc2e0402, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -6728,9 +6728,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: The Defender will be given the advantage of freezing an unattacked node
-    for one turn. The Attacker will not be able to attack the frozen node on the
-    next turn. The node will return to normal on subsequent turns.
+  m_Text: The Defender will be given the advantage of freezing an unattacked vertex
+    for one turn. The Attacker will not be able to attack the frozen vertex on the
+    next turn. The vertex will return to normal on subsequent turns.
 --- !u!222 &1796544172
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -7372,7 +7372,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.000045776, y: 43}
+  m_AnchoredPosition: {x: 0, y: 25}
   m_SizeDelta: {x: 367.9, y: 134.29}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2022530326
@@ -7792,8 +7792,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: On the Attacker's turn, the Attacker can attack any unattacked nodes that
-    have attacked nodes as their parent (nodes above it).
+  m_Text: On the Attacker's turn, the Attacker can attack any unattacked vertices
+    that have attacked vertices as their parent (vertices above it).
 --- !u!222 &2098767296
 CanvasRenderer:
   m_ObjectHideFlags: 0

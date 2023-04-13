@@ -60,23 +60,45 @@ public class NodeAbility : MonoBehaviour
             }
             else if (GameControllerAbility.player == 1)
             {
-                foreach (int parentKey in parentNodes)
+                if (GameControllerAbility.abilityChoosed && !GameControllerAbility.abilityDone)
                 {
-                    if (GraphSpawnerAbility.nodesDict[parentKey].GetComponent<NodeAbility>().state == 2)
+                    if (GameControllerAbility.firstNodeChoosed && layer == GameControllerAbility.firstLayer + 1)
                     {
-                        contents = new object[]{key, "Attacked", 2, 0};
-                        PhotonNetwork.RaiseEvent(2, contents, raiseEventOptions, SendOptions.SendReliable);
-                        if (lastLayer) {
-                            contents = new object[]{"Text", "ATTACKER WIN"};
-                            PhotonNetwork.RaiseEvent(3, contents, raiseEventOptions, SendOptions.SendReliable);
-                            GameControllerAbility.winGame = true;
-                        }
-                        CheckNodeFrozen();
-                        return;
+                        contents = new object[]{GameControllerAbility.firstKey, key};
+                        PhotonNetwork.RaiseEvent(5, contents, raiseEventOptions, SendOptions.SendReliable);
+                        GameControllerAbility.abilityChoosed = false;
+                        GameControllerAbility.firstNodeChoosed = false;
+                        GameControllerAbility.abilityDone = true;
+                        GraphSpawnerAbility.nodesDict[GameControllerAbility.firstKey].GetComponent<Animator>().SetBool("ChosenFirstNode", false);
+                    }
+                    else if (!GameControllerAbility.firstNodeChoosed && !lastLayer)
+                    {
+                        GameControllerAbility.firstNodeChoosed = true;
+                        GameControllerAbility.firstKey = key;
+                        GameControllerAbility.firstLayer = layer;
+                        GetComponent<Animator>().SetBool("ChosenFirstNode", true);
                     }
                 }
-                contents = new object[]{1};
-                PhotonNetwork.RaiseEvent(7, contents, raiseEventOptions, SendOptions.SendReliable);
+                else
+                {
+                    foreach (int parentKey in parentNodes)
+                    {
+                        if (GraphSpawnerAbility.nodesDict[parentKey].GetComponent<NodeAbility>().state == 2)
+                        {
+                            contents = new object[]{key, "Attacked", 2, 0};
+                            PhotonNetwork.RaiseEvent(2, contents, raiseEventOptions, SendOptions.SendReliable);
+                            if (lastLayer) {
+                                contents = new object[]{"Text", "ATTACKER WIN"};
+                                PhotonNetwork.RaiseEvent(3, contents, raiseEventOptions, SendOptions.SendReliable);
+                                GameControllerAbility.winGame = true;
+                            }
+                            CheckNodeFrozen();
+                            return;
+                        }
+                    }
+                    contents = new object[]{1};
+                    PhotonNetwork.RaiseEvent(7, contents, raiseEventOptions, SendOptions.SendReliable);
+                    }
             }
         }
         else if (state == 1)

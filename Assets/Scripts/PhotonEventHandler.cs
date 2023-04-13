@@ -131,20 +131,44 @@ public class PhotonEventHandler : MonoBehaviour, IOnEventCallback
 
         else if (photonEvent.Code == 6)
         {
-            if (GameController.player != GameController.currentPlayer) return;
             object[] contents = (object[]) photonEvent.CustomData;
             int textInt = (int) contents[0];
 
-            StartCoroutine(ShowFeedbackText(textInt));
+            if (textInt == 0)
+            {
+                if (GameController.player != GameController.currentPlayer)
+                {
+                    StartCoroutine(ShowFeedbackText(textInt));
+                }
+            }
+            else
+            {
+                if (GameController.player == GameController.currentPlayer)
+                {
+                    StartCoroutine(ShowFeedbackText(textInt));
+                }
+            }
         }
 
         else if (photonEvent.Code == 7)
         {
-            if (GameControllerAbility.player != GameControllerAbility.currentPlayer) return;
             object[] contents = (object[]) photonEvent.CustomData;
             int textInt = (int) contents[0];
 
-            StartCoroutine(ShowFeedbackText(textInt));
+            if (textInt == 0)
+            {
+                if (GameControllerAbility.player != GameControllerAbility.currentPlayer)
+                {
+                    StartCoroutine(ShowFeedbackText(textInt));
+                }
+            }
+            else
+            {
+                if (GameControllerAbility.player == GameControllerAbility.currentPlayer)
+                {
+                    StartCoroutine(ShowFeedbackText(textInt));
+                }
+            }
         }
     }
 
@@ -155,7 +179,7 @@ public class PhotonEventHandler : MonoBehaviour, IOnEventCallback
         Vector3 scale = CalculateEdgeScale(childNode, parentNode);
 
         GameObject edgeInstance = UnityEngine.Object.Instantiate(edgeObject, new Vector3(0, 0, 0), Quaternion.identity);
-        edgeInstance.GetComponent<Renderer>().material.color = Color.yellow;
+        edgeInstance.GetComponent<Renderer>().material.color = Color.green;
         edgeInstance.transform.position = midpoint;
         edgeInstance.transform.rotation = rotation;
         edgeInstance.transform.localScale = scale;
@@ -202,11 +226,11 @@ public class PhotonEventHandler : MonoBehaviour, IOnEventCallback
 
     public IEnumerator ShowFeedbackText(int textInt)
     {
-        if (textInt == 0) feedbackText.text = "Not your turn";
-        else if (textInt == 1) feedbackText.text = "The node doesn't have attacked node as the parents";
-        else if (textInt == 2) feedbackText.text = "The node has been defended";
-        else if (textInt == 3) feedbackText.text = "The node has been attacked";
-        else if (textInt == 4) feedbackText.text = "The node has been frozen for a round";
+        if (textInt == 0) feedbackText.text = "It is not your turn yet";
+        else if (textInt == 1) feedbackText.text = "The vertex doesn't have attacked vertex as the parent";
+        else if (textInt == 2) feedbackText.text = "The vertex has been defended";
+        else if (textInt == 3) feedbackText.text = "The vertex has been attacked";
+        else if (textInt == 4) feedbackText.text = "The vertex has been frozen for a round";
         
         feedbackBox.CrossFadeAlpha(1.0f, 1.0f, false);
         feedbackText.CrossFadeAlpha(1.0f, 1.0f, false);

@@ -58,8 +58,14 @@ TagManager:
   - name: Layer2
     uniqueID: 3082992137
     locked: 0
+  - name: Layer2.5
+    uniqueID: 1552204577
+    locked: 0
   - name: Layer3
     uniqueID: 1203140967
+    locked: 0
+  - name: Layer3.5
+    uniqueID: 3708691391
     locked: 0
   - name: Layer4
     uniqueID: 3617440783
