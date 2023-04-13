@@ -4,7 +4,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using ExitGames.Client.Photon;
 
-public class NodeAbility : MonoBehaviour
+public class NodeEdgeStep : MonoBehaviour
 {
     public int key;
     // state
@@ -24,10 +24,10 @@ public class NodeAbility : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (GameControllerAbility.settingOpened) return;
-        if (GameControllerAbility.gameOver) return;
+        if (GameControllerEdgeStep.settingOpened) return;
+        if (GameControllerEdgeStep.gameOver) return;
 
-        if (GameControllerAbility.currentPlayer != GameControllerAbility.player)
+        if (GameControllerEdgeStep.currentPlayer != GameControllerEdgeStep.player)
         {
             contents = new object[]{0};
             PhotonNetwork.RaiseEvent(7, contents, raiseEventOptions, SendOptions.SendReliable);
@@ -36,14 +36,14 @@ public class NodeAbility : MonoBehaviour
 
         if (state == 0)
         {
-            if (GameControllerAbility.player == 0)
+            if (GameControllerEdgeStep.player == 0)
             {
-                if (GameControllerAbility.abilityChoosed && !GameControllerAbility.abilityDone)
+                if (GameControllerEdgeStep.abilityChoosed && !GameControllerEdgeStep.abilityDone)
                 {
                     contents = new object[]{key, "Frozen", true, 3};
                     PhotonNetwork.RaiseEvent(4, contents, raiseEventOptions, SendOptions.SendReliable);
-                    GameControllerAbility.abilityChoosed = false;
-                    GameControllerAbility.abilityDone = true;
+                    GameControllerEdgeStep.abilityChoosed = false;
+                    GameControllerEdgeStep.abilityDone = true;
                 }
                 else
                 {
@@ -54,28 +54,28 @@ public class NodeAbility : MonoBehaviour
                     {
                         contents = new object[]{"Text", "DEFENDER WIN"};
                         PhotonNetwork.RaiseEvent(3, contents, raiseEventOptions, SendOptions.SendReliable);
-                        GameControllerAbility.winGame = true;
+                        GameControllerEdgeStep.winGame = true;
                     }
                 }
             }
-            else if (GameControllerAbility.player == 1)
+            else if (GameControllerEdgeStep.player == 1)
             {
-                if (GameControllerAbility.abilityChoosed && !GameControllerAbility.abilityDone)
+                if (GameControllerEdgeStep.abilityChoosed && !GameControllerEdgeStep.abilityDone)
                 {
-                    if (GameControllerAbility.firstNodeChoosed && layer == GameControllerAbility.firstLayer + 1)
+                    if (GameControllerEdgeStep.firstNodeChoosed && layer == GameControllerEdgeStep.firstLayer + 1)
                     {
-                        contents = new object[]{GameControllerAbility.firstKey, key};
+                        contents = new object[]{GameControllerEdgeStep.firstKey, key};
                         PhotonNetwork.RaiseEvent(5, contents, raiseEventOptions, SendOptions.SendReliable);
-                        GameControllerAbility.abilityChoosed = false;
-                        GameControllerAbility.firstNodeChoosed = false;
-                        GameControllerAbility.abilityDone = true;
-                        GraphSpawnerAbility.nodesDict[GameControllerAbility.firstKey].GetComponent<Animator>().SetBool("ChosenFirstNode", false);
+                        GameControllerEdgeStep.abilityChoosed = false;
+                        GameControllerEdgeStep.firstNodeChoosed = false;
+                        GameControllerEdgeStep.abilityDone = true;
+                        GraphSpawnerEdgeStep.nodesDict[GameControllerEdgeStep.firstKey].GetComponent<Animator>().SetBool("ChosenFirstNode", false);
                     }
-                    else if (!GameControllerAbility.firstNodeChoosed && !lastLayer)
+                    else if (!GameControllerEdgeStep.firstNodeChoosed && !lastLayer)
                     {
-                        GameControllerAbility.firstNodeChoosed = true;
-                        GameControllerAbility.firstKey = key;
-                        GameControllerAbility.firstLayer = layer;
+                        GameControllerEdgeStep.firstNodeChoosed = true;
+                        GameControllerEdgeStep.firstKey = key;
+                        GameControllerEdgeStep.firstLayer = layer;
                         GetComponent<Animator>().SetBool("ChosenFirstNode", true);
                     }
                 }
@@ -83,14 +83,14 @@ public class NodeAbility : MonoBehaviour
                 {
                     foreach (int parentKey in parentNodes)
                     {
-                        if (GraphSpawnerAbility.nodesDict[parentKey].GetComponent<NodeAbility>().state == 2)
+                        if (GraphSpawnerEdgeStep.nodesDict[parentKey].GetComponent<NodeEdgeStep>().state == 2)
                         {
                             contents = new object[]{key, "Attacked", 2, 0};
                             PhotonNetwork.RaiseEvent(2, contents, raiseEventOptions, SendOptions.SendReliable);
                             if (lastLayer) {
                                 contents = new object[]{"Text", "ATTACKER WIN"};
                                 PhotonNetwork.RaiseEvent(3, contents, raiseEventOptions, SendOptions.SendReliable);
-                                GameControllerAbility.winGame = true;
+                                GameControllerEdgeStep.winGame = true;
                             }
                             CheckNodeFrozen();
                             return;
@@ -120,22 +120,22 @@ public class NodeAbility : MonoBehaviour
 
     private void OnMouseEnter()
     {
-        List<GameObject> edges = GraphSpawnerAbility.connectedEdges[key];
+        List<GameObject> edges = GraphSpawnerEdgeStep.connectedEdges[key];
         foreach (GameObject edge in edges) {
             edge.GetComponent<Renderer>().material.color = Color.yellow;
             edge.GetComponent<Renderer>().sortingLayerName = "Layer1.5";
         }
 
-        if (GameControllerAbility.settingOpened) return;
-        if (!GameControllerAbility.gameOver && GameControllerAbility.player == 0 && GameControllerAbility.currentPlayer == 0 && state == 0) // if defender
+        if (GameControllerEdgeStep.settingOpened) return;
+        if (!GameControllerEdgeStep.gameOver && GameControllerEdgeStep.player == 0 && GameControllerEdgeStep.currentPlayer == 0 && state == 0) // if defender
         {
             float scale = transform.localScale.x;
             transform.localScale = new Vector3(1.2f * scale, 1.2f * scale, 1);
             hovered = true;
         }
-        else if (!GameControllerAbility.gameOver && GameControllerAbility.player == 1 && GameControllerAbility.currentPlayer == 1 && state == 0) // if attacker
+        else if (!GameControllerEdgeStep.gameOver && GameControllerEdgeStep.player == 1 && GameControllerEdgeStep.currentPlayer == 1 && state == 0) // if attacker
         {
-            if (GameControllerAbility.abilityChoosed && !GameControllerAbility.abilityDone)
+            if (GameControllerEdgeStep.abilityChoosed && !GameControllerEdgeStep.abilityDone)
             {
                 float scale = transform.localScale.x;
                 transform.localScale = new Vector3(1.2f * scale, 1.2f * scale, 1);
@@ -145,7 +145,7 @@ public class NodeAbility : MonoBehaviour
             {
                 foreach (int parentKey in parentNodes)
                 {
-                    if (GraphSpawnerAbility.nodesDict[parentKey].GetComponent<NodeAbility>().state == 2)
+                    if (GraphSpawnerEdgeStep.nodesDict[parentKey].GetComponent<NodeEdgeStep>().state == 2)
                     {
                         float scale = transform.localScale.x;
                         transform.localScale = new Vector3(1.2f * scale, 1.2f * scale, 1);
@@ -160,14 +160,14 @@ public class NodeAbility : MonoBehaviour
 
     private void OnMouseExit()
     {
-        List<GameObject> edges = GraphSpawnerAbility.connectedEdges[key];
+        List<GameObject> edges = GraphSpawnerEdgeStep.connectedEdges[key];
         foreach (GameObject edge in edges) {
             Color color = new Color32((byte)(0xFF), (byte)(0xFF), (byte)(0xFF), (byte)(0xFF));
             edge.GetComponent<Renderer>().material.color = color;
             edge.GetComponent<Renderer>().sortingLayerName = "Layer1";
         }
 
-        if (GameControllerAbility.settingOpened) return;
+        if (GameControllerEdgeStep.settingOpened) return;
         if (hovered)
         {
             float scale = transform.localScale.x;
@@ -178,13 +178,13 @@ public class NodeAbility : MonoBehaviour
 
     private bool AttackerLose()
     {
-        foreach(KeyValuePair<int, GameObject> entry in GraphSpawnerAbility.nodesDict)
+        foreach(KeyValuePair<int, GameObject> entry in GraphSpawnerEdgeStep.nodesDict)
         {
-            if ((entry.Value).GetComponent<NodeAbility>().state == 0)
+            if ((entry.Value).GetComponent<NodeEdgeStep>().state == 0)
             {
-                foreach(int parentKey in (entry.Value).GetComponent<NodeAbility>().parentNodes)
+                foreach(int parentKey in (entry.Value).GetComponent<NodeEdgeStep>().parentNodes)
                 {
-                    if (GraphSpawnerAbility.nodesDict[parentKey].GetComponent<NodeAbility>().state == 2)
+                    if (GraphSpawnerEdgeStep.nodesDict[parentKey].GetComponent<NodeEdgeStep>().state == 2)
                     {
                         if(HasPathToWin(entry.Key)) return false;
                     }
@@ -196,10 +196,10 @@ public class NodeAbility : MonoBehaviour
 
     private bool HasPathToWin(int key)
     {
-        if (GraphSpawnerAbility.nodesDict[key].GetComponent<NodeAbility>().lastLayer) return true;
-        foreach(int childKey in GraphSpawnerAbility.nodesDict[key].GetComponent<NodeAbility>().childNodes)
+        if (GraphSpawnerEdgeStep.nodesDict[key].GetComponent<NodeEdgeStep>().lastLayer) return true;
+        foreach(int childKey in GraphSpawnerEdgeStep.nodesDict[key].GetComponent<NodeEdgeStep>().childNodes)
         {
-            if (GraphSpawnerAbility.nodesDict[childKey].GetComponent<NodeAbility>().state == 0)
+            if (GraphSpawnerEdgeStep.nodesDict[childKey].GetComponent<NodeEdgeStep>().state == 0)
             {
                 if (HasPathToWin(childKey)) return true;
             }
@@ -209,9 +209,9 @@ public class NodeAbility : MonoBehaviour
 
     private void CheckNodeFrozen()
     {
-        foreach(KeyValuePair<int, GameObject> entry in GraphSpawnerAbility.nodesDict)
+        foreach(KeyValuePair<int, GameObject> entry in GraphSpawnerEdgeStep.nodesDict)
         {
-            if ((entry.Value).GetComponent<NodeAbility>().state == 3)
+            if ((entry.Value).GetComponent<NodeEdgeStep>().state == 3)
             {
                 contents = new object[]{entry.Key, "Frozen", false, 0};
                 PhotonNetwork.RaiseEvent(4, contents, raiseEventOptions, SendOptions.SendReliable);

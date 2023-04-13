@@ -15,9 +15,9 @@ EditorBuildSettings:
     path: Assets/Scenes/FindGame.unity
     guid: 3ad684a8a8b8b0845934016b1dac7769
   - enabled: 1
-    path: Assets/Scenes/GameStandardMulti.unity
+    path: Assets/Scenes/GameStandard.unity
     guid: cf898988351eabc4fa8a667be23665ee
   - enabled: 1
-    path: Assets/Scenes/GameAbilityMulti.unity
+    path: Assets/Scenes/GameEdgeStep.unity
     guid: e69027148b3d8ef46803c27be502db02
   m_configObjects: {}

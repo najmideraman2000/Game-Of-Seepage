@@ -49,7 +49,7 @@ public class Node : MonoBehaviour
             {
                 foreach (int parentKey in parentNodes)
                 {
-                    if (GraphSpawnerMulti.nodesDict[parentKey].GetComponent<Node>().state == 2)
+                    if (GraphSpawner.nodesDict[parentKey].GetComponent<Node>().state == 2)
                     {
                         contents = new object[]{key, "Attacked", 2, 0};
                         PhotonNetwork.RaiseEvent(0, contents, raiseEventOptions, SendOptions.SendReliable);
@@ -80,7 +80,7 @@ public class Node : MonoBehaviour
 
     private void OnMouseEnter()
     {
-        List<GameObject> edges = GraphSpawnerMulti.connectedEdges[key];
+        List<GameObject> edges = GraphSpawner.connectedEdges[key];
         foreach (GameObject edge in edges) {
             edge.GetComponent<Renderer>().material.color = Color.yellow;
             edge.GetComponent<Renderer>().sortingLayerName = "Layer1.5";
@@ -97,7 +97,7 @@ public class Node : MonoBehaviour
         {
             foreach (int parentKey in parentNodes)
             {
-                if (GraphSpawnerMulti.nodesDict[parentKey].GetComponent<Node>().state == 2)
+                if (GraphSpawner.nodesDict[parentKey].GetComponent<Node>().state == 2)
                 {
                     float scale = transform.localScale.x;
                     transform.localScale = new Vector3(1.2f * scale, 1.2f * scale, 1);
@@ -110,7 +110,7 @@ public class Node : MonoBehaviour
 
     private void OnMouseExit()
     {
-        List<GameObject> edges = GraphSpawnerMulti.connectedEdges[key];
+        List<GameObject> edges = GraphSpawner.connectedEdges[key];
         foreach (GameObject edge in edges) {
             Color color = new Color32((byte)(0xFF), (byte)(0xFF), (byte)(0xFF), (byte)(0xFF));
             edge.GetComponent<Renderer>().material.color = color;
@@ -128,13 +128,13 @@ public class Node : MonoBehaviour
 
     private bool AttackerLose()
     {
-        foreach(KeyValuePair<int, GameObject> entry in GraphSpawnerMulti.nodesDict)
+        foreach(KeyValuePair<int, GameObject> entry in GraphSpawner.nodesDict)
         {
             if ((entry.Value).GetComponent<Node>().state == 0)
             {
                 foreach(int parentKey in (entry.Value).GetComponent<Node>().parentNodes)
                 {
-                    if (GraphSpawnerMulti.nodesDict[parentKey].GetComponent<Node>().state == 2)
+                    if (GraphSpawner.nodesDict[parentKey].GetComponent<Node>().state == 2)
                     {
                         if(HasPathToWin(entry.Key)) return false;
                     }
@@ -146,10 +146,10 @@ public class Node : MonoBehaviour
 
     private bool HasPathToWin(int key)
     {
-        if (GraphSpawnerMulti.nodesDict[key].GetComponent<Node>().lastLayer) return true;
-        foreach(int childKey in GraphSpawnerMulti.nodesDict[key].GetComponent<Node>().childNodes)
+        if (GraphSpawner.nodesDict[key].GetComponent<Node>().lastLayer) return true;
+        foreach(int childKey in GraphSpawner.nodesDict[key].GetComponent<Node>().childNodes)
         {
-            if (GraphSpawnerMulti.nodesDict[childKey].GetComponent<Node>().state == 0)
+            if (GraphSpawner.nodesDict[childKey].GetComponent<Node>().state == 0)
             {
                 if (HasPathToWin(childKey)) return true;
             }

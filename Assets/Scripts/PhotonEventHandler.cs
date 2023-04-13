@@ -44,7 +44,7 @@ public class PhotonEventHandler : MonoBehaviour, IOnEventCallback
             string animBool = (string)  contents[1];
             int state = (int) contents[2];
             int currentPlayer = (int) contents[3];
-            GameObject node = GraphSpawnerMulti.nodesDict[key];
+            GameObject node = GraphSpawner.nodesDict[key];
             AudioSource audSrc = gameController.GetComponent<GameController>().effectSource;
 
             if (animBool == "Defended") audSrc.PlayOneShot(defendEffect, audSrc.volume);
@@ -75,15 +75,15 @@ public class PhotonEventHandler : MonoBehaviour, IOnEventCallback
             string animBool = (string)  contents[1];
             int state = (int) contents[2];
             int currentPlayer = (int) contents[3];
-            GameObject node = GraphSpawnerAbility.nodesDict[key];
-            AudioSource audSrc = gameController.GetComponent<GameControllerAbility>().effectSource;
+            GameObject node = GraphSpawnerEdgeStep.nodesDict[key];
+            AudioSource audSrc = gameController.GetComponent<GameControllerEdgeStep>().effectSource;
 
             if (animBool == "Defended") audSrc.PlayOneShot(defendEffect, audSrc.volume);
             else if (animBool == "Attacked") audSrc.PlayOneShot(attackEffect, audSrc.volume);
 
             node.GetComponent<Animator>().SetBool(animBool, true);
-            node.GetComponent<NodeAbility>().state = state;
-            GameControllerAbility.currentPlayer = currentPlayer;
+            node.GetComponent<NodeEdgeStep>().state = state;
+            GameControllerEdgeStep.currentPlayer = currentPlayer;
         }
 
         else if (photonEvent.Code == 3)
@@ -94,8 +94,8 @@ public class PhotonEventHandler : MonoBehaviour, IOnEventCallback
 
             GameObject textObject = GameObject.FindWithTag(tag);
             textObject.GetComponent<Text>().text = text;
-            GameControllerAbility.gameOver = true;
-            GameControllerAbility.matchStart = false;
+            GameControllerEdgeStep.gameOver = true;
+            GameControllerEdgeStep.matchStart = false;
             StartCoroutine(GameOver());
         }
 
@@ -106,12 +106,12 @@ public class PhotonEventHandler : MonoBehaviour, IOnEventCallback
             string animTag = (string)  contents[1];
             bool animBool = (bool) contents[2];
             int state = (int) contents[3];
-            GameObject node = GraphSpawnerAbility.nodesDict[key];
-            AudioSource audSrc = gameController.GetComponent<GameControllerAbility>().effectSource;
+            GameObject node = GraphSpawnerEdgeStep.nodesDict[key];
+            AudioSource audSrc = gameController.GetComponent<GameControllerEdgeStep>().effectSource;
             audSrc.PlayOneShot(iceEffect, audSrc.volume);
 
             node.GetComponent<Animator>().SetBool(animTag, animBool);
-            node.GetComponent<NodeAbility>().state = state;
+            node.GetComponent<NodeEdgeStep>().state = state;
         }
 
         else if (photonEvent.Code == 5)
@@ -119,13 +119,13 @@ public class PhotonEventHandler : MonoBehaviour, IOnEventCallback
             object[] contents = (object[]) photonEvent.CustomData;
             int firstKey = (int) contents[0];
             int secondKey = (int) contents[1];
-            AudioSource audSrc = gameController.GetComponent<GameControllerAbility>().effectSource;
+            AudioSource audSrc = gameController.GetComponent<GameControllerEdgeStep>().effectSource;
             audSrc.PlayOneShot(addEdgeEffect, audSrc.volume);
 
-            GameObject firstNodeObj = GraphSpawnerAbility.nodesDict[firstKey];
-            GameObject secondNodeObj = GraphSpawnerAbility.nodesDict[secondKey];
-            firstNodeObj.GetComponent<NodeAbility>().childNodes.Add(secondKey);
-            secondNodeObj.GetComponent<NodeAbility>().parentNodes.Add(firstKey);
+            GameObject firstNodeObj = GraphSpawnerEdgeStep.nodesDict[firstKey];
+            GameObject secondNodeObj = GraphSpawnerEdgeStep.nodesDict[secondKey];
+            firstNodeObj.GetComponent<NodeEdgeStep>().childNodes.Add(secondKey);
+            secondNodeObj.GetComponent<NodeEdgeStep>().parentNodes.Add(firstKey);
             CreateEdge(firstNodeObj, secondNodeObj);
         }
 
@@ -157,14 +157,14 @@ public class PhotonEventHandler : MonoBehaviour, IOnEventCallback
 
             if (textInt == 0)
             {
-                if (GameControllerAbility.player != GameControllerAbility.currentPlayer)
+                if (GameControllerEdgeStep.player != GameControllerEdgeStep.currentPlayer)
                 {
                     StartCoroutine(ShowFeedbackText(textInt));
                 }
             }
             else
             {
-                if (GameControllerAbility.player == GameControllerAbility.currentPlayer)
+                if (GameControllerEdgeStep.player == GameControllerEdgeStep.currentPlayer)
                 {
                     StartCoroutine(ShowFeedbackText(textInt));
                 }

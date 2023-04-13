@@ -3686,7 +3686,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 881079075}
-  - component: {fileID: 881079074}
+  - component: {fileID: 881079076}
   m_Layer: 0
   m_Name: GraphSpawner
   m_TagString: Untagged
@@ -3694,20 +3694,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &881079074
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 881079072}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dac2966c618ec25488832ad461fd4a82, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  nodeObject: {fileID: 4845116992827162929, guid: 9d7f4f594061ee342864f38c63974de7, type: 3}
-  edgeObject: {fileID: 5611774033209376707, guid: ae1fa0b39f629a14bbbb9766b0f5a3e1, type: 3}
 --- !u!4 &881079075
 Transform:
   m_ObjectHideFlags: 0
@@ -3723,6 +3709,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &881079076
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 881079072}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 161f112922e86ab4a89912cbadbf967b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nodeObject: {fileID: 4845116992827162929, guid: 9d7f4f594061ee342864f38c63974de7, type: 3}
+  edgeObject: {fileID: 5611774033209376707, guid: ae1fa0b39f629a14bbbb9766b0f5a3e1, type: 3}
 --- !u!1 &891230626
 GameObject:
   m_ObjectHideFlags: 0

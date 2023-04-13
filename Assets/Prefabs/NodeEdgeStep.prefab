@@ -11,10 +11,10 @@ GameObject:
   - component: {fileID: 5493396626513500524}
   - component: {fileID: 5494278661454347370}
   - component: {fileID: 346642971248043583}
-  - component: {fileID: -5989025621283015737}
   - component: {fileID: 2764230468979625671}
+  - component: {fileID: -387196491566062343}
   m_Layer: 0
-  m_Name: NodeAbility
+  m_Name: NodeEdgeStep
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -74,7 +74,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1211975159
-  m_SortingLayer: 2
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -103,24 +103,6 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
---- !u!114 &-5989025621283015737
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4845116992827162929}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d8152e1ce87c1084d980730bb9af0d6c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  key: 0
-  state: 0
-  parentNodes: 
-  childNodes: 
-  lastLayer: 0
-  edgeObject: {fileID: 5611774033209376707, guid: ae1fa0b39f629a14bbbb9766b0f5a3e1, type: 3}
 --- !u!95 &2764230468979625671
 Animator:
   serializedVersion: 4
@@ -141,3 +123,22 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &-387196491566062343
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4845116992827162929}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 546bd3c881a690846a3b6bfbeca37104, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: 0
+  state: 0
+  layer: 0
+  parentNodes: 
+  childNodes: 
+  lastLayer: 0
+  edgeObject: {fileID: 5611774033209376707, guid: ae1fa0b39f629a14bbbb9766b0f5a3e1, type: 3}

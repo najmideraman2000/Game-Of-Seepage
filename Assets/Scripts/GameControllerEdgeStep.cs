@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 using Photon.Pun;
 using Photon.Realtime;
 
-public class GameControllerAbility : MonoBehaviourPunCallbacks
+public class GameControllerEdgeStep : MonoBehaviourPunCallbacks
 {
     public static int player;
     public static int currentPlayer = 0;
@@ -204,9 +204,9 @@ public class GameControllerAbility : MonoBehaviourPunCallbacks
 
     private void ResetGame()
     {
-        GraphSpawnerAbility.nodesDict = new Dictionary<int, GameObject>{};
-        GraphSpawnerAbility.connectedEdges = new Dictionary<int, List<GameObject>>{};
-        GraphSpawnerAbility.allObjects = new List<GameObject>{};
+        GraphSpawnerEdgeStep.nodesDict = new Dictionary<int, GameObject>{};
+        GraphSpawnerEdgeStep.connectedEdges = new Dictionary<int, List<GameObject>>{};
+        GraphSpawnerEdgeStep.allObjects = new List<GameObject>{};
         currentPlayer = 0;
         abilityChoosed = false;
         firstNodeChoosed = false;
@@ -230,12 +230,12 @@ public class GameControllerAbility : MonoBehaviourPunCallbacks
     [PunRPC]
     private void UpdateStartTime(double startTime)
     {
-        GameControllerAbility.startTime = startTime;
+        GameControllerEdgeStep.startTime = startTime;
     }
 
     [PunRPC]
     private void UpdateMatchStart(bool state)
     {
-        GameControllerAbility.matchStart = state;
+        GameControllerEdgeStep.matchStart = state;
     }
 }

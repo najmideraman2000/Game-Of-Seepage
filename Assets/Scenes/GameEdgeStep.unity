@@ -573,8 +573,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 269423598}
-        m_TargetAssemblyTypeName: GameControllerAbility, Assembly-CSharp
+      - m_Target: {fileID: 269423603}
+        m_TargetAssemblyTypeName: GameControllerEdgeStep, Assembly-CSharp
         m_MethodName: UseAbility
         m_Mode: 1
         m_Arguments:
@@ -714,7 +714,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 269423598}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: GameControllerAbility, Assembly-CSharp
         m_MethodName: ChangeVolume
         m_Mode: 1
@@ -810,8 +810,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 269423598}
-        m_TargetAssemblyTypeName: GameControllerAbility, Assembly-CSharp
+      - m_Target: {fileID: 269423603}
+        m_TargetAssemblyTypeName: GameControllerEdgeStep, Assembly-CSharp
         m_MethodName: OpenSetting
         m_Mode: 1
         m_Arguments:
@@ -1539,9 +1539,9 @@ GameObject:
   m_Component:
   - component: {fileID: 269423600}
   - component: {fileID: 269423599}
-  - component: {fileID: 269423598}
   - component: {fileID: 269423601}
   - component: {fileID: 269423602}
+  - component: {fileID: 269423603}
   m_Layer: 0
   m_Name: GameController
   m_TagString: Untagged
@@ -1549,32 +1549,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &269423598
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 269423597}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a9a9404ae921854bb990b76a5148b0c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  abilityButton: {fileID: 125580336}
-  defenderAbilityImage: {fileID: 21300000, guid: de336869c6c68c140bd623f206009ad4, type: 3}
-  attackerAbilityImage: {fileID: 21300000, guid: af5c11ddb3c0f094c944be91a48f44f1, type: 3}
-  turnText: {fileID: 248490628}
-  roleText: {fileID: 563516725}
-  defenderTimeText: {fileID: 2045896861}
-  attackerTimeText: {fileID: 427367063}
-  resultText: {fileID: 713364862}
-  canvasSetting: {fileID: 992140906}
-  canvasGameOver: {fileID: 1835039914}
-  musicSlider: {fileID: 172706718}
-  effectSlider: {fileID: 508811495}
-  musicSource: {fileID: 269423601}
-  effectSource: {fileID: 269423602}
 --- !u!114 &269423599
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1804,6 +1778,32 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &269423603
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 269423597}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b835f8d9edc247e47a9dbdade69aceb8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  abilityButton: {fileID: 125580336}
+  defenderAbilityImage: {fileID: 21300000, guid: de336869c6c68c140bd623f206009ad4, type: 3}
+  attackerAbilityImage: {fileID: 21300000, guid: af5c11ddb3c0f094c944be91a48f44f1, type: 3}
+  turnText: {fileID: 248490628}
+  roleText: {fileID: 563516725}
+  defenderTimeText: {fileID: 2045896861}
+  attackerTimeText: {fileID: 427367063}
+  resultText: {fileID: 713364862}
+  canvasSetting: {fileID: 992140906}
+  canvasGameOver: {fileID: 1835039914}
+  musicSlider: {fileID: 172706718}
+  effectSlider: {fileID: 508811495}
+  musicSource: {fileID: 269423601}
+  effectSource: {fileID: 269423602}
 --- !u!1 &327435139
 GameObject:
   m_ObjectHideFlags: 0
@@ -2672,7 +2672,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 269423598}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: GameControllerAbility, Assembly-CSharp
         m_MethodName: ChangeVolume
         m_Mode: 1
@@ -3336,8 +3336,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 269423598}
-        m_TargetAssemblyTypeName: GameControllerAbility, Assembly-CSharp
+      - m_Target: {fileID: 269423603}
+        m_TargetAssemblyTypeName: GameControllerEdgeStep, Assembly-CSharp
         m_MethodName: LeaveGame
         m_Mode: 1
         m_Arguments:
@@ -3600,8 +3600,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 269423598}
-        m_TargetAssemblyTypeName: GameControllerAbility, Assembly-CSharp
+      - m_Target: {fileID: 269423603}
+        m_TargetAssemblyTypeName: GameControllerEdgeStep, Assembly-CSharp
         m_MethodName: CloseSetting
         m_Mode: 1
         m_Arguments:
@@ -4973,8 +4973,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 269423598}
-        m_TargetAssemblyTypeName: GameControllerAbility, Assembly-CSharp
+      - m_Target: {fileID: 269423603}
+        m_TargetAssemblyTypeName: GameControllerEdgeStep, Assembly-CSharp
         m_MethodName: BackToMenu
         m_Mode: 1
         m_Arguments:
@@ -6803,7 +6803,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1828849057}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fb9bad1ee624cbc4dba5e42a75af0f3c, type: 3}
+  m_Script: {fileID: 11500000, guid: 6236354b0535e514e988b119600a401e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   nodeObject: {fileID: 4845116992827162929, guid: d47e4cb4705c98f4dacc5e8ce5a68f0b, type: 3}
@@ -7419,8 +7419,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 269423598}
-        m_TargetAssemblyTypeName: GameControllerAbility, Assembly-CSharp
+      - m_Target: {fileID: 269423603}
+        m_TargetAssemblyTypeName: GameControllerEdgeStep, Assembly-CSharp
         m_MethodName: LeaveGame
         m_Mode: 1
         m_Arguments:
@@ -7671,7 +7671,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 269423598}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: GameControllerAbility, Assembly-CSharp
         m_MethodName: CloseGameOver
         m_Mode: 1

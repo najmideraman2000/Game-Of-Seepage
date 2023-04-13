@@ -27,10 +27,10 @@ public class TutorialButton : MonoBehaviour
         nextBtn.GetComponent<Button>().interactable = true;
         tutoPagesStandard[0].SetActive(true);
 
-        foreach (GameObject obj in GraphSpawnerMulti.allObjects) {
+        foreach (GameObject obj in GraphSpawner.allObjects) {
             obj.SetActive(false);
         }
-        foreach (GameObject obj in GraphSpawnerAbility.allObjects) {
+        foreach (GameObject obj in GraphSpawnerEdgeStep.allObjects) {
             obj.SetActive(false);
         }
     }
@@ -50,10 +50,10 @@ public class TutorialButton : MonoBehaviour
         canvasMenu.SetActive(true);
         howToBtn.SetActive(true);
 
-        foreach (GameObject obj in GraphSpawnerMulti.allObjects) {
+        foreach (GameObject obj in GraphSpawner.allObjects) {
             obj.SetActive(true);
         }
-        foreach (GameObject obj in GraphSpawnerAbility.allObjects) {
+        foreach (GameObject obj in GraphSpawnerEdgeStep.allObjects) {
             obj.SetActive(true);
         }
     }

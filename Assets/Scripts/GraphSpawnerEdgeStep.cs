@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 
-public class GraphSpawnerMulti : MonoBehaviour
+public class GraphSpawnerEdgeStep : MonoBehaviour
 {
     public static Dictionary<int, GameObject> nodesDict = new Dictionary<int, GameObject>{};
     public static Dictionary<int, List<GameObject>> connectedEdges = new Dictionary<int, List<GameObject>>{};
@@ -39,15 +39,16 @@ public class GraphSpawnerMulti : MonoBehaviour
             allObjects.Add(nodeInstance);
             nodeInstance.GetComponent<Animator>().keepAnimatorControllerStateOnDisable = true;
             nodeInstance.transform.localScale = new Vector3(minScale, minScale, 1);
-            nodeInstance.GetComponent<Node>().key = i;
+            nodeInstance.GetComponent<NodeEdgeStep>().key = i;
             if (i == 0)
             {
-                nodeInstance.GetComponent<Node>().state = 2;
+                nodeInstance.GetComponent<NodeEdgeStep>().state = 2;
                 nodeInstance.GetComponent<Animator>().SetBool("Attacked", true);
             }
 
             int totalInlayer = totalNodeInLayer[i];
             int layer = nodeLayer[i];
+            nodeInstance.GetComponent<NodeEdgeStep>().layer = layer;
             if (currentNodeLayer != layer)
             {   
                 horizontalSpace = 0;
@@ -73,18 +74,18 @@ public class GraphSpawnerMulti : MonoBehaviour
             {
                 GameObject parentObj = nodesDict[parentKey];
                 CreateEdge(nodeInstance, parentObj);
-                parentObj.GetComponent<Node>().childNodes.Add(i);
-                nodeInstance.GetComponent<Node>().parentNodes.Add(parentKey);
+                parentObj.GetComponent<NodeEdgeStep>().childNodes.Add(i);
+                nodeInstance.GetComponent<NodeEdgeStep>().parentNodes.Add(parentKey);
             }
             nodesDict.Add(i, nodeInstance);
         }
         foreach (KeyValuePair<int, GameObject> entry in nodesDict)
         {
 
-            if ((entry.Value).GetComponent<Node>().childNodes.Count == 0)
+            if ((entry.Value).GetComponent<NodeEdgeStep>().childNodes.Count == 0)
             {
                 (entry.Value).GetComponent<Animator>().SetBool("IsSink", true);
-                (entry.Value).GetComponent<Node>().lastLayer = true;
+                (entry.Value).GetComponent<NodeEdgeStep>().lastLayer = true;
             }
         }
     }
@@ -171,8 +172,8 @@ public class GraphSpawnerMulti : MonoBehaviour
         edgeInstance.transform.rotation = rotation;
         edgeInstance.transform.localScale = scale;
 
-        int childKey = childNode.GetComponent<Node>().key;
-        int parentKey = parentNode.GetComponent<Node>().key;
+        int childKey = childNode.GetComponent<NodeEdgeStep>().key;
+        int parentKey = parentNode.GetComponent<NodeEdgeStep>().key;
         if (connectedEdges.ContainsKey(childKey)) {
             List<GameObject> edgeList = connectedEdges[childKey];
             edgeList.Add(edgeInstance);

@@ -54,15 +54,15 @@ public class FindGame : MonoBehaviourPunCallbacks
         }
         else if (selectedMode.text == "Edge-Step")
         {
-            GameControllerAbility.gameTime = gameTime;
+            GameControllerEdgeStep.gameTime = gameTime;
             if (selectedRole.text == "Defender") 
             {
-                GameControllerAbility.player = 0;
+                GameControllerEdgeStep.player = 0;
                 expectedCustomRoomProperties.Add("role", "Attacker");
             }
             else if (selectedRole.text == "Attacker") 
             {
-                GameControllerAbility.player = 1;
+                GameControllerEdgeStep.player = 1;
                 expectedCustomRoomProperties.Add("role", "Defender");
             }
         }
@@ -94,7 +94,7 @@ public class FindGame : MonoBehaviourPunCallbacks
         roomCustomProperties.Add("role", selectedRole.text);
         roomCustomProperties.Add("time", selectedTime.text);
         roomCustomProperties.Add("mode", selectedMode.text);
-        roomCustomProperties.Add("graph", 19);
+        roomCustomProperties.Add("graph", randint);
         roomOptions.CustomRoomProperties = roomCustomProperties;
 
         string[] customPropsForLobby = {"role", "time", "mode", "graph"};
@@ -109,11 +109,11 @@ public class FindGame : MonoBehaviourPunCallbacks
         {
             if (PhotonNetwork.CurrentRoom.CustomProperties["mode"].ToString() == "Standard")
             {
-                PhotonNetwork.LoadLevel("GameStandardMulti");
+                PhotonNetwork.LoadLevel("GameStandard");
             }
             else if (PhotonNetwork.CurrentRoom.CustomProperties["mode"].ToString() == "Edge-Step")
             {
-                PhotonNetwork.LoadLevel("GameAbilityMulti");
+                PhotonNetwork.LoadLevel("GameEdgeStep");
             }
         }
     }
@@ -169,8 +169,8 @@ public class FindGame : MonoBehaviourPunCallbacks
         SceneManager.LoadScene("ConnectServer");
     }
 
-    public override void OnJoinedRoom()
-    {
-        PhotonNetwork.LoadLevel("GameStandardMulti");
-    }
+    // public override void OnJoinedRoom()
+    // {
+    //     PhotonNetwork.LoadLevel("GameStandard");
+    // }
 }
